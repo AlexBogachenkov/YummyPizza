@@ -9,6 +9,9 @@ public class CoreResponse {
 
     private List<CoreError> errors;
 
+    public CoreResponse() {
+    }
+
     public CoreResponse(List<CoreError> errors) {
         this.errors = errors;
     }
