@@ -1,9 +1,11 @@
 package yummypizza.core.requests;
 
 import lombok.Getter;
+import lombok.Setter;
 import yummypizza.core.domain.UserRole;
 
 @Getter
+@Setter
 public class SaveUserRequest {
 
     private String firstName;
@@ -21,4 +23,5 @@ public class SaveUserRequest {
         this.phone = phone;
         this.role = role;
     }
+
 }
