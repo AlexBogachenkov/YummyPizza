@@ -1,5 +1,6 @@
 package yummypizza.core.validators;
 
+import org.springframework.stereotype.Component;
 import yummypizza.core.domain.UserRole;
 import yummypizza.core.requests.SaveUserRequest;
 import yummypizza.core.responses.CoreError;
@@ -7,6 +8,7 @@ import yummypizza.core.responses.CoreError;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SaveUserRequestValidator {
 
     private List<CoreError> errors;
