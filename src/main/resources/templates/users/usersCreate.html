@@ -3,15 +3,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin page</title>
+  <title>Create user</title>
 </head>
 <body>
 
-<h1>Admin page</h1>
+<h1>Create user</h1>
 
-<h3>Create user:</h3>
-
-<form action="/user" th:object="${request}" method="post">
+<form action="/usersCreate" th:object="${request}" method="post">
   <label>First name:</label><br>
   <input type="text" th:field="${request.firstName}"/><br>
   <label>Last name:</label><br>
@@ -26,7 +24,9 @@
   <select th:field="${request.role}">
     <option th:value="CLIENT" th:text="Client"></option>
     <option th:value="ADMIN" th:text="Admin"></option>
-  </select><br>
+  </select>
+  <br>
+  <br>
 
   <input type="submit" value="Create"/>
   <input type="reset" value="Clear"/>

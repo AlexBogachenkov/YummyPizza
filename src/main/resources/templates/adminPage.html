@@ -12,37 +12,5 @@
 
 <a href="/users">Users</a>
 
-<h3>Save user:</h3>
-
-<form action="/user" th:object="${request}" method="post">
-    <label>First name:</label><br>
-    <input type="text" th:field="${request.firstName}"/><br>
-    <label>Last name:</label><br>
-    <input type="text" th:field="${request.lastName}"/><br>
-    <label>Email:</label><br>
-    <input type="text" th:field="${request.email}"/><br>
-    <label>Password:</label><br>
-    <input type="password" th:field="${request.password}"/><br>
-    <label>Phone:</label><br>
-    <input type="text" th:field="${request.phone}"/><br>
-    <label>Role:</label><br>
-    <select th:field="${request.role}">
-        <option th:value="CLIENT" th:text="Client"></option>
-        <option th:value="ADMIN" th:text="Admin"></option>
-    </select><br>
-
-    <input type="submit" value="Save"/>
-    <input type="reset" value="Clear"/>
-</form>
-
-<table>
-    <td th:if="${errors != null}">
-        <tr th:each="error : ${errors}">
-            <td th:text="${error.field}" />
-            <td th:text="${error.message}" />
-        </tr>
-    </td>
-</table>
-
 </body>
 </html>
