@@ -10,40 +10,30 @@
 <h1>Admin page</h1>
 
 
-<h2>User</h2>
+<a href="/users">Users</a>
 
 <h3>Save user:</h3>
-<table>
-    <tr>
-        <td>First name:</td>
-        <td>Last name:</td>
-        <td>Email:</td>
-        <td>Password:</td>
-        <td>Phone:</td>
-        <td>Role:</td>
-    </tr>
 
-    <tr>
-        <form action="/user" th:object="${request}" method="post">
-            <td><input type="text" th:field="${request.firstName}"/></td>
-            <td><input type="text" th:field="${request.lastName}"/></td>
-            <td><input type="text" th:field="${request.email}"/></td>
-            <td><input type="password" th:field="${request.password}"/></td>
-            <td><input type="text" th:field="${request.phone}"/></td>
-            <td>
-                <select th:field="${request.role}">
-                    <option th:value="CLIENT" th:text="Client"></option>
-                    <option th:value="ADMIN" th:text="Admin"></option>
-                </select>
-            </td>
-            <td>
-                <input type="submit" value="Save"/>
-                <input type="reset" value="Clear"/>
-            </td>
-        </form>
-    </tr>
+<form action="/user" th:object="${request}" method="post">
+    <label>First name:</label><br>
+    <input type="text" th:field="${request.firstName}"/><br>
+    <label>Last name:</label><br>
+    <input type="text" th:field="${request.lastName}"/><br>
+    <label>Email:</label><br>
+    <input type="text" th:field="${request.email}"/><br>
+    <label>Password:</label><br>
+    <input type="password" th:field="${request.password}"/><br>
+    <label>Phone:</label><br>
+    <input type="text" th:field="${request.phone}"/><br>
+    <label>Role:</label><br>
+    <select th:field="${request.role}">
+        <option th:value="CLIENT" th:text="Client"></option>
+        <option th:value="ADMIN" th:text="Admin"></option>
+    </select><br>
 
-</table>
+    <input type="submit" value="Save"/>
+    <input type="reset" value="Clear"/>
+</form>
 
 <table>
     <td th:if="${errors != null}">
@@ -53,8 +43,6 @@
         </tr>
     </td>
 </table>
-
-<span th:if="${response != null}" th:text="'User was added with ID ' + ${response} + '.'"></span>
 
 </body>
 </html>
