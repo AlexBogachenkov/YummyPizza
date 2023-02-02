@@ -11,7 +11,7 @@ import yummypizza.core.responses.SaveUserResponse;
 import yummypizza.core.services.SaveUserService;
 
 @Controller
-@RequestMapping(value = "user")
+@RequestMapping(value = "users")
 public class UserController {
 
     @Autowired
