@@ -1,6 +1,8 @@
 package yummypizza.core.services;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SaveUserServiceTest {
 
     @Mock
@@ -28,10 +31,22 @@ class SaveUserServiceTest {
     @InjectMocks
     SaveUserService service;
 
+    private SaveUserRequest invalidRequest;
+    private SaveUserRequest validRequest;
+    private User user;
+
+    @BeforeAll
+    public void setup() {
+        invalidRequest = new SaveUserRequest(null, "Smith", "m.smith@gmail.com",
+                "password", "25436565", UserRole.CLIENT);
+        validRequest = new SaveUserRequest("Michael", "Smith", "m.smith@gmail.com",
+                "password", "25436565", UserRole.CLIENT);
+        user = new User(validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
+                validRequest.getPassword(), validRequest.getPhone(), validRequest.getRole());
+    }
+
     @Test
     public void shouldReturnResponseWithErrorsWhenValidationFails() {
-        SaveUserRequest invalidRequest = new SaveUserRequest(null, "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
         Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("First name", "is mandatory.")));
         SaveUserResponse response = service.execute(invalidRequest);
         assertTrue(response.hasErrors());
@@ -42,8 +57,6 @@ class SaveUserServiceTest {
 
     @Test
     public void shouldNotInvokeRepositoryWhenRequestValidationFails() {
-        SaveUserRequest invalidRequest = new SaveUserRequest(null, "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
         Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("First name", "is mandatory.")));
         service.execute(invalidRequest);
         Mockito.verifyNoInteractions(repository);
@@ -51,10 +64,6 @@ class SaveUserServiceTest {
 
     @Test
     public void shouldSaveUserToRepositoryWhenValidationPasses() {
-        SaveUserRequest validRequest = new SaveUserRequest("Michael", "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
-        User user = new User(validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
-                validRequest.getPassword(), validRequest.getPhone(), validRequest.getRole());
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         service.execute(validRequest);
         Mockito.verify(repository).save(user);
@@ -62,8 +71,6 @@ class SaveUserServiceTest {
 
     @Test
     public void shouldReturnResponseWithoutErrorsWhenValidationPasses() {
-        SaveUserRequest validRequest = new SaveUserRequest("Michael", "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         SaveUserResponse response = service.execute(validRequest);
         assertFalse(response.hasErrors());
@@ -71,10 +78,6 @@ class SaveUserServiceTest {
 
     @Test
     public void shouldReturnResponseWithSavedUserWhenValidationPasses() {
-        SaveUserRequest validRequest = new SaveUserRequest("Michael", "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
-        User user = new User(validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
-                validRequest.getPassword(), validRequest.getPhone(), validRequest.getRole());
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         Mockito.when(repository.save(user)).thenReturn(user);
         SaveUserResponse response = service.execute(validRequest);
