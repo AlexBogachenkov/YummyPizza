@@ -32,13 +32,11 @@
     <input type="reset" value="Clear"/>
 </form>
 
-<table>
-    <td th:if="${errors != null}">
-        <tr th:each="error : ${errors}">
-            <td th:text="${error.field}" />
-            <td th:text="${error.message}" />
-        </tr>
-    </td>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
 </table>
 
 </body>

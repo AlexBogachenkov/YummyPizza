@@ -11,7 +11,7 @@
 
 <form action="/users/" method="get">
   <label>User ID:</label><br>
-  <input type="text" th:name="id"/><br>
+  <input type="text" name="id"/><br>
   <br>
   <br>
 
@@ -19,13 +19,11 @@
   <input type="reset" value="Clear"/>
 </form>
 
-<table>
-  <td th:if="${errors != null}">
+<table th:if="${errors != null}">
     <tr th:each="error : ${errors}">
       <td th:text="${error.field}" />
       <td th:text="${error.message}" />
     </tr>
-  </td>
 </table>
 
 <table th:if="${foundUser != null}">
@@ -48,7 +46,7 @@
 </table>
 
 
-<span th:if="${foundUser == null}">User not found.</span>
+<span th:if="${userNotFound == true}">User not found.</span>
 
 </body>
 </html>

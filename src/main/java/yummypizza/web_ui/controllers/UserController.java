@@ -60,7 +60,7 @@ public class UserController {
         if (response.getFoundUser().isPresent()) {
             modelMap.addAttribute("foundUser", response.getFoundUser().get());
         } else {
-            modelMap.addAttribute("foundUser", null);
+            modelMap.addAttribute("userNotFound", true);
         }
         return "users/usersFindById.html";
     }
