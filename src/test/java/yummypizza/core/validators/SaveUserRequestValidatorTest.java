@@ -265,4 +265,10 @@ class SaveUserRequestValidatorTest {
         assertEquals("is mandatory.", errors.get(0).getMessage());
     }
 
+    @Test
+    public void shouldNotReturnErrorsWhenRequestIsCorrect() {
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(0, errors.size());
+    }
+
 }
