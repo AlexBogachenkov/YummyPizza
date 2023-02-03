@@ -1,11 +1,11 @@
 package yummypizza.core.requests;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import yummypizza.core.domain.UserRole;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 public class SaveUserRequest {
 
     private String firstName;
@@ -15,9 +15,6 @@ public class SaveUserRequest {
     private String phone;
     private UserRole role;
 
-    public SaveUserRequest() {
-    }
-
     public SaveUserRequest(String firstName, String lastName, String email, String password, String phone, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -26,4 +23,5 @@ public class SaveUserRequest {
         this.phone = phone;
         this.role = role;
     }
+
 }
