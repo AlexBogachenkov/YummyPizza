@@ -2,8 +2,10 @@ package yummypizza.core.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -40,4 +42,5 @@ public class User {
         this.phone = phone;
         this.role = role;
     }
+
 }

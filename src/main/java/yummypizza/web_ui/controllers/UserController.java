@@ -6,8 +6,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import yummypizza.core.requests.FindUserByIdRequest;
 import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.responses.FindUserByIdResponse;
 import yummypizza.core.responses.SaveUserResponse;
+import yummypizza.core.services.FindUserByIdService;
 import yummypizza.core.services.SaveUserService;
 
 @Controller
@@ -15,6 +19,8 @@ public class UserController {
 
     @Autowired
     private SaveUserService saveUserService;
+    @Autowired
+    private FindUserByIdService findUserByIdService;
 
     @GetMapping(value = "users")
     public String showUsersPage() {
@@ -36,6 +42,27 @@ public class UserController {
         } else {
             return "users/users.html";
         }
+    }
+
+    @GetMapping(value = "usersFindById")
+    public String showUsersFindByIdPage() {
+        return "users/usersFindById.html";
+    }
+
+    @GetMapping(value = "users/")
+    public String processFindUserByIdRequest(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+        FindUserByIdRequest request = new FindUserByIdRequest(id);
+        FindUserByIdResponse response = findUserByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+            return "users/usersFindById.html";
+        }
+        if (response.getFoundUser().isPresent()) {
+            modelMap.addAttribute("foundUser", response.getFoundUser().get());
+        } else {
+            modelMap.addAttribute("foundUser", null);
+        }
+        return "users/usersFindById.html";
     }
 
 }
