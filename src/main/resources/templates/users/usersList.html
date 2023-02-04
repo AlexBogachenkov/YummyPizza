@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find all users</title>
+</head>
+<body>
+
+<h1>Find all users</h1>
+
+<table th:if="${not users.isEmpty}">
+  <tr>
+    <th>ID</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Role</th>
+  </tr>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}" />
+    <td th:text="${user.firstName}" />
+    <td th:text="${user.lastName}" />
+    <td th:text="${user.email}" />
+    <td th:text="${user.phone}" />
+    <td th:text="${user.role}" />
+  </tr>
+</table>
+
+
+<span th:if="${users.isEmpty}">Users not found.</span>
+
+</body>
+</html>

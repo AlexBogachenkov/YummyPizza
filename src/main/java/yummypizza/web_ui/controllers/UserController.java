@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import yummypizza.core.requests.FindUserByIdRequest;
 import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.responses.FindAllUsersResponse;
 import yummypizza.core.responses.FindUserByIdResponse;
 import yummypizza.core.responses.SaveUserResponse;
+import yummypizza.core.services.FindAllUsersService;
 import yummypizza.core.services.FindUserByIdService;
 import yummypizza.core.services.SaveUserService;
 
@@ -21,6 +23,8 @@ public class UserController {
     private SaveUserService saveUserService;
     @Autowired
     private FindUserByIdService findUserByIdService;
+    @Autowired
+    private FindAllUsersService findAllUsersService;
 
     @GetMapping(value = "users")
     public String showUsersPage() {
@@ -63,6 +67,13 @@ public class UserController {
             modelMap.addAttribute("userNotFound", true);
         }
         return "users/usersFindById.html";
+    }
+
+    @GetMapping(value = "usersList")
+    public String showUsersListPage(ModelMap modelMap) {
+        FindAllUsersResponse response = findAllUsersService.execute();
+        modelMap.addAttribute("users", response.getAllUsers());
+        return "users/usersList.html";
     }
 
 }
