@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete user by ID</title>
+</head>
+<body>
+
+<h1>Delete user by ID</h1>
+
+<form action="/usersDeleteById" th:object="${request}" method="post">
+  <label>User ID:</label><br>
+  <input type="text" th:field="${request.id}"/><br>
+  <br>
+  <br>
+
+  <input type="submit" value="Delete"/>
+  <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+</body>
+</html>

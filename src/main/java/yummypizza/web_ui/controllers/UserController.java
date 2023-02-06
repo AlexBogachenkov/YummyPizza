@@ -3,15 +3,15 @@ package yummypizza.web_ui.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import yummypizza.core.requests.DeleteUserByIdRequest;
 import yummypizza.core.requests.FindUserByIdRequest;
 import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.responses.DeleteUserByIdResponse;
 import yummypizza.core.responses.FindAllUsersResponse;
 import yummypizza.core.responses.FindUserByIdResponse;
 import yummypizza.core.responses.SaveUserResponse;
+import yummypizza.core.services.DeleteUserByIdService;
 import yummypizza.core.services.FindAllUsersService;
 import yummypizza.core.services.FindUserByIdService;
 import yummypizza.core.services.SaveUserService;
@@ -25,6 +25,8 @@ public class UserController {
     private FindUserByIdService findUserByIdService;
     @Autowired
     private FindAllUsersService findAllUsersService;
+    @Autowired
+    private DeleteUserByIdService deleteUserByIdService;
 
     @GetMapping(value = "users")
     public String showUsersPage() {
@@ -74,6 +76,24 @@ public class UserController {
         FindAllUsersResponse response = findAllUsersService.execute();
         modelMap.addAttribute("users", response.getAllUsers());
         return "users/usersList.html";
+    }
+
+    @GetMapping(value = "usersDeleteById")
+    public String showUsersDeleteByIdPage(ModelMap modelMap) {
+        modelMap.addAttribute("request", new DeleteUserByIdRequest());
+        return "users/usersDeleteById.html";
+    }
+
+    @PostMapping(value = "usersDeleteById")
+    public String processDeleteUserByIdRequest(@ModelAttribute(value = "request")
+                                                   DeleteUserByIdRequest request, ModelMap modelMap) {
+        DeleteUserByIdResponse response = deleteUserByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+            return "users/usersDeleteById.html";
+        } else {
+            return "users/users.html";
+        }
     }
 
 }
