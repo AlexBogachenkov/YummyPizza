@@ -25,6 +25,7 @@
     <td th:text="${user.email}" />
     <td th:text="${user.phone}" />
     <td th:text="${user.role}" />
+    <td><a th:href="@{/usersUpdate?id=} + ${user.id}">Update</a></td>
   </tr>
 </table>
 
