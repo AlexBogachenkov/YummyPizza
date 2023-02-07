@@ -8,6 +8,7 @@ import yummypizza.core.domain.UserRole;
 @NoArgsConstructor
 public class SaveUserRequest {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;

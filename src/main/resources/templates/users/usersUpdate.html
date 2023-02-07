@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update user</title>
+</head>
+<body>
+
+<h1>Update user</h1>
+
+<form action="/usersUpdate" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>First name:</label><br>
+    <input type="text" th:field="*{firstName}"/><br>
+    <label>Last name:</label><br>
+    <input type="text" th:field="*{lastName}"/><br>
+    <label>Email:</label><br>
+    <input type="text" th:field="*{email}"/><br>
+    <label>Password:</label><br>
+    <input type="text" th:field="*{password}"/><br>
+    <label>Phone:</label><br>
+    <input type="text" th:field="*{phone}"/><br>
+    <label>Role:</label><br>
+    <select th:field="*{role}">
+        <option th:value="CLIENT" th:text="Client"></option>
+        <option th:value="ADMIN" th:text="Admin"></option>
+    </select>
+    <br>
+    <br>
+
+    <input type="submit" value="Update"/>
+    <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+</body>
+</html>
