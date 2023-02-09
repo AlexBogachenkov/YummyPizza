@@ -11,7 +11,7 @@
 
 <form action="/usersDeleteById" th:object="${request}" method="post">
   <label>User ID:</label><br>
-  <input type="text" th:field="${request.id}"/><br>
+  <input type="text" th:field="*{id}"/><br>
   <br>
   <br>
 

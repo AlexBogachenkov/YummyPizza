@@ -11,17 +11,17 @@
 
 <form action="/usersCreate" th:object="${request}" method="post">
     <label>First name:</label><br>
-    <input type="text" th:field="${request.firstName}"/><br>
+    <input type="text" th:field="*{firstName}"/><br>
     <label>Last name:</label><br>
-    <input type="text" th:field="${request.lastName}"/><br>
+    <input type="text" th:field="*{lastName}"/><br>
     <label>Email:</label><br>
-    <input type="text" th:field="${request.email}"/><br>
+    <input type="text" th:field="*{email}"/><br>
     <label>Password:</label><br>
-    <input type="password" th:field="${request.password}"/><br>
+    <input type="password" th:field="*{password}"/><br>
     <label>Phone:</label><br>
-    <input type="text" th:field="${request.phone}"/><br>
+    <input type="text" th:field="*{phone}"/><br>
     <label>Role:</label><br>
-    <select th:field="${request.role}">
+    <select th:field="*{role}">
         <option th:value="CLIENT" th:text="Client"></option>
         <option th:value="ADMIN" th:text="Admin"></option>
     </select>
