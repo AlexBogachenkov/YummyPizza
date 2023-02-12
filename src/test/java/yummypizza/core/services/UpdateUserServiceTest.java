@@ -11,10 +11,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.requests.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.SaveUserResponse;
-import yummypizza.core.validators.SaveUserRequestValidator;
+import yummypizza.core.responses.UpdateUserResponse;
+import yummypizza.core.validators.UpdateUserRequestValidator;
 
 import java.util.List;
 
@@ -22,24 +22,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SaveUserServiceTest {
+class UpdateUserServiceTest {
 
     @Mock
-    SaveUserRequestValidator validator;
+    UpdateUserRequestValidator validator;
     @Mock
     UserRepository repository;
     @InjectMocks
-    SaveUserService service;
+    UpdateUserService service;
 
-    private SaveUserRequest invalidRequest;
-    private SaveUserRequest validRequest;
+    private UpdateUserRequest invalidRequest;
+    private UpdateUserRequest validRequest;
     private User user;
 
     @BeforeAll
     public void setup() {
-        invalidRequest = new SaveUserRequest(null, "Smith", "m.smith@gmail.com",
+        invalidRequest = new UpdateUserRequest(null, "Michael", "Smith", "m.smith@gmail.com",
                 "password", "25436565", UserRole.CLIENT);
-        validRequest = new SaveUserRequest("Michael", "Smith", "m.smith@gmail.com",
+        validRequest = new UpdateUserRequest(5L, "Michael", "Smith", "m.smith@gmail.com",
                 "password", "25436565", UserRole.CLIENT);
         user = new User(validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
                 validRequest.getPassword(), validRequest.getPhone(), validRequest.getRole());
@@ -48,7 +48,7 @@ class SaveUserServiceTest {
     @Test
     public void shouldReturnResponseWithErrorsWhenValidationFails() {
         Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("First name", "is mandatory.")));
-        SaveUserResponse response = service.execute(invalidRequest);
+        UpdateUserResponse response = service.execute(invalidRequest);
         assertTrue(response.hasErrors());
         assertEquals(1, response.getErrors().size());
         assertEquals("First name", response.getErrors().get(0).getField());
@@ -63,7 +63,7 @@ class SaveUserServiceTest {
     }
 
     @Test
-    public void shouldSaveUserToRepositoryWhenValidationPasses() {
+    public void shouldUpdateUserInRepositoryWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         service.execute(validRequest);
         Mockito.verify(repository).save(user);
@@ -72,18 +72,18 @@ class SaveUserServiceTest {
     @Test
     public void shouldReturnResponseWithoutErrorsWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        SaveUserResponse response = service.execute(validRequest);
+        UpdateUserResponse response = service.execute(validRequest);
         assertFalse(response.hasErrors());
     }
 
     @Test
-    public void shouldReturnResponseWithSavedUserWhenValidationPasses() {
+    public void shouldReturnResponseWithUpdatedUserWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         Mockito.when(repository.save(user)).thenReturn(user);
-        SaveUserResponse response = service.execute(validRequest);
-        assertNotNull(response.getSavedUser());
-        assertEquals("Michael", response.getSavedUser().getFirstName());
-        assertEquals("Smith", response.getSavedUser().getLastName());
+        UpdateUserResponse response = service.execute(validRequest);
+        assertNotNull(response.getUpdatedUser());
+        assertEquals("Michael", response.getUpdatedUser().getFirstName());
+        assertEquals("Smith", response.getUpdatedUser().getLastName());
     }
 
 }

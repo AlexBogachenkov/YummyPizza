@@ -2,23 +2,76 @@ package yummypizza.core.validators;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.requests.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.reset;
 
-class SaveUserRequestValidatorTest {
+@ExtendWith(MockitoExtension.class)
+class UpdateUserRequestValidatorTest {
 
-    private SaveUserRequestValidator validator = new SaveUserRequestValidator();
-    private SaveUserRequest request;
+    @Mock
+    private UserRepository repository;
+    @InjectMocks
+    private UpdateUserRequestValidator validator = new UpdateUserRequestValidator();
+
+    private UpdateUserRequest request;
 
     @BeforeEach
     public void setup() {
-        request = new SaveUserRequest("Michael", "Smith",
+        request = new UpdateUserRequest(5L, "Michael", "Smith",
                 "m.smith@gmail.com", "password123", "25843748", UserRole.CLIENT);
+        Mockito.when(repository.existsById(request.getId())).thenReturn(true);
+    }
+
+    @Test
+    public void shouldReturnErrorWhenIdIsNull() {
+        reset(repository);
+        request.setId(null);
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(1, errors.size());
+        assertEquals("User ID", errors.get(0).getField());
+        assertEquals("is mandatory.", errors.get(0).getMessage());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenIdIsZero() {
+        reset(repository);
+        request.setId(0L);
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(1, errors.size());
+        assertEquals("User ID", errors.get(0).getField());
+        assertEquals("must be a positive number.", errors.get(0).getMessage());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenIdIsNegative() {
+        reset(repository);
+        request.setId(-7L);
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(1, errors.size());
+        assertEquals("User ID", errors.get(0).getField());
+        assertEquals("must be a positive number.", errors.get(0).getMessage());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenIdNotExists() {
+        reset(repository);
+        Mockito.when(repository.existsById(request.getId())).thenReturn(false);
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(1, errors.size());
+        assertEquals("User ID", errors.get(0).getField());
+        assertEquals("doesn't exist.", errors.get(0).getMessage());
     }
 
     @Test
