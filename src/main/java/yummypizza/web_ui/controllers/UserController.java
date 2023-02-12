@@ -11,14 +11,9 @@ import yummypizza.core.domain.User;
 import yummypizza.core.requests.CreateUserRequest;
 import yummypizza.core.requests.DeleteUserByIdRequest;
 import yummypizza.core.requests.FindUserByIdRequest;
-import yummypizza.core.responses.CreateUserResponse;
-import yummypizza.core.responses.DeleteUserByIdResponse;
-import yummypizza.core.responses.FindAllUsersResponse;
-import yummypizza.core.responses.FindUserByIdResponse;
-import yummypizza.core.services.CreateUserService;
-import yummypizza.core.services.DeleteUserByIdService;
-import yummypizza.core.services.FindAllUsersService;
-import yummypizza.core.services.FindUserByIdService;
+import yummypizza.core.requests.UpdateUserRequest;
+import yummypizza.core.responses.*;
+import yummypizza.core.services.*;
 
 @Controller
 public class UserController {
@@ -31,6 +26,8 @@ public class UserController {
     private FindAllUsersService findAllUsersService;
     @Autowired
     private DeleteUserByIdService deleteUserByIdService;
+    @Autowired
+    private UpdateUserService updateUserService;
 
     @GetMapping(value = "users")
     public String showUsersPage() {
@@ -108,19 +105,19 @@ public class UserController {
         return "users/usersUpdate.html";
     }
 
-//    @PostMapping(value = "/usersUpdate")
-//    public String processUpdateUserRequest(@ModelAttribute(value = "user") User user, ModelMap modelMap) {
-//        SaveUserRequest request = new SaveUserRequest(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getPhone(), user.getRole());
-//        request.setId(user.getId());
-//        SaveUserResponse response = saveUserService.execute(request);
-//        if (response.hasErrors()) {
-//            modelMap.addAttribute("errors", response.getErrors());
-//            return "users/usersUpdate.html";
-//        } else {
-//            modelMap.addAttribute("users", findAllUsersService.execute().getAllUsers());
-//            return "users/usersList.html";
-//        }
-//
-//    }
+    @PostMapping(value = "/usersUpdate")
+    public String processUpdateUserRequest(@ModelAttribute(value = "user") User user, ModelMap modelMap) {
+        UpdateUserRequest request = new UpdateUserRequest(user.getId(), user.getFirstName(), user.getLastName(),
+                user.getEmail(), user.getPassword(), user.getPhone(), user.getRole());
+        UpdateUserResponse response = updateUserService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+            return "users/usersUpdate.html";
+        } else {
+            modelMap.addAttribute("users", findAllUsersService.execute().getAllUsers());
+            return "users/usersList.html";
+        }
+
+    }
 
 }

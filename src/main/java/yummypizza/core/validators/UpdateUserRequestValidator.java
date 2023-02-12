@@ -1,20 +1,26 @@
 package yummypizza.core.validators;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.SaveUserRequest;
+import yummypizza.core.requests.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SaveUserRequestValidator {
+public class UpdateUserRequestValidator {
+
+    @Autowired
+    private UserRepository repository;
 
     private List<CoreError> errors;
 
-    public List<CoreError> validate(SaveUserRequest request) {
+    public List<CoreError> validate(UpdateUserRequest request) {
         errors = new ArrayList<>();
+        validateId(request.getId());
         validateFirstName(request.getFirstName());
         validateLastName(request.getLastName());
         validateEmail(request.getEmail());
@@ -22,6 +28,20 @@ public class SaveUserRequestValidator {
         validatePhone(request.getPhone());
         validateRole(request.getRole());
         return errors;
+    }
+
+    private void validateId(Long id) {
+        if (id == null) {
+            errors.add(new CoreError("User ID", "is mandatory."));
+            return;
+        }
+        if (id <= 0) {
+            errors.add(new CoreError("User ID", "must be a positive number."));
+            return;
+        }
+        if (!repository.existsById(id)) {
+            errors.add(new CoreError("User ID", "doesn't exist."));
+        }
     }
 
     private void validateFirstName(String firstName) {

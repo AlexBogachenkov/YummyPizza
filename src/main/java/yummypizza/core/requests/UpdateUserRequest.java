@@ -6,7 +6,7 @@ import yummypizza.core.domain.UserRole;
 
 @Data
 @NoArgsConstructor
-public class SaveUserRequest {
+public class UpdateUserRequest {
 
     private Long id;
     private String firstName;
@@ -16,7 +16,8 @@ public class SaveUserRequest {
     private String phone;
     private UserRole role;
 
-    public SaveUserRequest(String firstName, String lastName, String email, String password, String phone, UserRole role) {
+    public UpdateUserRequest(Long id, String firstName, String lastName, String email, String password, String phone, UserRole role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
