@@ -47,7 +47,7 @@ public class UserController {
             modelMap.addAttribute("errors", response.getErrors());
             return "users/usersCreate.html";
         } else {
-            return "users/users.html";
+            return "redirect:/users";
         }
     }
 
@@ -93,7 +93,7 @@ public class UserController {
             modelMap.addAttribute("errors", response.getErrors());
             return "users/usersDeleteById.html";
         } else {
-            return "users/users.html";
+            return "redirect:/users";
         }
     }
 
@@ -114,8 +114,7 @@ public class UserController {
             modelMap.addAttribute("errors", response.getErrors());
             return "users/usersUpdate.html";
         } else {
-            modelMap.addAttribute("users", findAllUsersService.execute().getAllUsers());
-            return "users/usersList.html";
+            return "redirect:/usersList";
         }
 
     }
