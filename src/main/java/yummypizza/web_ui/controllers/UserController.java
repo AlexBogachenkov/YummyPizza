@@ -41,14 +41,14 @@ public class UserController {
     }
 
     @PostMapping(value = "usersCreate")
-    public String processSaveUserRequest(@ModelAttribute(value = "request")CreateUserRequest request, ModelMap modelMap) {
+    public String processCreateUserRequest(@ModelAttribute(value = "request")CreateUserRequest request, ModelMap modelMap) {
         CreateUserResponse response = createUserService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "users/usersCreate.html";
         } else {
-            return "redirect:/users";
+            modelMap.addAttribute("createdUser", response.getCreatedUser());
         }
+        return "users/usersCreate.html";
     }
 
     @GetMapping(value = "usersFindById")
@@ -112,10 +112,10 @@ public class UserController {
         UpdateUserResponse response = updateUserService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "users/usersUpdate.html";
         } else {
-            return "redirect:/usersList";
+            modelMap.addAttribute("updatedUser", response.getUpdatedUser());
         }
+        return "users/usersUpdate.html";
 
     }
 
