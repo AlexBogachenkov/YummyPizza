@@ -69,12 +69,4 @@ class DeleteUserByIdServiceTest {
         assertFalse(response.hasErrors());
     }
 
-    @Test
-    public void shouldReturnResponseWhenValidationPasses() {
-        Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        DeleteUserByIdResponse response = service.execute(validRequest);
-        assertNotNull(response.isUserDeleted());
-        assertTrue(response.isUserDeleted());
-    }
-
 }

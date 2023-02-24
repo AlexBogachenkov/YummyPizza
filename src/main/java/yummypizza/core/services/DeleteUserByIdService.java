@@ -24,7 +24,7 @@ public class DeleteUserByIdService {
             return new DeleteUserByIdResponse(errors);
         }
         repository.deleteById(request.getId());
-        return new DeleteUserByIdResponse(true);
+        return new DeleteUserByIdResponse();
     }
 
 }
