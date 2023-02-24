@@ -23,7 +23,7 @@ public class UpdateUserRequestValidator {
         validateId(request.getId());
         validateFirstName(request.getFirstName());
         validateLastName(request.getLastName());
-        validateEmail(request.getEmail());
+        validateEmail(request.getEmail(), request.getId());
         validatePassword(request.getPassword());
         validatePhone(request.getPhone());
         validateRole(request.getRole());
@@ -56,7 +56,7 @@ public class UpdateUserRequestValidator {
         }
     }
 
-    private void validateEmail(String email) {
+    private void validateEmail(String email, Long id) {
         if (email == null || email.isBlank()) {
             errors.add(new CoreError("Email", "is mandatory."));
             return;
@@ -69,6 +69,9 @@ public class UpdateUserRequestValidator {
                 "x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
         if (!email.matches(emailRegex)) {
             errors.add(new CoreError("Email", "has invalid format."));
+        }
+        if (repository.findAllByEmailAndIdIsNot(email, id).size() > 0) {
+            errors.add(new CoreError("Email", "is already occupied by another user."));
         }
     }
 

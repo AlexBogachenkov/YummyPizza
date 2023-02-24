@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
+import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
 import yummypizza.core.requests.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
@@ -189,6 +190,23 @@ class UpdateUserRequestValidatorTest {
         assertEquals(1, errors.size());
         assertEquals("Email", errors.get(0).getField());
         assertEquals("has invalid format.", errors.get(0).getMessage());
+    }
+
+    @Test
+    public void shouldReturnErrorWhenAnotherUserAlreadyHasSuchEmail() {
+        request.setEmail("smithyym@gmail.com");
+        Mockito.when(repository.findAllByEmailAndIdIsNot("smithyym@gmail.com", request.getId())).thenReturn(List.of(new User()));
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(1, errors.size());
+        assertEquals("Email", errors.get(0).getField());
+        assertEquals("is already occupied by another user.", errors.get(0).getMessage());
+    }
+
+    @Test
+    public void shouldNotReturnErrorWhenEmailWasNotChanged() {
+        Mockito.when(repository.findAllByEmailAndIdIsNot(request.getEmail(), request.getId())).thenReturn(List.of());
+        List<CoreError> errors = validator.validate(request);
+        assertEquals(0, errors.size());
     }
 
     @Test
