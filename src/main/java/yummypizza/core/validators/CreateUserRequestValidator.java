@@ -55,7 +55,7 @@ public class CreateUserRequestValidator {
             errors.add(new CoreError("Email", "has invalid format."));
         }
         if (repository.findByEmail(email).isPresent()) {
-            errors.add(new CoreError("Email", "is already occupied by other user."));
+            errors.add(new CoreError("Email", "is already occupied by another user."));
         }
     }
 

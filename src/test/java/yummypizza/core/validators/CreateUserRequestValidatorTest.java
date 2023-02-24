@@ -159,7 +159,7 @@ class CreateUserRequestValidatorTest {
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
         assertEquals("Email", errors.get(0).getField());
-        assertEquals("is already occupied by other user.", errors.get(0).getMessage());
+        assertEquals("is already occupied by another user.", errors.get(0).getMessage());
     }
 
     @Test
