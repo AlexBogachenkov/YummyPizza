@@ -31,4 +31,20 @@
         <addUniqueConstraint tableName="users" columnNames="email"/>
     </changeSet>
 
+    <changeSet id="2" author="Alexander">
+        <createTable tableName="carts">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="carts" baseColumnNames="user_id" referencedTableName="users"
+                                 referencedColumnNames="id"  constraintName="FK_user_carts"/>
+    </changeSet>
+
 </databaseChangeLog>
