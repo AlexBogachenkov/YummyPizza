@@ -1,4 +1,4 @@
-package yummypizza.core.services.users;
+package yummypizza.core.services.user;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import yummypizza.core.database.UserRepository;
 import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.user.DeleteUserByIdResponse;
-import yummypizza.core.services.user.DeleteUserByIdService;
 import yummypizza.core.validators.user.DeleteUserByIdRequestValidator;
 
 import java.util.List;

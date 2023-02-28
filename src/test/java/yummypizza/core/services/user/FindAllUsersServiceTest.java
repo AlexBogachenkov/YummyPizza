@@ -1,4 +1,4 @@
-package yummypizza.core.services.users;
+package yummypizza.core.services.user;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
 import yummypizza.core.responses.user.FindAllUsersResponse;
-import yummypizza.core.services.user.FindAllUsersService;
 
 import java.util.List;
 
