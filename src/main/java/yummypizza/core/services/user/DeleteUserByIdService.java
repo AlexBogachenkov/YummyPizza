@@ -1,12 +1,12 @@
-package yummypizza.core.services;
+package yummypizza.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.requests.DeleteUserByIdRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.DeleteUserByIdResponse;
-import yummypizza.core.validators.DeleteUserByIdRequestValidator;
+import yummypizza.core.responses.user.DeleteUserByIdResponse;
+import yummypizza.core.validators.user.DeleteUserByIdRequestValidator;
 
 import java.util.List;
 

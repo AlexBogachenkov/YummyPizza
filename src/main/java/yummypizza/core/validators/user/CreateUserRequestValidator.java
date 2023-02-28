@@ -1,10 +1,10 @@
-package yummypizza.core.validators;
+package yummypizza.core.validators.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.CreateUserRequest;
+import yummypizza.core.requests.user.CreateUserRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.util.ArrayList;

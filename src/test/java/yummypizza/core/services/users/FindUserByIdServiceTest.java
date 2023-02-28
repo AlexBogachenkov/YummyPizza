@@ -1,4 +1,4 @@
-package yummypizza.core.services;
+package yummypizza.core.services.users;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.FindUserByIdRequest;
+import yummypizza.core.requests.user.FindUserByIdRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.FindUserByIdResponse;
-import yummypizza.core.validators.FindUserByIdRequestValidator;
+import yummypizza.core.responses.user.FindUserByIdResponse;
+import yummypizza.core.services.user.FindUserByIdService;
+import yummypizza.core.validators.user.FindUserByIdRequestValidator;
 
 import java.util.List;
 import java.util.Optional;

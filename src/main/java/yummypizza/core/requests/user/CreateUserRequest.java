@@ -1,4 +1,4 @@
-package yummypizza.core.requests;
+package yummypizza.core.requests.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,9 +6,8 @@ import yummypizza.core.domain.UserRole;
 
 @Data
 @NoArgsConstructor
-public class UpdateUserRequest {
+public class CreateUserRequest {
 
-    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -16,8 +15,7 @@ public class UpdateUserRequest {
     private String phone;
     private UserRole role;
 
-    public UpdateUserRequest(Long id, String firstName, String lastName, String email, String password, String phone, UserRole role) {
-        this.id = id;
+    public CreateUserRequest(String firstName, String lastName, String email, String password, String phone, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

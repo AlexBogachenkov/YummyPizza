@@ -1,4 +1,4 @@
-package yummypizza.core.services;
+package yummypizza.core.services.users;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
-import yummypizza.core.requests.UpdateUserRequest;
+import yummypizza.core.requests.user.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.UpdateUserResponse;
-import yummypizza.core.validators.UpdateUserRequestValidator;
+import yummypizza.core.responses.user.UpdateUserResponse;
+import yummypizza.core.services.user.UpdateUserService;
+import yummypizza.core.validators.user.UpdateUserRequestValidator;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ class UpdateUserServiceTest {
                 "password", "25436565", UserRole.CLIENT);
         validRequest = new UpdateUserRequest(5L, "Michael", "Smith", "m.smith@gmail.com",
                 "password", "25436565", UserRole.CLIENT);
-        user = new User(validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
+        user = new User(validRequest.getId(), validRequest.getFirstName(), validRequest.getLastName(), validRequest.getEmail(),
                 validRequest.getPassword(), validRequest.getPhone(), validRequest.getRole());
     }
 

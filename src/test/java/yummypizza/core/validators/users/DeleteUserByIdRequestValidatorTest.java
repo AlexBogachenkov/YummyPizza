@@ -1,4 +1,4 @@
-package yummypizza.core.validators;
+package yummypizza.core.validators.users;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,8 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.requests.DeleteUserByIdRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.CoreError;
+import yummypizza.core.validators.user.DeleteUserByIdRequestValidator;
 
 import java.util.List;
 

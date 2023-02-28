@@ -20,7 +20,7 @@ public class Cart {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private CartStatus status;
 
 }

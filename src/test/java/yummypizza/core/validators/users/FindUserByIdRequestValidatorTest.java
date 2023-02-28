@@ -1,8 +1,9 @@
-package yummypizza.core.validators;
+package yummypizza.core.validators.users;
 
 import org.junit.jupiter.api.Test;
-import yummypizza.core.requests.FindUserByIdRequest;
+import yummypizza.core.requests.user.FindUserByIdRequest;
 import yummypizza.core.responses.CoreError;
+import yummypizza.core.validators.user.FindUserByIdRequestValidator;
 
 import java.util.List;
 

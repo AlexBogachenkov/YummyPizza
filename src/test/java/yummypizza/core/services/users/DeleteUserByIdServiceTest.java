@@ -1,4 +1,4 @@
-package yummypizza.core.services;
+package yummypizza.core.services.users;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,10 +9,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.requests.DeleteUserByIdRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.DeleteUserByIdResponse;
-import yummypizza.core.validators.DeleteUserByIdRequestValidator;
+import yummypizza.core.responses.user.DeleteUserByIdResponse;
+import yummypizza.core.services.user.DeleteUserByIdService;
+import yummypizza.core.validators.user.DeleteUserByIdRequestValidator;
 
 import java.util.List;
 

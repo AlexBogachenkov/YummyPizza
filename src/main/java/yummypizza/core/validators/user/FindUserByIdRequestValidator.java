@@ -1,7 +1,7 @@
-package yummypizza.core.validators;
+package yummypizza.core.validators.user;
 
 import org.springframework.stereotype.Component;
-import yummypizza.core.requests.FindUserByIdRequest;
+import yummypizza.core.requests.user.FindUserByIdRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.util.ArrayList;

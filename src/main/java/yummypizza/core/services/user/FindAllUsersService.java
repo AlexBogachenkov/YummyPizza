@@ -1,9 +1,9 @@
-package yummypizza.core.services;
+package yummypizza.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.responses.FindAllUsersResponse;
+import yummypizza.core.responses.user.FindAllUsersResponse;
 
 @Service
 public class FindAllUsersService {

@@ -1,9 +1,9 @@
-package yummypizza.core.validators;
+package yummypizza.core.validators.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.requests.DeleteUserByIdRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.util.ArrayList;

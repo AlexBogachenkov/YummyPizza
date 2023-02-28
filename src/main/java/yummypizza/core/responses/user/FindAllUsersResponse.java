@@ -1,7 +1,8 @@
-package yummypizza.core.responses;
+package yummypizza.core.responses.user;
 
 import lombok.Getter;
 import yummypizza.core.domain.User;
+import yummypizza.core.responses.CoreResponse;
 
 import java.util.List;
 

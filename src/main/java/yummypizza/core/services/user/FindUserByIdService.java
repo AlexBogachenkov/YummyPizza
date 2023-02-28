@@ -1,13 +1,13 @@
-package yummypizza.core.services;
+package yummypizza.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
-import yummypizza.core.requests.FindUserByIdRequest;
+import yummypizza.core.requests.user.FindUserByIdRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.FindUserByIdResponse;
-import yummypizza.core.validators.FindUserByIdRequestValidator;
+import yummypizza.core.responses.user.FindUserByIdResponse;
+import yummypizza.core.validators.user.FindUserByIdRequestValidator;
 
 import java.util.List;
 import java.util.Optional;

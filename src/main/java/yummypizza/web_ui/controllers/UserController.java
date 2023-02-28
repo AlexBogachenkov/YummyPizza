@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import yummypizza.core.domain.User;
-import yummypizza.core.requests.CreateUserRequest;
-import yummypizza.core.requests.DeleteUserByIdRequest;
-import yummypizza.core.requests.FindUserByIdRequest;
-import yummypizza.core.requests.UpdateUserRequest;
-import yummypizza.core.responses.*;
-import yummypizza.core.services.*;
+import yummypizza.core.requests.user.CreateUserRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
+import yummypizza.core.requests.user.FindUserByIdRequest;
+import yummypizza.core.requests.user.UpdateUserRequest;
+import yummypizza.core.responses.user.*;
+import yummypizza.core.services.user.*;
 
 @Controller
 public class UserController {

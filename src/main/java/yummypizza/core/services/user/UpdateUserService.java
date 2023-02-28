@@ -1,32 +1,33 @@
-package yummypizza.core.services;
+package yummypizza.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
-import yummypizza.core.requests.CreateUserRequest;
+import yummypizza.core.requests.user.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.CreateUserResponse;
-import yummypizza.core.validators.CreateUserRequestValidator;
+import yummypizza.core.responses.user.UpdateUserResponse;
+import yummypizza.core.validators.user.UpdateUserRequestValidator;
 
 import java.util.List;
 
 @Service
-public class CreateUserService {
+public class UpdateUserService {
 
     @Autowired
-    private CreateUserRequestValidator validator;
+    private UpdateUserRequestValidator validator;
     @Autowired
     private UserRepository repository;
 
-    public CreateUserResponse execute(CreateUserRequest request) {
+    public UpdateUserResponse execute(UpdateUserRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
-            return new CreateUserResponse(errors);
+            return new UpdateUserResponse(errors);
         }
         User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
                 request.getPassword(), request.getPhone(), request.getRole());
-        return new CreateUserResponse(repository.save(user));
+        user.setId(request.getId());
+        return new UpdateUserResponse(repository.save(user));
     }
 
 }
