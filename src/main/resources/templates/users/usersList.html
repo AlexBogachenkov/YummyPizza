@@ -9,6 +9,15 @@
 
 <h1>Find all users</h1>
 
+<table th:if="${deleteByIdRequestErrors != null}">
+  <tr th:each="error : ${deleteByIdRequestErrors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+<span th:if="${userDeleted == true}">User deleted successfully.</span>
+
 <table th:if="${not users.isEmpty}">
   <tr>
     <th>ID</th>
@@ -25,10 +34,17 @@
     <td th:text="${user.email}" />
     <td th:text="${user.phone}" />
     <td th:text="${user.role}" />
-    <td><a th:href="@{/usersUpdate?id=} + ${user.id}">Update</a></td>
+    <td>
+      <a th:href="@{/usersUpdate?id=} + ${user.id}">Update</a>
+    </td>
+    <td>
+      <form action="/usersDeleteById" th:object="${deleteByIdRequest}" method="post">
+        <input type="hidden" th:value="${user.id}" name="id" />
+        <button type="submit">Delete</button>
+      </form>
+    </td>
   </tr>
 </table>
-
 
 <span th:if="${users.isEmpty}">Users not found.</span>
 

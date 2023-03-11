@@ -75,26 +75,21 @@ public class UserController {
     @GetMapping(value = "usersList")
     public String showUsersListPage(ModelMap modelMap) {
         FindAllUsersResponse response = findAllUsersService.execute();
+        modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());
         modelMap.addAttribute("users", response.getAllUsers());
         return "users/usersList.html";
     }
 
-    @GetMapping(value = "usersDeleteById")
-    public String showUsersDeleteByIdPage(ModelMap modelMap) {
-        modelMap.addAttribute("request", new DeleteUserByIdRequest());
-        return "users/usersDeleteById.html";
-    }
-
     @PostMapping(value = "usersDeleteById")
-    public String processDeleteUserByIdRequest(@ModelAttribute(value = "request")
+    public String processDeleteUserByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
                                                    DeleteUserByIdRequest request, ModelMap modelMap) {
         DeleteUserByIdResponse response = deleteUserByIdService.execute(request);
         if (response.hasErrors()) {
-            modelMap.addAttribute("errors", response.getErrors());
-            return "users/usersDeleteById.html";
+            modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
         } else {
-            return "redirect:/users";
+            modelMap.addAttribute("userDeleted", true);
         }
+        return showUsersListPage(modelMap);
     }
 
     @GetMapping(value = "/usersUpdate")
