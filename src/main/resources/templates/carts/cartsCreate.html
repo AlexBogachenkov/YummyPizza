@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create cart</title>
+</head>
+<body>
+
+<h1>Create cart</h1>
+
+<form action="/cartsCreate" th:object="${request}" method="post">
+  <label>User ID:</label><br>
+  <input type="text" th:field="*{userId}"/><br>
+  <label>Status:</label><br>
+  <select th:field="*{status}">
+    <option th:value="ACTIVE" th:text="Active"></option>
+    <option th:value="INACTIVE" th:text="Inactive"></option>
+  </select>
+  <br>
+  <br>
+
+  <input type="submit" value="Create"/>
+  <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+<span th:if="${createdCart != null}">Cart was created successfully!</span>
+
+</body>
+</html>
