@@ -7,17 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import yummypizza.core.domain.Cart;
 import yummypizza.core.requests.cart.CreateCartRequest;
 import yummypizza.core.requests.cart.DeleteCartByIdRequest;
+import yummypizza.core.requests.cart.FindCartByIdRequest;
 import yummypizza.core.requests.cart.UpdateCartRequest;
-import yummypizza.core.responses.cart.CreateCartResponse;
-import yummypizza.core.responses.cart.DeleteCartByIdResponse;
-import yummypizza.core.responses.cart.FindAllCartsResponse;
-import yummypizza.core.responses.cart.UpdateCartResponse;
-import yummypizza.core.services.cart.CreateCartService;
-import yummypizza.core.services.cart.DeleteCartByIdService;
-import yummypizza.core.services.cart.FindAllCartsService;
-import yummypizza.core.services.cart.UpdateCartService;
+import yummypizza.core.responses.cart.*;
+import yummypizza.core.services.cart.*;
 
 @Controller
 public class CartController {
@@ -30,6 +26,8 @@ public class CartController {
     private DeleteCartByIdService deleteCartByIdService;
     @Autowired
     private UpdateCartService updateCartService;
+    @Autowired
+    private FindCartByIdService findCartByIdService;
 
     @GetMapping(value = "carts")
     public String showCartsPage() {
@@ -72,11 +70,33 @@ public class CartController {
         return showCartsListPage(modelMap);
     }
 
+    @GetMapping(value = "cartsFindById")
+    public String showCartsFindByIdPage() {
+        return "carts/cartsFindById.html";
+    }
+
+    @GetMapping(value = "carts/")
+    public String processFindCartByIdRequest(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+        FindCartByIdRequest request = new FindCartByIdRequest(id);
+        FindCartByIdResponse response = findCartByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+            return "carts/cartsFindById.html";
+        }
+        if (response.getFoundCart().isPresent()) {
+            modelMap.addAttribute("foundCart", response.getFoundCart().get());
+        } else {
+            modelMap.addAttribute("cartNotFound", true);
+        }
+        return "carts/cartsFindById.html";
+    }
+
     @GetMapping(value = "/cartsUpdate")
     public String showCartsUpdatePage(@RequestParam(value = "id") Long id, ModelMap modelMap) {
-        //FindCartByIdResponse response = findCartByIdService.execute(new FindCartByIdRequest(id));
-        //Cart cart = response.getFoundCart().get();
-        //modelMap.addAttribute("cart", cart);
+        FindCartByIdResponse response = findCartByIdService.execute(new FindCartByIdRequest(id));
+        Cart cart = response.getFoundCart().get();
+        UpdateCartRequest request = new UpdateCartRequest(cart.getId(), cart.getUser().getId(), cart.getStatus());
+        modelMap.addAttribute("updateCartRequest", request);
         return "carts/cartsUpdate.html";
     }
 
