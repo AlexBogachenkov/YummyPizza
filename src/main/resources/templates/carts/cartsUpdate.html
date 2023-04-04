@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update cart</title>
+    <title>Update a cart</title>
 </head>
 <body>
 
-<h1>Update cart</h1>
+<h1>Update a cart</h1>
 
 <form action="/cartsUpdate" th:object="${updateCartRequest}" method="post">
     <input type="hidden" th:field="*{id}"/>
@@ -32,7 +32,7 @@
     </tr>
 </table>
 
-<span th:if="${updatedCart != null}">Cart was updated successfully!</span>
+<span th:if="${updatedCart != null}">The cart was updated successfully!</span>
 
 </body>
 </html>

@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update user</title>
+    <title>Update a user</title>
 </head>
 <body>
 
-<h1>Update user</h1>
+<h1>Update a user</h1>
 
 <form action="/usersUpdate" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}"/>
@@ -40,7 +40,7 @@
     </tr>
 </table>
 
-<span th:if="${updatedUser != null}">User was updated successfully!</span>
+<span th:if="${updatedUser != null}">The user was updated successfully!</span>
 
 </body>
 </html>

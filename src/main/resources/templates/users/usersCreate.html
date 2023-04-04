@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create user</title>
+    <title>Create a user</title>
 </head>
 <body>
 
-<h1>Create user</h1>
+<h1>Create a user</h1>
 
 <form action="/usersCreate" th:object="${request}" method="post">
     <label>First name:</label><br>
@@ -39,7 +39,7 @@
     </tr>
 </table>
 
-<span th:if="${createdUser != null}">User was created successfully!</span>
+<span th:if="${createdUser != null}">The user was created successfully!</span>
 
 </body>
 </html>
