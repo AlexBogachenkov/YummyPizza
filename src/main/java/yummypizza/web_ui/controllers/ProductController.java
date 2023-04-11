@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.responses.product.CreateProductResponse;
+import yummypizza.core.responses.product.FindAllProductsResponse;
 import yummypizza.core.services.product.CreateProductService;
+import yummypizza.core.services.product.FindAllProductsService;
 
 @Controller
 public class ProductController {
 
     @Autowired
     private CreateProductService createProductService;
+    @Autowired
+    private FindAllProductsService findAllProductsService;
 
     @GetMapping(value = "products")
     public String showProductsPage() {
@@ -36,6 +40,14 @@ public class ProductController {
             modelMap.addAttribute("createdProduct", response.getCreatedProduct());
         }
         return "products/productsCreate.html";
+    }
+
+    @GetMapping(value = "productsList")
+    public String showProductsListPage(ModelMap modelMap) {
+        FindAllProductsResponse response = findAllProductsService.execute();
+        modelMap.addAttribute("products", response.getAllProducts());
+        //modelMap.addAttribute("deleteByIdRequest", new DeleteProductByIdRequest());
+        return "products/productsList.html";
     }
 
 }
