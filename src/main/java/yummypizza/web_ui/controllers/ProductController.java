@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import yummypizza.core.requests.product.CreateProductRequest;
+import yummypizza.core.requests.product.DeleteProductByIdRequest;
 import yummypizza.core.responses.product.CreateProductResponse;
+import yummypizza.core.responses.product.DeleteProductByIdResponse;
 import yummypizza.core.responses.product.FindAllProductsResponse;
 import yummypizza.core.services.product.CreateProductService;
+import yummypizza.core.services.product.DeleteProductByIdService;
 import yummypizza.core.services.product.FindAllProductsService;
 
 @Controller
@@ -19,6 +22,8 @@ public class ProductController {
     private CreateProductService createProductService;
     @Autowired
     private FindAllProductsService findAllProductsService;
+    @Autowired
+    private DeleteProductByIdService deleteProductByIdService;
 
     @GetMapping(value = "products")
     public String showProductsPage() {
@@ -46,8 +51,20 @@ public class ProductController {
     public String showProductsListPage(ModelMap modelMap) {
         FindAllProductsResponse response = findAllProductsService.execute();
         modelMap.addAttribute("products", response.getAllProducts());
-        //modelMap.addAttribute("deleteByIdRequest", new DeleteProductByIdRequest());
+        modelMap.addAttribute("deleteByIdRequest", new DeleteProductByIdRequest());
         return "products/productsList.html";
+    }
+
+    @PostMapping(value = "productsDeleteById")
+    public String processDeleteProductByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
+                                                      DeleteProductByIdRequest request, ModelMap modelMap) {
+        DeleteProductByIdResponse response = deleteProductByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
+        } else {
+            modelMap.addAttribute("productDeleted", true);
+        }
+        return showProductsListPage(modelMap);
     }
 
 }
