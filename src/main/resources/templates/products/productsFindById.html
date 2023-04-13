@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find product by ID</title>
+</head>
+<body>
+
+<h1>Find product by ID</h1>
+
+<form action="/products/" method="get">
+  <label>Product ID:</label><br>
+  <input type="text" name="id"/><br>
+  <br>
+  <br>
+
+  <input type="submit" value="Find"/>
+  <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<table th:if="${foundProduct != null}">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Type</th>
+    </tr>
+    <tr>
+      <td th:text="${foundProduct?.id}" />
+      <td th:text="${foundProduct?.name}" />
+      <td th:text="${foundProduct?.description}" />
+      <td th:text="${foundProduct?.price}" />
+      <td th:text="${foundProduct?.type}" />
+    </tr>
+</table>
+
+
+    <span th:if="${productNotFound == true}">Product not found.</span>
+
+</body>
+</html>
