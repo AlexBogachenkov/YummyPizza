@@ -7,17 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import yummypizza.core.domain.Product;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.requests.product.DeleteProductByIdRequest;
 import yummypizza.core.requests.product.FindProductByIdRequest;
-import yummypizza.core.responses.product.CreateProductResponse;
-import yummypizza.core.responses.product.DeleteProductByIdResponse;
-import yummypizza.core.responses.product.FindAllProductsResponse;
-import yummypizza.core.responses.product.FindProductByIdResponse;
-import yummypizza.core.services.product.CreateProductService;
-import yummypizza.core.services.product.DeleteProductByIdService;
-import yummypizza.core.services.product.FindAllProductsService;
-import yummypizza.core.services.product.FindProductByIdService;
+import yummypizza.core.requests.product.UpdateProductRequest;
+import yummypizza.core.responses.product.*;
+import yummypizza.core.services.product.*;
 
 @Controller
 public class ProductController {
@@ -30,6 +26,8 @@ public class ProductController {
     private DeleteProductByIdService deleteProductByIdService;
     @Autowired
     private FindProductByIdService findProductByIdService;
+    @Autowired
+    private UpdateProductService updateProductService;
 
     @GetMapping(value = "products")
     public String showProductsPage() {
@@ -92,6 +90,27 @@ public class ProductController {
             modelMap.addAttribute("productNotFound", true);
         }
         return "products/productsFindById.html";
+    }
+
+    @GetMapping(value = "/productsUpdate")
+    public String showProductsUpdatePage(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+        FindProductByIdResponse response = findProductByIdService.execute(new FindProductByIdRequest(id));
+        Product product = response.getFoundProduct().get();
+        modelMap.addAttribute("product", product);
+        return "products/productsUpdate.html";
+    }
+
+    @PostMapping(value = "/productsUpdate")
+    public String processUpdateProductRequest(@ModelAttribute(value = "product") Product product, ModelMap modelMap) {
+        UpdateProductRequest request = new UpdateProductRequest(product.getId(), product.getName(),
+                product.getDescription(), product.getPrice(), product.getType());
+        UpdateProductResponse response = updateProductService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+        } else {
+            modelMap.addAttribute("updatedProduct", response.getUpdatedProduct());
+        }
+        return "products/productsUpdate.html";
     }
 
 }
