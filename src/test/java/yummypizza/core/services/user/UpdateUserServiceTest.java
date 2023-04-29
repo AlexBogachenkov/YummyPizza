@@ -47,17 +47,17 @@ class UpdateUserServiceTest {
 
     @Test
     public void shouldReturnResponseWithErrorsWhenValidationFails() {
-        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("First name", "is mandatory.")));
+        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("User ID", "is mandatory.")));
         UpdateUserResponse response = service.execute(invalidRequest);
         assertTrue(response.hasErrors());
         assertEquals(1, response.getErrors().size());
-        assertEquals("First name", response.getErrors().get(0).getField());
+        assertEquals("User ID", response.getErrors().get(0).getField());
         assertEquals("is mandatory.", response.getErrors().get(0).getMessage());
     }
 
     @Test
     public void shouldNotInvokeRepositoryWhenRequestValidationFails() {
-        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("First name", "is mandatory.")));
+        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("User ID", "is mandatory.")));
         service.execute(invalidRequest);
         Mockito.verifyNoInteractions(repository);
     }
