@@ -35,10 +35,10 @@
     <td th:text="${user.phone}" />
     <td th:text="${user.role}" />
     <td>
-      <a th:href="@{/usersUpdate?id=} + ${user.id}">Update</a>
+      <a th:href="@{/users/} + ${user.id}+ @{/update}">Update</a>
     </td>
     <td>
-      <form action="/usersDeleteById" th:object="${deleteByIdRequest}" method="post">
+      <form action="/users/deleteById" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${user.id}" name="id" />
         <button type="submit">Delete</button>
       </form>

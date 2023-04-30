@@ -9,7 +9,7 @@
 
 <h1>Create a user</h1>
 
-<form action="/usersCreate" th:object="${request}" method="post">
+<form action="/users/create" th:object="${request}" method="post">
     <label>First name:</label><br>
     <input type="text" th:field="*{firstName}"/><br>
     <label>Last name:</label><br>
