@@ -12,6 +12,8 @@ import yummypizza.core.requests.user.UpdateUserRequest;
 import yummypizza.core.responses.user.*;
 import yummypizza.core.services.user.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping(value = "/users")
 public class UserController {
@@ -86,7 +88,6 @@ public class UserController {
             modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
             return showUsersListPage(modelMap);
         } else {
-            modelMap.addAttribute("userDeleted", true);
             return "redirect:/users/list";
         }
     }
@@ -94,9 +95,14 @@ public class UserController {
     @GetMapping(value = "/{id}/update")
     public String showUsersUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindUserByIdResponse response = findUserByIdService.execute(new FindUserByIdRequest(id));
-        User user = response.getFoundUser().get();
-        modelMap.addAttribute("user", user);
-        return "users/usersUpdate.html";
+        Optional<User> foundUser = response.getFoundUser();
+        if (foundUser.isEmpty()) {
+            modelMap.addAttribute("userToUpdateNotFound", true);
+            return showUsersListPage(modelMap);
+        } else {
+            modelMap.addAttribute("user", foundUser.get());
+            return "users/usersUpdate.html";
+        }
     }
 
     @PostMapping(value = "/{id}/update")

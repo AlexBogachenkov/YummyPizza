@@ -16,7 +16,7 @@
   </tr>
 </table>
 
-<span th:if="${userDeleted == true}">The user was deleted successfully.</span>
+<span th:if="${userToUpdateNotFound == true}">The user to update was not found.</span>
 
 <table th:if="${not users.isEmpty}">
   <tr>
