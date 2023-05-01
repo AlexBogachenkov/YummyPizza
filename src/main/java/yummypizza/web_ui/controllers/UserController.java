@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/create")
-    public String processCreateUserRequest(@ModelAttribute(value = "request")CreateUserRequest request, ModelMap modelMap) {
+    public String processCreateUserRequest(@ModelAttribute(value = "request") CreateUserRequest request, ModelMap modelMap) {
         CreateUserResponse response = createUserService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
@@ -49,12 +49,12 @@ public class UserController {
         return "users/usersCreate.html";
     }
 
-    @GetMapping(value = "/findById")
+    @GetMapping(value = "/find")
     public String showUsersFindByIdPage() {
         return "users/usersFindById.html";
     }
 
-    @GetMapping(value = "/findById/")
+    @GetMapping(value = "/find/")
     public String processFindUserByIdRequest(@RequestParam(value = "id") Long id, ModelMap modelMap) {
         FindUserByIdRequest request = new FindUserByIdRequest(id);
         FindUserByIdResponse response = findUserByIdService.execute(request);
@@ -78,16 +78,17 @@ public class UserController {
         return "users/usersList.html";
     }
 
-    @PostMapping(value = "/deleteById")
+    @PostMapping(value = "/delete")
     public String processDeleteUserByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
                                                DeleteUserByIdRequest request, ModelMap modelMap) {
         DeleteUserByIdResponse response = deleteUserByIdService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
+            return showUsersListPage(modelMap);
         } else {
             modelMap.addAttribute("userDeleted", true);
+            return "redirect:/users/list";
         }
-        return "redirect:/users/list";
     }
 
     @GetMapping(value = "/{id}/update")
@@ -98,7 +99,7 @@ public class UserController {
         return "users/usersUpdate.html";
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/{id}/update")
     public String processUpdateUserRequest(@ModelAttribute(value = "user") User user, ModelMap modelMap) {
         UpdateUserRequest request = new UpdateUserRequest(user.getId(), user.getFirstName(), user.getLastName(),
                 user.getEmail(), user.getPassword(), user.getPhone(), user.getRole());
@@ -109,7 +110,6 @@ public class UserController {
             modelMap.addAttribute("updatedUser", response.getUpdatedUser());
         }
         return "users/usersUpdate.html";
-
     }
 
 }
