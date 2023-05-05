@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/find/")
-    public String processFindUserByIdRequest(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+    public String processFindUserByIdRequest(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
         FindUserByIdRequest request = new FindUserByIdRequest(id);
         FindUserByIdResponse response = findUserByIdService.execute(request);
         if (response.hasErrors()) {

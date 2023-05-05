@@ -3,10 +3,7 @@ package yummypizza.web_ui.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import yummypizza.core.domain.Product;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.requests.product.DeleteProductByIdRequest;
@@ -15,7 +12,10 @@ import yummypizza.core.requests.product.UpdateProductRequest;
 import yummypizza.core.responses.product.*;
 import yummypizza.core.services.product.*;
 
+import java.util.Optional;
+
 @Controller
+@RequestMapping(value = "/products")
 public class ProductController {
 
     @Autowired
@@ -29,18 +29,18 @@ public class ProductController {
     @Autowired
     private UpdateProductService updateProductService;
 
-    @GetMapping(value = "products")
+    @GetMapping(value = "")
     public String showProductsPage() {
         return "products/products.html";
     }
 
-    @GetMapping(value = "productsCreate")
+    @GetMapping(value = "/create")
     public String showProductsCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateProductRequest());
         return "products/productsCreate.html";
     }
 
-    @PostMapping(value = "productsCreate")
+    @PostMapping(value = "/create")
     public String processCreateProductRequest(@ModelAttribute(value = "request") CreateProductRequest request, ModelMap modelMap) {
         CreateProductResponse response = createProductService.execute(request);
         if (response.hasErrors()) {
@@ -51,7 +51,7 @@ public class ProductController {
         return "products/productsCreate.html";
     }
 
-    @GetMapping(value = "productsList")
+    @GetMapping(value = "/list")
     public String showProductsListPage(ModelMap modelMap) {
         FindAllProductsResponse response = findAllProductsService.execute();
         modelMap.addAttribute("products", response.getAllProducts());
@@ -59,7 +59,7 @@ public class ProductController {
         return "products/productsList.html";
     }
 
-    @PostMapping(value = "productsDeleteById")
+    @PostMapping(value = "/delete")
     public String processDeleteProductByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
                                                       DeleteProductByIdRequest request, ModelMap modelMap) {
         DeleteProductByIdResponse response = deleteProductByIdService.execute(request);
@@ -71,13 +71,13 @@ public class ProductController {
         return showProductsListPage(modelMap);
     }
 
-    @GetMapping(value = "productsFindById")
+    @GetMapping(value = "/find")
     public String showProductsFindByIdPage() {
         return "products/productsFindById.html";
     }
 
-    @GetMapping(value = "products/")
-    public String processFindProductByIdRequest(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+    @GetMapping(value = "/find/")
+    public String processFindProductByIdRequest(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
         FindProductByIdRequest request = new FindProductByIdRequest(id);
         FindProductByIdResponse response = findProductByIdService.execute(request);
         if (response.hasErrors()) {
@@ -92,15 +92,20 @@ public class ProductController {
         return "products/productsFindById.html";
     }
 
-    @GetMapping(value = "/productsUpdate")
-    public String showProductsUpdatePage(@RequestParam(value = "id") Long id, ModelMap modelMap) {
+    @GetMapping(value = "/{id}/update")
+    public String showProductsUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindProductByIdResponse response = findProductByIdService.execute(new FindProductByIdRequest(id));
-        Product product = response.getFoundProduct().get();
-        modelMap.addAttribute("product", product);
-        return "products/productsUpdate.html";
+        Optional<Product> foundProduct = response.getFoundProduct();
+        if (foundProduct.isEmpty()) {
+            modelMap.addAttribute("productToUpdateNotFound", true);
+            return showProductsListPage(modelMap);
+        } else {
+            modelMap.addAttribute("product", foundProduct.get());
+            return "products/productsUpdate.html";
+        }
     }
 
-    @PostMapping(value = "/productsUpdate")
+    @PostMapping(value = "/{id}/update")
     public String processUpdateProductRequest(@ModelAttribute(value = "product") Product product, ModelMap modelMap) {
         UpdateProductRequest request = new UpdateProductRequest(product.getId(), product.getName(),
                 product.getDescription(), product.getPrice(), product.getType());

@@ -16,6 +16,7 @@
   </tr>
 </table>
 
+<span th:if="${productToUpdateNotFound == true}">The product to update was not found.</span>
 <span th:if="${productDeleted == true}">The product was deleted successfully.</span>
 
 <table th:if="${not products.isEmpty}">
@@ -33,10 +34,10 @@
     <td th:text="${product.price}" />
     <td th:text="${product.type}" />
     <td>
-      <a th:href="@{/productsUpdate?id=} + ${product.id}">Update</a>
+      <a th:href="@{/products/} + ${product.id} + @{/update}">Update</a>
     </td>
     <td>
-      <form action="/productsDeleteById" th:object="${deleteByIdRequest}" method="post">
+      <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${product.id}" name="id" />
         <button type="submit">Delete</button>
       </form>

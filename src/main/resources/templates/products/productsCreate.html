@@ -9,7 +9,7 @@
 
 <h1>Create a product</h1>
 
-<form action="/productsCreate" th:object="${request}" method="post">
+<form action="/products/create" th:object="${request}" method="post">
     <label>Name:</label><br>
     <input type="text" th:field="*{name}"/><br>
     <label>Description:</label><br>
