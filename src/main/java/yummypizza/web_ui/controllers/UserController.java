@@ -86,10 +86,10 @@ public class UserController {
         DeleteUserByIdResponse response = deleteUserByIdService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
-            return showUsersListPage(modelMap);
         } else {
-            return "redirect:/users/list";
+            modelMap.addAttribute("userDeleted", true);
         }
+        return showUsersListPage(modelMap);
     }
 
     @GetMapping(value = "/{id}/update")
