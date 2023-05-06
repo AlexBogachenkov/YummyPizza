@@ -9,7 +9,7 @@
 
 <h1>Update a cart</h1>
 
-<form action="/cartsUpdate" th:object="${updateCartRequest}" method="post">
+<form th:action="@{/carts/} + ${updateCartRequest.id} + @{/update}" th:object="${updateCartRequest}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <label>User ID:</label><br>
     <input type="text" th:field="*{userId}"/><br>

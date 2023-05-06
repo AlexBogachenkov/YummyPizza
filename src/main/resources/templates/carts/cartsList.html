@@ -16,6 +16,8 @@
   </tr>
 </table>
 
+<span th:if="${cartToUpdateNotFound == true}">The cart to update was not found.</span>
+
 <span th:if="${isCartDeleted == true}">The cart was deleted successfully.</span>
 
 <table th:if="${not carts.isEmpty}">
@@ -35,10 +37,10 @@
     <td th:text="${cart.user.email}" />
     <td th:text="${cart.status}" />
     <td>
-      <a th:href="@{/cartsUpdate?id=} + ${cart.id}">Update</a>
+      <a th:href="@{/carts/} + ${cart.id} + @{/update}">Update</a>
     </td>
     <td>
-      <form action="/cartsDeleteById" th:object="${deleteByIdRequest}" method="post">
+      <form action="/carts/delete" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${cart.id}" name="id" />
         <button type="submit">Delete</button>
       </form>

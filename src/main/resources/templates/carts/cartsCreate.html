@@ -9,7 +9,7 @@
 
 <h1>Create a cart</h1>
 
-<form action="/cartsCreate" th:object="${request}" method="post">
+<form action="/carts/create" th:object="${request}" method="post">
   <label>User ID:</label><br>
   <input type="text" th:field="*{userId}"/><br>
   <label>Status:</label><br>
