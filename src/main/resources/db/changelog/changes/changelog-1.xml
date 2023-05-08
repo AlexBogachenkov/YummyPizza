@@ -67,4 +67,25 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4" author="Alexander">
+        <createTable tableName="cart_products">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cart_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="cart_products" baseColumnNames="cart_id" referencedTableName="carts"
+                                 referencedColumnNames="id"  constraintName="FK_cart_product_cart_id"/>
+        <addForeignKeyConstraint baseTableName="cart_products" baseColumnNames="product_id" referencedTableName="products"
+                                 referencedColumnNames="id"  constraintName="FK_cart_product_product_id"/>
+    </changeSet>
+
 </databaseChangeLog>
