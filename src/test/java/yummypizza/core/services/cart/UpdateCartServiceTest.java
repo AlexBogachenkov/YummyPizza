@@ -32,8 +32,6 @@ class UpdateCartServiceTest {
     private UpdateCartRequestValidator validator;
     @Mock
     private CartRepository cartRepository;
-    @Mock
-    private UserRepository userRepository;
     @InjectMocks
     private UpdateCartService service;
 
@@ -46,8 +44,8 @@ class UpdateCartServiceTest {
     public void setup() {
         invalidRequest = new UpdateCartRequest(null, 12L, CartStatus.INACTIVE);
         validRequest = new UpdateCartRequest(4L, 12L, CartStatus.INACTIVE);
-        user = new User(12L, "Michael", "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
+        user = new User();
+        user.setId(validRequest.getUserId());
         cart = new Cart(4L, user, CartStatus.INACTIVE);
     }
 
@@ -71,7 +69,6 @@ class UpdateCartServiceTest {
     @Test
     public void shouldUpdateCartInRepositoryWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         service.execute(validRequest);
         Mockito.verify(cartRepository).save(cart);
     }
@@ -79,7 +76,6 @@ class UpdateCartServiceTest {
     @Test
     public void shouldReturnResponseWithoutErrorsWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         UpdateCartResponse response = service.execute(validRequest);
         assertFalse(response.hasErrors());
     }
@@ -87,7 +83,6 @@ class UpdateCartServiceTest {
     @Test
     public void shouldReturnResponseWithUpdatedCartWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         Mockito.when(cartRepository.save(cart)).thenReturn(cart);
         UpdateCartResponse response = service.execute(validRequest);
         assertNotNull(response.getUpdatedCart());

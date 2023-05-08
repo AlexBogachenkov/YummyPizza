@@ -20,15 +20,14 @@ public class UpdateCartService {
     private UpdateCartRequestValidator validator;
     @Autowired
     private CartRepository cartRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     public UpdateCartResponse execute(UpdateCartRequest request) {
         List<CoreError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new UpdateCartResponse(errors);
         }
-        User user = userRepository.findById(request.getUserId()).get();
+        User user = new User();
+        user.setId(request.getUserId());
         Cart cart = new Cart(request.getId(), user, request.getStatus());
         return new UpdateCartResponse(cartRepository.save(cart));
     }

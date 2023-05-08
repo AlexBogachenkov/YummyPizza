@@ -31,8 +31,6 @@ class CreateCartServiceTest {
     @Mock
     private CartRepository cartRepository;
     @Mock
-    private UserRepository userRepository;
-    @Mock
     private CreateCartRequestValidator validator;
     @InjectMocks
     private CreateCartService service;
@@ -46,8 +44,8 @@ class CreateCartServiceTest {
     public void setup() {
         invalidRequest = new CreateCartRequest(null, CartStatus.ACTIVE);
         validRequest = new CreateCartRequest(34L, CartStatus.ACTIVE);
-        user = new User(34L, "Michael", "Smith", "m.smith@gmail.com",
-                "password", "25436565", UserRole.CLIENT);
+        user = new User();
+        user.setId(validRequest.getUserId());
         cart = new Cart(user, validRequest.getStatus());
     }
 
@@ -71,7 +69,6 @@ class CreateCartServiceTest {
     @Test
     public void shouldCreateCartInRepositoryWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         service.execute(validRequest);
         Mockito.verify(cartRepository).save(cart);
     }
@@ -79,7 +76,6 @@ class CreateCartServiceTest {
     @Test
     public void shouldReturnResponseWithoutErrorsWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         CreateCartResponse response = service.execute(validRequest);
         assertFalse(response.hasErrors());
     }
@@ -87,7 +83,6 @@ class CreateCartServiceTest {
     @Test
     public void shouldReturnResponseWithCreatedCartWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
-        Mockito.when(userRepository.findById(validRequest.getUserId())).thenReturn(Optional.of(user));
         Mockito.when(cartRepository.save(cart)).thenReturn(cart);
         CreateCartResponse response = service.execute(validRequest);
         assertNotNull(response.getCartCreated());

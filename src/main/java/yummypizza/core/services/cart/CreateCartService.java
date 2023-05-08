@@ -19,8 +19,6 @@ public class CreateCartService {
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private CreateCartRequestValidator validator;
 
     public CreateCartResponse execute(CreateCartRequest request) {
@@ -28,7 +26,8 @@ public class CreateCartService {
         if (!errors.isEmpty()) {
             return new CreateCartResponse(errors);
         }
-        User user = userRepository.findById(request.getUserId()).get();
+        User user = new User();
+        user.setId(request.getUserId());
         Cart cart = new Cart(user, request.getStatus());
         return new CreateCartResponse(cartRepository.save(cart));
     }
