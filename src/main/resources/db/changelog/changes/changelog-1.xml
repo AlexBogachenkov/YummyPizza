@@ -88,4 +88,39 @@
                                  referencedColumnNames="id"  constraintName="FK_cart_product_product_id"/>
     </changeSet>
 
+    <changeSet id="5" author="Alexander">
+        <createTable tableName="orders">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cart_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_completed" type="datetime">
+            </column>
+            <column name="city" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="building_number" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="apartment_number" type="varchar(10)">
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="orders" baseColumnNames="cart_id" referencedTableName="carts"
+                                 referencedColumnNames="id"  constraintName="FK_orders_cart_id"/>
+    </changeSet>
+
 </databaseChangeLog>
