@@ -44,14 +44,14 @@ public class Order {
     private String street;
 
     @Column(name = "building_number", nullable = false)
-    private String building_number;
+    private String buildingNumber;
 
     @Column(name = "apartment_number")
-    private String apartment_number;
+    private String apartmentNumber;
 
     public Order(Cart cart, OrderStatus status, BigDecimal amount, LocalDateTime dateCreated,
-                 LocalDateTime dateCompleted, String city, String street, String building_number,
-                 String apartment_number) {
+                 LocalDateTime dateCompleted, String city, String street, String buildingNumber,
+                 String apartmentNumber) {
         this.cart = cart;
         this.status = status;
         this.amount = amount;
@@ -59,7 +59,7 @@ public class Order {
         this.dateCompleted = dateCompleted;
         this.city = city;
         this.street = street;
-        this.building_number = building_number;
-        this.apartment_number = apartment_number;
+        this.buildingNumber = buildingNumber;
+        this.apartmentNumber = apartmentNumber;
     }
 }

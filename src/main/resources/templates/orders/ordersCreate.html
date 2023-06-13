@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create an order</title>
+</head>
+<body>
+
+<h1>Create an order</h1>
+
+<form action="/orders/create" th:object="${request}" method="post">
+    <label>Cart ID:</label><br>
+    <input type="number" th:field="*{cartId}"/><br>
+    <label>Status:</label><br>
+    <select th:field="*{status}">
+        <option th:value="RECEIVED" th:text="Received"></option>
+        <option th:value="PREPARING" th:text="Preparing"></option>
+        <option th:value="COMPLETED" th:text="Completed"></option>
+    </select><br>
+    <label>Amount:</label><br>
+    <input type="number" step="0.01" th:field="*{amount}"/><br>
+    <label>Date created:</label><br>
+    <input type="datetime-local" th:field="*{dateCreated}"><br>
+    <label>Date completed:</label><br>
+    <input type="datetime-local" th:field="*{dateCompleted}"><br>
+    <label>City:</label><br>
+    <input type="text" th:field="*{city}"/><br>
+    <label>Street:</label><br>
+    <input type="text" th:field="*{street}"/><br>
+    <label>Building number:</label><br>
+    <input type="text" th:field="*{buildingNumber}"/><br>
+    <label>Apartment number:</label><br>
+    <input type="text" th:field="*{apartmentNumber}"/><br>
+
+    <br>
+    <br>
+
+    <input type="submit" value="Create"/>
+    <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<span th:if="${createdOrder != null}">The order was created successfully!</span>
+
+</body>
+</html>
