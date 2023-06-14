@@ -9,16 +9,16 @@
 
 <h1>Find all orders</h1>
 
-<!--<table th:if="${deleteByIdRequestErrors != null}">-->
-<!--  <tr th:each="error : ${deleteByIdRequestErrors}">-->
-<!--    <td th:text="${error.field}" />-->
-<!--    <td th:text="${error.message}" />-->
-<!--  </tr>-->
-<!--</table>-->
+<table th:if="${deleteByIdRequestErrors != null}">
+  <tr th:each="error : ${deleteByIdRequestErrors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
 
 <!--<span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>-->
 
-<!--<span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>-->
+<span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>
 
 <table th:if="${not orders.isEmpty}">
   <tr>
@@ -47,12 +47,12 @@
 <!--    <td>-->
 <!--      <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>-->
 <!--    </td>-->
-<!--    <td>-->
-<!--      <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">-->
-<!--        <input type="hidden" th:value="${order.id}" name="id" />-->
-<!--        <button type="submit">Delete</button>-->
-<!--      </form>-->
-<!--    </td>-->
+    <td>
+      <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
+        <input type="hidden" th:value="${order.id}" name="id" />
+        <button type="submit">Delete</button>
+      </form>
+    </td>
   </tr>
 </table>
 

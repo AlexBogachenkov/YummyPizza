@@ -5,11 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import yummypizza.core.requests.order.CreateOrderRequest;
+import yummypizza.core.requests.order.DeleteOrderByIdRequest;
 import yummypizza.core.requests.order.FindOrderByIdRequest;
+import yummypizza.core.requests.product.DeleteProductByIdRequest;
 import yummypizza.core.responses.order.CreateOrderResponse;
+import yummypizza.core.responses.order.DeleteOrderByIdResponse;
 import yummypizza.core.responses.order.FindAllOrdersResponse;
 import yummypizza.core.responses.order.FindOrderByIdResponse;
+import yummypizza.core.responses.product.DeleteProductByIdResponse;
 import yummypizza.core.services.order.CreateOrderService;
+import yummypizza.core.services.order.DeleteOrderByIdService;
 import yummypizza.core.services.order.FindAllOrdersService;
 import yummypizza.core.services.order.FindOrderByIdService;
 
@@ -23,6 +28,8 @@ public class OrderController {
     private FindAllOrdersService findAllOrdersService;
     @Autowired
     private FindOrderByIdService findOrderByIdService;
+    @Autowired
+    private DeleteOrderByIdService deleteOrderByIdService;
 
     @GetMapping(value = "")
     public String showOrdersPage() {
@@ -73,6 +80,18 @@ public class OrderController {
             modelMap.addAttribute("orderNotFound", true);
         }
         return "orders/ordersFindById.html";
+    }
+
+    @PostMapping(value = "/delete")
+    public String processDeleteOrderByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
+                                                DeleteOrderByIdRequest request, ModelMap modelMap) {
+        DeleteOrderByIdResponse response = deleteOrderByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
+        } else {
+            modelMap.addAttribute("orderDeleted", true);
+        }
+        return showOrdersListPage(modelMap);
     }
 
 }
