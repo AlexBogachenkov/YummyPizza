@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import yummypizza.core.requests.order.CreateOrderRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.order.CreateOrderResponse;
+import yummypizza.core.responses.order.FindAllOrdersResponse;
+import yummypizza.core.responses.user.FindAllUsersResponse;
 import yummypizza.core.services.order.CreateOrderService;
+import yummypizza.core.services.order.FindAllOrdersService;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -17,6 +21,8 @@ public class OrderController {
 
     @Autowired
     private CreateOrderService createOrderService;
+    @Autowired
+    private FindAllOrdersService findAllOrdersService;
 
     @GetMapping(value = "")
     public String showOrdersPage() {
@@ -38,6 +44,14 @@ public class OrderController {
             modelMap.addAttribute("createdOrder", response.getCreatedOrder());
         }
         return "orders/ordersCreate.html";
+    }
+
+    @GetMapping(value = "/list")
+    public String showOrdersListPage(ModelMap modelMap) {
+        FindAllOrdersResponse response = findAllOrdersService.execute();
+        //modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());
+        modelMap.addAttribute("orders", response.getAllOrders());
+        return "orders/ordersList.html";
     }
 
 }
