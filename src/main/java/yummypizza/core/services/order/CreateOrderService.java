@@ -2,8 +2,10 @@ package yummypizza.core.services.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
 import yummypizza.core.domain.Cart;
+import yummypizza.core.domain.CartStatus;
 import yummypizza.core.domain.Order;
 import yummypizza.core.requests.order.CreateOrderRequest;
 import yummypizza.core.responses.CoreError;
@@ -16,7 +18,9 @@ import java.util.List;
 public class CreateOrderService {
 
     @Autowired
-    private OrderRepository repository;
+    private OrderRepository orderRepository;
+    @Autowired
+    private CartRepository cartRepository;
     @Autowired
     private CreateOrderRequestValidator validator;
 
@@ -25,11 +29,15 @@ public class CreateOrderService {
         if (!errors.isEmpty()) {
             return new CreateOrderResponse(errors);
         }
-        Cart cart = new Cart();
-        cart.setId(request.getCartId());
+
+        Cart cart = cartRepository.findById(request.getCartId()).get();
+        cart.setStatus(CartStatus.INACTIVE);
+        cartRepository.save(cart);
+        cartRepository.save(new Cart(cart.getUser(), CartStatus.ACTIVE));
+
         Order order = new Order(cart, request.getStatus(), request.getAmount(), request.getDateCreated(),
                 request.getDateCompleted(), request.getCity(), request.getStreet(), request.getBuildingNumber(), request.getApartmentNumber());
-        return new CreateOrderResponse(repository.save(order));
+        return new CreateOrderResponse(orderRepository.save(order));
     }
 
 }
