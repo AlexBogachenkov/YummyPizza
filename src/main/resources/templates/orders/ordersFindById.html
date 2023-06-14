@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find order by ID</title>
+</head>
+<body>
+
+<h1>Find order by ID</h1>
+
+<form action="/orders/find/" method="get">
+  <label>Order ID:</label><br>
+  <input type="text" name="id"/><br>
+  <br>
+  <br>
+
+  <input type="submit" value="Find"/>
+  <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<table th:if="${foundOrder != null}">
+    <tr>
+        <th>ID</th>
+        <th>Cart ID</th>
+        <th>Status</th>
+        <th>Amount</th>
+        <th>Date created</th>
+        <th>Date completed</th>
+        <th>City</th>
+        <th>Street</th>
+        <th>Building number</th>
+        <th>Apartment number</th>
+    </tr>
+    <tr>
+        <td th:text="${foundOrder?.id}" />
+        <td th:text="${foundOrder?.cart.id}" />
+        <td th:text="${foundOrder?.status}" />
+        <td th:text="${foundOrder?.amount}" />
+        <td th:text="${foundOrder?.dateCreated}" />
+        <td th:text="${foundOrder?.dateCompleted}" />
+        <td th:text="${foundOrder?.city}" />
+        <td th:text="${foundOrder?.street}" />
+        <td th:text="${foundOrder?.buildingNumber}" />
+        <td th:text="${foundOrder?.apartmentNumber}" />
+    </tr>
+</table>
+
+
+<span th:if="${orderNotFound == true}">Order not found.</span>
+
+</body>
+</html>
