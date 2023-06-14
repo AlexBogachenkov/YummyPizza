@@ -1,22 +1,20 @@
 package yummypizza.web_ui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import yummypizza.core.domain.Order;
 import yummypizza.core.requests.order.CreateOrderRequest;
 import yummypizza.core.requests.order.DeleteOrderByIdRequest;
 import yummypizza.core.requests.order.FindOrderByIdRequest;
-import yummypizza.core.requests.product.DeleteProductByIdRequest;
-import yummypizza.core.responses.order.CreateOrderResponse;
-import yummypizza.core.responses.order.DeleteOrderByIdResponse;
-import yummypizza.core.responses.order.FindAllOrdersResponse;
-import yummypizza.core.responses.order.FindOrderByIdResponse;
-import yummypizza.core.responses.product.DeleteProductByIdResponse;
-import yummypizza.core.services.order.CreateOrderService;
-import yummypizza.core.services.order.DeleteOrderByIdService;
-import yummypizza.core.services.order.FindAllOrdersService;
-import yummypizza.core.services.order.FindOrderByIdService;
+import yummypizza.core.requests.order.UpdateOrderRequest;
+import yummypizza.core.responses.order.*;
+import yummypizza.core.services.order.*;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -30,6 +28,8 @@ public class OrderController {
     private FindOrderByIdService findOrderByIdService;
     @Autowired
     private DeleteOrderByIdService deleteOrderByIdService;
+    @Autowired
+    private UpdateOrderService updateOrderService;
 
     @GetMapping(value = "")
     public String showOrdersPage() {
@@ -92,6 +92,34 @@ public class OrderController {
             modelMap.addAttribute("orderDeleted", true);
         }
         return showOrdersListPage(modelMap);
+    }
+
+    @GetMapping(value = "/{id}/update")
+    public String showOrdersUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
+        FindOrderByIdResponse response = findOrderByIdService.execute(new FindOrderByIdRequest(id));
+        Optional<Order> optionalOfOrder = response.getFoundOrder();
+        if (optionalOfOrder.isEmpty()) {
+            modelMap.addAttribute("orderToUpdateNotFound", true);
+            return showOrdersListPage(modelMap);
+        } else {
+            Order order = optionalOfOrder.get();
+            modelMap.addAttribute("updateOrderRequest",
+                    new UpdateOrderRequest(order.getId(), order.getCart().getId(), order.getStatus(), order.getAmount(),
+                            order.getDateCreated(), order.getDateCompleted(), order.getCity(), order.getStreet(),
+                            order.getBuildingNumber(), order.getApartmentNumber()));
+            return "orders/ordersUpdate.html";
+        }
+    }
+
+    @PostMapping(value = "/{id}/update")
+    public String processUpdateOrderRequest(@ModelAttribute(value = "updateOrderRequest") UpdateOrderRequest request, ModelMap modelMap) {
+        UpdateOrderResponse response = updateOrderService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+        } else {
+            modelMap.addAttribute("updatedOrder", response.getUpdatedOrder());
+        }
+        return "orders/ordersUpdate.html";
     }
 
 }

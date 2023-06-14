@@ -16,7 +16,7 @@
   </tr>
 </table>
 
-<!--<span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>-->
+<span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>
 
 <span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>
 
@@ -44,9 +44,9 @@
     <td th:text="${order.street}" />
     <td th:text="${order.buildingNumber}" />
     <td th:text="${order.apartmentNumber}" />
-<!--    <td>-->
-<!--      <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>-->
-<!--    </td>-->
+    <td>
+      <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>
+    </td>
     <td>
       <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${order.id}" name="id" />
