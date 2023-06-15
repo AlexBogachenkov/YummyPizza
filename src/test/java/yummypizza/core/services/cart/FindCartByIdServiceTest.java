@@ -45,17 +45,17 @@ class FindCartByIdServiceTest {
 
     @Test
     public void shouldReturnResponseWithErrorsWhenValidationFails() {
-        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("Cart ID", "is mandatory.")));
+        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("Cart ID", "must be a positive number.")));
         FindCartByIdResponse response = service.execute(invalidRequest);
         assertTrue(response.hasErrors());
         assertEquals(1, response.getErrors().size());
         assertEquals("Cart ID", response.getErrors().get(0).getField());
-        assertEquals("is mandatory.", response.getErrors().get(0).getMessage());
+        assertEquals("must be a positive number.", response.getErrors().get(0).getMessage());
     }
 
     @Test
     public void shouldNotInvokeRepositoryWhenValidationFails() {
-        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("Cart ID", "is mandatory.")));
+        Mockito.when(validator.validate(invalidRequest)).thenReturn(List.of(new CoreError("Cart ID", "must be a positive number.")));
         service.execute(invalidRequest);
         Mockito.verifyNoInteractions(repository);
     }
