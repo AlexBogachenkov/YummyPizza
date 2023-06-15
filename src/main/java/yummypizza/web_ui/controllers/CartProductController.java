@@ -6,16 +6,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import yummypizza.core.domain.CartProduct;
 import yummypizza.core.requests.cart_product.AddCartProductRequest;
+import yummypizza.core.requests.cart_product.DeleteCartProductByIdRequest;
 import yummypizza.core.requests.cart_product.FindCartProductByIdRequest;
 import yummypizza.core.requests.cart_product.UpdateCartProductRequest;
-import yummypizza.core.responses.cart_product.AddCartProductResponse;
-import yummypizza.core.responses.cart_product.FindAllCartProductsResponse;
-import yummypizza.core.responses.cart_product.FindCartProductByIdResponse;
-import yummypizza.core.responses.cart_product.UpdateCartProductResponse;
-import yummypizza.core.services.cart_product.AddCartProductService;
-import yummypizza.core.services.cart_product.FindAllCartProductsService;
-import yummypizza.core.services.cart_product.FindCartProductByIdService;
-import yummypizza.core.services.cart_product.UpdateCartProductService;
+import yummypizza.core.responses.cart_product.*;
+import yummypizza.core.services.cart_product.*;
 
 import java.util.Optional;
 
@@ -31,6 +26,8 @@ public class CartProductController {
     private FindCartProductByIdService findCartProductByIdService;
     @Autowired
     private UpdateCartProductService updateCartProductService;
+    @Autowired
+    private DeleteCartProductByIdService deleteCartProductByIdService;
 
     @GetMapping(value = "")
     public String showCartProductsPage() {
@@ -108,6 +105,18 @@ public class CartProductController {
             modelMap.addAttribute("updatedCartProduct", response.getUpdatedCartProduct());
         }
         return "cart_products/cartProductsUpdate.html";
+    }
+
+    @PostMapping(value = "/delete")
+    public String processDeleteCartProductByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
+                                                      DeleteCartProductByIdRequest request, ModelMap modelMap) {
+        DeleteCartProductByIdResponse response = deleteCartProductByIdService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
+        } else {
+            modelMap.addAttribute("isCartProductDeleted", true);
+        }
+        return showCartProductsListPage(modelMap);
     }
 
 }

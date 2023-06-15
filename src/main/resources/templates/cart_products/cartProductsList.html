@@ -9,16 +9,16 @@
 
 <h1>Find all cart products</h1>
 
-<!--<table th:if="${deleteByIdRequestErrors != null}">-->
-<!--  <tr th:each="error : ${deleteByIdRequestErrors}">-->
-<!--    <td th:text="${error.field}" />-->
-<!--    <td th:text="${error.message}" />-->
-<!--  </tr>-->
-<!--</table>-->
+<table th:if="${deleteByIdRequestErrors != null}">
+  <tr th:each="error : ${deleteByIdRequestErrors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
 
 <span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>
 
-<!--<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>-->
+<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
 
 <table th:if="${not cartProducts.isEmpty}">
   <tr>
@@ -37,12 +37,12 @@
     <td>
       <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>
     </td>
-<!--    <td>-->
-<!--      <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">-->
-<!--        <input type="hidden" th:value="${cartProduct.id}" name="id" />-->
-<!--        <button type="submit">Delete</button>-->
-<!--      </form>-->
-<!--    </td>-->
+    <td>
+      <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">
+        <input type="hidden" th:value="${cartProduct.id}" name="id" />
+        <button type="submit">Delete</button>
+      </form>
+    </td>
   </tr>
 </table>
 
