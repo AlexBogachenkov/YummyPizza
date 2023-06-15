@@ -4,16 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import yummypizza.core.requests.cart.FindCartByIdRequest;
+import yummypizza.core.domain.CartProduct;
 import yummypizza.core.requests.cart_product.AddCartProductRequest;
 import yummypizza.core.requests.cart_product.FindCartProductByIdRequest;
-import yummypizza.core.responses.cart.FindCartByIdResponse;
+import yummypizza.core.requests.cart_product.UpdateCartProductRequest;
 import yummypizza.core.responses.cart_product.AddCartProductResponse;
 import yummypizza.core.responses.cart_product.FindAllCartProductsResponse;
 import yummypizza.core.responses.cart_product.FindCartProductByIdResponse;
+import yummypizza.core.responses.cart_product.UpdateCartProductResponse;
 import yummypizza.core.services.cart_product.AddCartProductService;
 import yummypizza.core.services.cart_product.FindAllCartProductsService;
 import yummypizza.core.services.cart_product.FindCartProductByIdService;
+import yummypizza.core.services.cart_product.UpdateCartProductService;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/cart-products")
@@ -25,6 +29,8 @@ public class CartProductController {
     private FindAllCartProductsService findAllCartProductsService;
     @Autowired
     private FindCartProductByIdService findCartProductByIdService;
+    @Autowired
+    private UpdateCartProductService updateCartProductService;
 
     @GetMapping(value = "")
     public String showCartProductsPage() {
@@ -75,6 +81,33 @@ public class CartProductController {
             modelMap.addAttribute("cartProductNotFound", true);
         }
         return "cart_products/cartProductsFindById.html";
+    }
+
+    @GetMapping(value = "/{id}/update")
+    public String showCartProductsUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
+        FindCartProductByIdResponse response = findCartProductByIdService.execute(new FindCartProductByIdRequest(id));
+        Optional<CartProduct> optionalOfCartProduct = response.getFoundCartProduct();
+        if (optionalOfCartProduct.isEmpty()) {
+            modelMap.addAttribute("cartProductToUpdateNotFound", true);
+            return showCartProductsListPage(modelMap);
+        } else {
+            CartProduct cartProduct = optionalOfCartProduct.get();
+            modelMap.addAttribute("updateCartProductRequest",
+                    new UpdateCartProductRequest(cartProduct.getId(), cartProduct.getCart().getId(),
+                            cartProduct.getProduct().getId(), cartProduct.getQuantity()));
+            return "cart_products/cartProductsUpdate.html";
+        }
+    }
+
+    @PostMapping(value = "/{id}/update")
+    public String processUpdateCartProductRequest(@ModelAttribute(value = "updateCartProductRequest") UpdateCartProductRequest request, ModelMap modelMap) {
+        UpdateCartProductResponse response = updateCartProductService.execute(request);
+        if (response.hasErrors()) {
+            modelMap.addAttribute("errors", response.getErrors());
+        } else {
+            modelMap.addAttribute("updatedCartProduct", response.getUpdatedCartProduct());
+        }
+        return "cart_products/cartProductsUpdate.html";
     }
 
 }

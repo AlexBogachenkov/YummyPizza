@@ -16,7 +16,7 @@
 <!--  </tr>-->
 <!--</table>-->
 
-<!--<span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>-->
+<span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>
 
 <!--<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>-->
 
@@ -34,9 +34,9 @@
     <td th:text="${cartProduct.product.id}" />
     <td th:text="${cartProduct.product.name}" />
     <td th:text="${cartProduct.quantity}" />
-<!--    <td>-->
-<!--      <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>-->
-<!--    </td>-->
+    <td>
+      <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>
+    </td>
 <!--    <td>-->
 <!--      <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">-->
 <!--        <input type="hidden" th:value="${cartProduct.id}" name="id" />-->
