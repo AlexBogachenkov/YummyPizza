@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product to the cart</title>
+</head>
+<body>
+
+<h1>Add product to the cart</h1>
+
+<form action="/cart-products/add" th:object="${request}" method="post">
+  <label>Cart ID:</label><br>
+  <input type="text" th:field="*{cartId}"/><br>
+  <label>Product ID:</label><br>
+  <input type="text" th:field="*{productId}"/><br>
+  <label>Quantity:</label><br>
+  <input type="number" min="1" th:field="*{quantity}"/><br>
+  <br>
+  <br>
+
+  <input type="submit" value="Create"/>
+  <input type="reset" value="Clear"/>
+</form>
+
+<table th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+<span th:if="${addedCartProduct != null}">The product was added to the cart successfully!</span>
+
+</body>
+</html>
