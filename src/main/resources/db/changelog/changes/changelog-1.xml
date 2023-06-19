@@ -18,7 +18,7 @@
             <column name="email" type="varchar(320)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="varchar(20)">
+            <column name="password" type="varchar(120)">
                 <constraints nullable="false"/>
             </column>
             <column name="phone" type="varchar(15)">

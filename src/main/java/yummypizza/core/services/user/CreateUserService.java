@@ -1,6 +1,7 @@
 package yummypizza.core.services.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
@@ -18,6 +19,8 @@ public class CreateUserService {
     private CreateUserRequestValidator validator;
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public CreateUserResponse execute(CreateUserRequest request) {
         List<CoreError> errors = validator.validate(request);
@@ -25,7 +28,7 @@ public class CreateUserService {
             return new CreateUserResponse(errors);
         }
         User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
-                request.getPassword(), request.getPhone(), request.getRole());
+                passwordEncoder.encode(request.getPassword()), request.getPhone(), request.getRole());
         return new CreateUserResponse(repository.save(user));
     }
 
