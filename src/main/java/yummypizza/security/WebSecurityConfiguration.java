@@ -1,4 +1,4 @@
-package yummypizza.config;
+package yummypizza.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SpringSecurityConfiguration {
+public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -20,8 +20,16 @@ public class SpringSecurityConfiguration {
                 .csrf().disable()
 
                 .authorizeHttpRequests()
+                .requestMatchers("/").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().permitAll();
+
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/login.html?error=true")
+                .permitAll();
         return http.build();
     }
 
