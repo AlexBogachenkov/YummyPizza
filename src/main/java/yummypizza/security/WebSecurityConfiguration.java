@@ -21,6 +21,7 @@ public class WebSecurityConfiguration {
 
                 .authorizeHttpRequests()
                 .requestMatchers("/").permitAll()
+                .requestMatchers("/signup").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

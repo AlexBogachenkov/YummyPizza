@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+
+<h1>Sign up</h1>
+
+<form action="/signup" th:object="${request}" method="post">
+  <label>First name:</label><br>
+  <input type="text" th:field="*{firstName}"/><br>
+  <label>Last name:</label><br>
+  <input type="text" th:field="*{lastName}"/><br>
+  <label>Email:</label><br>
+  <input type="text" th:field="*{email}"/><br>
+  <label>Password:</label><br>
+  <input type="password" th:field="*{password}"/><br>
+  <label>Phone:</label><br>
+  <input type="text" th:field="*{phone}"/><br>
+  <br>
+  <br>
+
+  <input type="submit" value="Sign up"/>
+</form>
+
+<table th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+</body>
+</html>
