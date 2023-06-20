@@ -1,6 +1,7 @@
 package yummypizza.web_ui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import yummypizza.core.services.user.*;
 import java.util.Optional;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(value = "/users")
 public class UserController {
 

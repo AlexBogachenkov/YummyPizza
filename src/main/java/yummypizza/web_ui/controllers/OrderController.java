@@ -1,7 +1,7 @@
 package yummypizza.web_ui.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import yummypizza.core.requests.order.UpdateOrderRequest;
 import yummypizza.core.responses.order.*;
 import yummypizza.core.services.order.*;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(value = "/orders")
 public class OrderController {
 
