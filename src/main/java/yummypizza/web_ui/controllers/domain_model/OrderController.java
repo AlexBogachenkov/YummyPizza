@@ -1,4 +1,4 @@
-package yummypizza.web_ui.controllers;
+package yummypizza.web_ui.controllers.domain_model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
