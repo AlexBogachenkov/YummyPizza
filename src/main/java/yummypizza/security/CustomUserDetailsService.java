@@ -29,13 +29,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = optionalOfUser.orElse(null);
 
         if (user == null) {
-            return new org.springframework.security.core.userdetails.User(
-                    " ", " ", true, true, true,
-                    true, List.of());
+//            return new org.springframework.security.core.userdetails.User(
+//                    " ", " ", List.of());
+            return new CustomUserDetails(" ", " ", List.of());
         }
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(), true, true, true,
-                true, getAuthority(user.getRole()));
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getEmail(), user.getPassword(), getAuthority(user.getRole()));
+        return new CustomUserDetails(user.getEmail(), user.getPassword(), getAuthority(user.getRole()),
+                user.getId(), user.getFirstName(), user.getLastName(), user.getPhone(), user.getRole());
     }
 
     private Collection<? extends GrantedAuthority> getAuthority(UserRole userRole) {

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+
+<table th:if="${addProductToCartRequestErrors != null}">
+    <tr th:each="error : ${addProductToCartRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<h1>Menu</h1>
+
+<!--<div sec:authorize="isAuthenticated()">-->
+<!--    <span th:text ="${#authentication.principal.id}"></span>-->
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--        Authenticated as <span sec:authentication="name"></span></div>-->
+<!--</div>-->
+
+<h2>Pizza</h2>
+
+<table th:if="${not products.isEmpty}">
+    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'PIZZA'}">
+        <td th:text="${product.name}" />
+        <td th:text="${product.description}" />
+        <td th:text="${product.price}" />
+        <td>
+            <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                <div sec:authorize="isAuthenticated()">
+                    <input type="hidden" th:value="${cart.id}" name="cartId" />
+                    <input type="hidden" th:value="${product.id}" name="productId" />
+                    <input type="hidden" value="1" name="quantity" />
+                </div>
+                <button type="submit">To cart</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<h2>Drinks</h2>
+
+<table th:if="${not products.isEmpty}">
+    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DRINK'}">
+        <td th:text="${product.name}" />
+        <td th:text="${product.description}" />
+        <td th:text="${product.price}" />
+    </tr>
+</table>
+
+<h2>Desserts</h2>
+
+<table th:if="${not products.isEmpty}">
+    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DESSERT'}">
+        <td th:text="${product.name}" />
+        <td th:text="${product.description}" />
+        <td th:text="${product.price}" />
+    </tr>
+</table>
+
+</body>
+</html>

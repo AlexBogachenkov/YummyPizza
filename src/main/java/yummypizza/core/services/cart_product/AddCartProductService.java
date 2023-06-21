@@ -12,6 +12,7 @@ import yummypizza.core.responses.cart_product.AddCartProductResponse;
 import yummypizza.core.validators.cart_product.AddCartProductRequestValidator;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddCartProductService {
@@ -27,13 +28,19 @@ public class AddCartProductService {
             return new AddCartProductResponse(errors);
         }
 
-        Cart cart = new Cart();
-        cart.setId(request.getCartId());
+        CartProduct cartProduct;
+        Optional<CartProduct> optionalOfCartProduct = repository.findByCartIdAndProductId(request.getCartId(), request.getProductId());
+        if (optionalOfCartProduct.isPresent()) {
+            cartProduct = optionalOfCartProduct.get();
+            cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+        } else {
+            Cart cart = new Cart();
+            cart.setId(request.getCartId());
 
-        Product product = new Product();
-        product.setId(request.getProductId());
-
-        CartProduct cartProduct = new CartProduct(cart, product, request.getQuantity());
+            Product product = new Product();
+            product.setId(request.getProductId());
+            cartProduct = new CartProduct(cart, product, request.getQuantity());
+        }
         return new AddCartProductResponse(repository.save(cartProduct));
     }
 
