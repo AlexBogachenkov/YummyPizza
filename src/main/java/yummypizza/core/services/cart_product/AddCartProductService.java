@@ -32,7 +32,7 @@ public class AddCartProductService {
         Optional<CartProduct> optionalOfCartProduct = repository.findByCartIdAndProductId(request.getCartId(), request.getProductId());
         if (optionalOfCartProduct.isPresent()) {
             cartProduct = optionalOfCartProduct.get();
-            cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+            cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
         } else {
             Cart cart = new Cart();
             cart.setId(request.getCartId());

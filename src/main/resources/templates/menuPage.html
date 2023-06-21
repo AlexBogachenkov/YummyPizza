@@ -16,12 +16,6 @@
 
 <h1>Menu</h1>
 
-<!--<div sec:authorize="isAuthenticated()">-->
-<!--    <span th:text ="${#authentication.principal.id}"></span>-->
-<!--    <div sec:authorize="isAuthenticated()">-->
-<!--        Authenticated as <span sec:authentication="name"></span></div>-->
-<!--</div>-->
-
 <h2>Pizza</h2>
 
 <table th:if="${not products.isEmpty}">
@@ -30,14 +24,22 @@
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
         <td>
-            <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
-                <div sec:authorize="isAuthenticated()">
-                    <input type="hidden" th:value="${cart.id}" name="cartId" />
-                    <input type="hidden" th:value="${product.id}" name="productId" />
-                    <input type="hidden" value="1" name="quantity" />
-                </div>
-                <button type="submit">To cart</button>
-            </form>
+
+            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                    <div sec:authorize="isAuthenticated()">
+                        <input type="hidden" th:value="${cart.id}" name="cartId" />
+                        <input type="hidden" th:value="${product.id}" name="productId" />
+                        <input type="hidden" value="1" name="quantity" />
+                    </div>
+                    <button type="submit">To cart</button>
+                </form>
+            </div>
+
+            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+            </div>
+
         </td>
     </tr>
 </table>
@@ -49,6 +51,24 @@
         <td th:text="${product.name}" />
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
+        <td>
+
+            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                    <div sec:authorize="isAuthenticated()">
+                        <input type="hidden" th:value="${cart.id}" name="cartId" />
+                        <input type="hidden" th:value="${product.id}" name="productId" />
+                        <input type="hidden" value="1" name="quantity" />
+                    </div>
+                    <button type="submit">To cart</button>
+                </form>
+            </div>
+
+            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+            </div>
+
+        </td>
     </tr>
 </table>
 
@@ -59,6 +79,24 @@
         <td th:text="${product.name}" />
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
+        <td>
+
+            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                    <div sec:authorize="isAuthenticated()">
+                        <input type="hidden" th:value="${cart.id}" name="cartId" />
+                        <input type="hidden" th:value="${product.id}" name="productId" />
+                        <input type="hidden" value="1" name="quantity" />
+                    </div>
+                    <button type="submit">To cart</button>
+                </form>
+            </div>
+
+            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+            </div>
+
+        </td>
     </tr>
 </table>
 
