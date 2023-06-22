@@ -23,6 +23,7 @@ public class WebSecurityConfiguration {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/menu").permitAll()
+                .requestMatchers("/products/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
