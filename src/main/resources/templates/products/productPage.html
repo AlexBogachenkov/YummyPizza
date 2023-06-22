@@ -26,7 +26,7 @@
     <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
         <div sec:authorize="isAuthenticated()">
             <input type="hidden" th:value="${cart.id}" name="cartId" />
-            <input type="hidden" th:value="${product.id}" name="productId" />
+            <input type="hidden" th:value="${foundProduct?.id}" name="productId" />
             <input type="hidden" value="1" name="quantity" />
         </div>
         <button type="submit">To cart</button>
