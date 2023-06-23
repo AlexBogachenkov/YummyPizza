@@ -9,9 +9,9 @@
 
 <h1>Find product by ID</h1>
 
-<form id="findProductForm" action="/products/" method="get">
+<form action="/products/find/" method="get">
   <label>Product ID:</label><br>
-  <input type="text" name="id" id="productId"/><br>
+  <input type="text" name="id"/><br>
   <br>
   <br>
 
@@ -19,13 +19,32 @@
   <input type="reset" value="Clear"/>
 </form>
 
-<script>
-    document.getElementById("findProductForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        let productId = document.getElementById("productId").value;
-        window.location.href = "/products/" + productId;
-    });
-</script>
+<table th:if="${errors != null}">
+    <tr th:each="error : ${errors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<table th:if="${foundProduct != null}">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Type</th>
+    </tr>
+    <tr>
+      <td th:text="${foundProduct?.id}" />
+      <td th:text="${foundProduct?.name}" />
+      <td th:text="${foundProduct?.description}" />
+      <td th:text="${foundProduct?.price}" />
+      <td th:text="${foundProduct?.type}" />
+    </tr>
+</table>
+
+
+    <span th:if="${productNotFound == true}">Product not found.</span>
 
 </body>
 </html>

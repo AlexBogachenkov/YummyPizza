@@ -16,6 +16,7 @@ import yummypizza.core.services.product.*;
 import java.util.Optional;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(value = "/products")
 public class ProductController {
 
@@ -30,20 +31,17 @@ public class ProductController {
     @Autowired
     private UpdateProductService updateProductService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "")
     public String showProductsPage() {
         return "products/products.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/create")
     public String showProductsCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateProductRequest());
         return "products/productsCreate.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/create")
     public String processCreateProductRequest(@ModelAttribute(value = "request") CreateProductRequest request, ModelMap modelMap) {
         CreateProductResponse response = createProductService.execute(request);
@@ -55,7 +53,6 @@ public class ProductController {
         return "products/productsCreate.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/list")
     public String showProductsListPage(ModelMap modelMap) {
         FindAllProductsResponse response = findAllProductsService.execute();
@@ -64,7 +61,6 @@ public class ProductController {
         return "products/productsList.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/delete")
     public String processDeleteProductByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
                                                       DeleteProductByIdRequest request, ModelMap modelMap) {
@@ -77,29 +73,27 @@ public class ProductController {
         return showProductsListPage(modelMap);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/find")
     public String showProductsFindByIdPage() {
         return "products/productsFindById.html";
     }
 
-    @GetMapping(value = "/{id}")
-    public String processFindProductByIdRequest(@PathVariable(value = "id", required = false) Long id, ModelMap modelMap) {
+    @GetMapping(value = "/find/")
+    public String processFindProductByIdRequest(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
         FindProductByIdRequest request = new FindProductByIdRequest(id);
         FindProductByIdResponse response = findProductByIdService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
-            return "products/productPage.html";
+            return "products/productsFindById.html";
         }
         if (response.getFoundProduct().isPresent()) {
             modelMap.addAttribute("foundProduct", response.getFoundProduct().get());
         } else {
             modelMap.addAttribute("productNotFound", true);
         }
-        return "products/productPage.html";
+        return "products/productsFindById.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/{id}/update")
     public String showProductsUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindProductByIdResponse response = findProductByIdService.execute(new FindProductByIdRequest(id));
@@ -113,7 +107,6 @@ public class ProductController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value = "/{id}/update")
     public String processUpdateProductRequest(@ModelAttribute(value = "product") Product product, ModelMap modelMap) {
         UpdateProductRequest request = new UpdateProductRequest(product.getId(), product.getName(),
