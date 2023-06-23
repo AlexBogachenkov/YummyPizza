@@ -37,7 +37,7 @@
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+                <a href="/cart">In the cart</a>
             </div>
 
         </td>

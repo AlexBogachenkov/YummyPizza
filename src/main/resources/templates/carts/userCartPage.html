@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+
+<h1>Cart</h1>
+
+<table th:if="${deleteCartProductRequestErrors != null}">
+    <tr th:each="error : ${deleteCartProductRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<table th:if="${updatedCartProductRequestErrors != null}">
+    <tr th:each="error : ${updatedCartProductRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
+
+<table th:if="${not userCartProducts.isEmpty}">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    <tr th:each="cartProduct : ${userCartProducts}">
+        <td th:text="${cartProduct.product.name}" />
+        <td th:text="${cartProduct.product.description}" />
+        <td th:text="${cartProduct.product.price}" />
+        <td>
+            <form action="/cart/updateCartProductQuantity" th:object="${updateCartProductRequest}" method="post">
+                <input type="hidden" th:value="${cartProduct.id}" name="id" />
+                <input type="hidden" th:value="${cartProduct.cart.id}" name="cartId" />
+                <input type="hidden" th:value="${cartProduct.product.id}" name="productId" />
+                <input type="number" min="1" th:value="${cartProduct.quantity}" name="quantity" />
+                <button type="submit">Update product quantity</button>
+            </form>
+        </td>
+        <td>
+            <form action="/cart/deleteCartProduct" th:object="${deleteCartProductRequest}" method="post">
+                <input type="hidden" th:value="${cartProduct.id}" name="id" />
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<span th:if="${userCartProducts.isEmpty}">Your cart is empty.</span>
+
+</body>
+</html>
