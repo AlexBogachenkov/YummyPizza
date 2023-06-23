@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${foundProduct?.name}">Product</title>
+</head>
+<body>
+
+<h1 th:text="${foundProduct?.name}">Product</h1>
+
+<table th:if="${errors != null}">
+  <tr th:each="error : ${errors}">
+    <td th:text="${error.field}" />
+    <td th:text="${error.message}" />
+  </tr>
+</table>
+
+<div th:if="${foundProduct != null}">
+  <p th:text="${foundProduct?.description}"></p>
+  <p th:text="${foundProduct?.price}"></p>
+</div>
+
+<div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], foundProduct)}">
+  <form th:action="@{/products/} + ${foundProduct.id} + @{/addProductToCart}" th:object="${addProductToCartRequest}" method="post" th:if="${errors == null and productNotFound != true}">
+    <div sec:authorize="isAuthenticated()">
+      <input type="hidden" th:value="${cart.id}" name="cartId" />
+      <input type="hidden" th:value="${foundProduct?.id}" name="productId" />
+      <input type="hidden" value="1" name="quantity" />
+    </div>
+    <button type="submit">To cart</button>
+  </form>
+</div>
+
+<div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], foundProduct)}">
+  <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+</div>
+
+<span th:if="${productNotFound == true}">Product not found.</span>
+
+</body>
+</html>

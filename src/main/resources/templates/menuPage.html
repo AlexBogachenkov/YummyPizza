@@ -20,7 +20,7 @@
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'PIZZA'}">
-        <td th:text="${product.name}" />
+        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
         <td>
