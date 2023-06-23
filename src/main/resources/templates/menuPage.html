@@ -48,7 +48,7 @@
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DRINK'}">
-        <td th:text="${product.name}" />
+        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
         <td>
@@ -65,7 +65,7 @@
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+                <a href="/cart">In the cart</a>
             </div>
 
         </td>
@@ -76,7 +76,7 @@
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DESSERT'}">
-        <td th:text="${product.name}" />
+        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
         <td th:text="${product.description}" />
         <td th:text="${product.price}" />
         <td>
@@ -93,7 +93,7 @@
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a th:href="@{/user/} + ${#authentication.principal.id} + @{/cart}">In the cart</a>
+                <a href="/cart">In the cart</a>
             </div>
 
         </td>
