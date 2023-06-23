@@ -42,7 +42,6 @@
                 <input type="hidden" th:value="${cartProduct.cart.id}" name="cartId" />
                 <input type="hidden" th:value="${cartProduct.product.id}" name="productId" />
                 <input type="number" min="1" th:value="${cartProduct.quantity}" name="quantity" />
-                <button type="submit">Update product quantity</button>
             </form>
         </td>
         <td>
@@ -55,7 +54,9 @@
 </table>
 
 <div id="totalSum" th:if="${not userCartProducts.isEmpty}">
-    <h4>Total Sum: $<span id="sumValue"></span></h4>
+    <h4>Total: €<span id="sumValue"></span></h4>
+    <br>
+    <a href="/order/make">Make an order</a>
 </div>
 
 <span th:if="${userCartProducts.isEmpty}">Your cart is empty.</span>

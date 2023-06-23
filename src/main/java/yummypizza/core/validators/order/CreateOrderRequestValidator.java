@@ -2,6 +2,7 @@ package yummypizza.core.validators.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import yummypizza.core.database.CartProductRepository;
 import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
 import yummypizza.core.domain.OrderStatus;
@@ -21,6 +22,8 @@ public class CreateOrderRequestValidator {
     private OrderRepository orderRepository;
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private CartProductRepository cartProductRepository;
 
     private List<CoreError> errors;
 
@@ -51,6 +54,9 @@ public class CreateOrderRequestValidator {
         }
         if (orderRepository.existsByCartId(id)) {
             errors.add(new CoreError("Cart ID", "is already in use in another order."));
+        }
+        if (cartProductRepository.findByCartId(id).isEmpty()) {
+            errors.add(new CoreError("Cart", "should have at least one product to make an order."));
         }
     }
 

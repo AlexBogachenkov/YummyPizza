@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Make an order</title>
+</head>
+<body>
+
+<h1>Make an order</h1>
+
+<span th:if="${userCartProducts.isEmpty}">Your cart is empty.</span>
+
+<table th:if="${createOrderRequestErrors != null}">
+    <tr th:each="error : ${createOrderRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+    </tr>
+</table>
+
+<table th:if="${not userCartProducts.isEmpty}">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    <tr th:each="cartProduct : ${userCartProducts}">
+        <td th:text="${cartProduct.product.name}" />
+        <td th:text="${cartProduct.product.description}" />
+        <td th:text="${cartProduct.product.price}" />
+        <td th:text="${cartProduct.quantity}" />
+    </tr>
+</table>
+<br>
+<div th:if="${not userCartProducts.isEmpty}">
+    <h4>Total: €<span th:text="${createOrderRequest.amount}"></span></h4>
+</div>
+<br>
+
+<form action="/order/make" th:object="${createOrderRequest}" method="post">
+    <input type="hidden" th:value="${cart.id}" name="cartId" />
+    <label>City*:</label><br>
+    <input type="text" th:field="${createOrderRequest.city}" /><br>
+    <label>Street*:</label><br>
+    <input type="text" th:field="${createOrderRequest.street}" /><br>
+    <label>Building number*:</label><br>
+    <input type="text" th:field="${createOrderRequest.buildingNumber}" /><br>
+    <label>Apartment number:</label><br>
+    <input type="text" th:field="${createOrderRequest.apartmentNumber}" /><br><br>
+    <button type="submit">Make an order</button>
+</form>
+
+</body>
+</html>
