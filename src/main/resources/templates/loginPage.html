@@ -3,17 +3,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Log in</title>
+    <title th:text="#{login}"></title>
 </head>
 <body>
-    <h1>Log in</h1>
+    <h1 th:text="#{login}"></h1>
     <form action="/login" method='POST'>
-        <label>E-mail:</label><br>
+        <label th:text="#{form.field.email} + ':'"></label><br>
         <input type='text' name='username' /><br>
-        <label>Password:</label><br>
+        <label th:text="#{form.field.password} + ':'"></label><br>
         <input type='password' name='password' /><br>
-        <span th:if="${isAuthenticationFailed == true}">E-mail or password is incorrect. Try again!<br></span><br>
-        <input name="submit" type="submit" value="Log in" />
+        <span th:if="${isAuthenticationFailed == true}" th:text="#{error.emailOrPasswordIncorrect}"><br></span><br>
+        <input name="submit" type="submit" th:value="#{login}"/>
     </form>
 </body>
 </html>

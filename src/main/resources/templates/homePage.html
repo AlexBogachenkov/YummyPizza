@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Yummy Pizza</title>
 </head>
 <body>
 
-<h1>Welcome to Yummy Pizza!</h1>
-<a href="/login">Log in</a>
-<a href="/signup">Sign up</a>
-<a href="/logout">Log out</a>
+<h1 th:text="#{welcome.text}"></h1>
+
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.eng}"></option>
+    <option value="lv" th:text="#{lang.lv}"></option>
+    <option value="ru" th:text="#{lang.ru}"></option>
+</select><br>
+
+<a href="/login" th:text="#{login}"></a>
+<a href="/signup" th:text="#{signup}"></a>
+<a href="/logout" th:text="#{logout}"></a>
 <br>
-<a href="/menu">Menu</a>
+<a href="/menu" th:text="#{menu}"></a>
 <br>
-<a href="/cart">Cart</a>
+<a href="/cart" th:text="#{cart}"></a>
 <br>
-<a href="/my-orders">My orders</a>
+<a href="/my-orders" th:text="#{myOrders}"></a>
 <br>
-<a href="/adminPage">Admin page</a>
+<a href="/adminPage" th:text="#{adminPage}"></a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace('?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Menu</title>
+    <title th:text="#{menu}"></title>
 </head>
 <body>
 
@@ -14,9 +14,9 @@
     </tr>
 </table>
 
-<h1>Menu</h1>
+<h1 th:text="#{menu}"></h1>
 
-<h2>Pizza</h2>
+<h2 th:text="#{menu.pizza}"></h2>
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'PIZZA'}">
@@ -32,19 +32,19 @@
                         <input type="hidden" th:value="${product.id}" name="productId" />
                         <input type="hidden" value="1" name="quantity" />
                     </div>
-                    <button type="submit">To cart</button>
+                    <button type="submit" th:text="#{form.button.toCart}"></button>
                 </form>
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart">In the cart</a>
+                <a href="/cart" th:text="#{menu.inTheCart}"></a>
             </div>
 
         </td>
     </tr>
 </table>
 
-<h2>Drinks</h2>
+<h2 th:text="#{menu.drinks}"></h2>
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DRINK'}">
@@ -60,19 +60,19 @@
                         <input type="hidden" th:value="${product.id}" name="productId" />
                         <input type="hidden" value="1" name="quantity" />
                     </div>
-                    <button type="submit">To cart</button>
+                    <button type="submit" th:text="#{form.button.toCart}"></button>
                 </form>
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart">In the cart</a>
+                <a href="/cart" th:text="#{menu.inTheCart}"></a>
             </div>
 
         </td>
     </tr>
 </table>
 
-<h2>Desserts</h2>
+<h2 th:text="#{menu.desserts}"></h2>
 
 <table th:if="${not products.isEmpty}">
     <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DESSERT'}">
@@ -88,12 +88,12 @@
                         <input type="hidden" th:value="${product.id}" name="productId" />
                         <input type="hidden" value="1" name="quantity" />
                     </div>
-                    <button type="submit">To cart</button>
+                    <button type="submit" th:text="#{form.button.toCart}"></button>
                 </form>
             </div>
 
             <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart">In the cart</a>
+                <a href="/cart" th:text="#{menu.inTheCart}"></a>
             </div>
 
         </td>

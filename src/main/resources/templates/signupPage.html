@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign up</title>
+    <title th:text="#{signup}"></title>
 </head>
 <body>
 
-<h1>Sign up</h1>
+<h1 th:text="#{signup}"></h1>
 
 <form action="/signup" th:object="${request}" method="post">
-  <label>First name:</label><br>
+  <label th:text="#{form.field.firstName} + ':'"></label><br>
   <input type="text" th:field="*{firstName}"/><br>
-  <label>Last name:</label><br>
+  <label th:text="#{form.field.lastName} + ':'"></label><br>
   <input type="text" th:field="*{lastName}"/><br>
-  <label>Email:</label><br>
+  <label th:text="#{form.field.email} + ':'"></label><br>
   <input type="text" th:field="*{email}"/><br>
-  <label>Password:</label><br>
+  <label th:text="#{form.field.password} + ':'"></label><br>
   <input type="password" th:field="*{password}"/><br>
-  <label>Phone:</label><br>
+  <label th:text="#{form.field.phone} + ':'"></label><br>
   <input type="text" th:field="*{phone}"/><br>
   <br>
   <br>
 
-  <input type="submit" value="Sign up"/>
+  <input type="submit" th:value="#{signup}"/>
 </form>
 
 <table th:if="${errors != null}">

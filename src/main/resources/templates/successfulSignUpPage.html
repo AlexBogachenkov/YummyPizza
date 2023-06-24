@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Successful sign up</title>
+    <title th:text="#{successfulSignUpPage.title}"></title>
 </head>
 <body>
 
-<h1>You have successfully signed up! Now you can log into your new account.</h1>
-<a href="/login">Log In</a>
+<h1 th:text="#{successfulSignUpPage.message}"></h1>
+<a href="/login" th:text="#{login}"></a>
 
 </body>
 </html>
