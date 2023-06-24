@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My orders</title>
+</head>
+<body>
+
+<h1>My orders</h1>
+
+<table th:if="${not userOrders.isEmpty}">
+  <tr>
+    <th>ID</th>
+    <th>Amount</th>
+    <th>Date created</th>
+    <th>Date completed</th>
+    <th>City</th>
+    <th>Street</th>
+    <th>Building number</th>
+    <th>Apartment number</th>
+    <th>Status</th>
+  </tr>
+  <tr th:each="order : ${userOrders}">
+    <td th:text="${order.id}" />
+    <td th:text="${order.amount}" />
+    <td th:text="${order.dateCreated}" />
+    <td th:text="${order.dateCompleted}" />
+    <td th:text="${order.city}" />
+    <td th:text="${order.street}" />
+    <td th:text="${order.buildingNumber}" />
+    <td th:text="${order.apartmentNumber}" />
+    <td th:text="${order.status}" />
+  </tr>
+</table>
+
+<span th:if="${userOrders.isEmpty}">You have not made any order yet.</span>
+
+</body>
+</html>
