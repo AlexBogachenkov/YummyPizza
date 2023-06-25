@@ -4,11 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${foundProduct?.name}">Product</title>
+  <title th:text="${foundProduct?.name}"></title>
 </head>
 <body>
 
-<h1 th:text="${foundProduct?.name}">Product</h1>
+<h1 th:text="${foundProduct?.name}"></h1>
 
 <table th:if="${errors != null}">
   <tr th:each="error : ${errors}">
@@ -29,15 +29,15 @@
       <input type="hidden" th:value="${foundProduct?.id}" name="productId" />
       <input type="hidden" value="1" name="quantity" />
     </div>
-    <button type="submit">To cart</button>
+    <button type="submit" th:text="#{form.button.toCart}"></button>
   </form>
 </div>
 
 <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], foundProduct)}">
-  <a href="/cart">In the cart</a>
+  <a href="/cart" th:text="#{menu.inTheCart}"></a>
 </div>
 
-<span th:if="${productNotFound == true}">Product not found.</span>
+<span th:if="${productNotFound == true}" th:text="#{product.notFound}"></span>
 
 </body>
 </html>

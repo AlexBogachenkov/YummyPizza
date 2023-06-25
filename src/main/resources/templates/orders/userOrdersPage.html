@@ -3,23 +3,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My orders</title>
+    <title th:text="#{myOrders}"></title>
 </head>
 <body>
 
-<h1>My orders</h1>
+<h1 th:text="#{myOrders}"></h1>
 
 <table th:if="${not userOrders.isEmpty}">
   <tr>
-    <th>ID</th>
-    <th>Amount</th>
-    <th>Date created</th>
-    <th>Date completed</th>
-    <th>City</th>
-    <th>Street</th>
-    <th>Building number</th>
-    <th>Apartment number</th>
-    <th>Status</th>
+    <th th:text="#{userOrder.id}"></th>
+    <th th:text="#{userOrder.amount}"></th>
+    <th th:text="#{userOrder.dateCreated}"></th>
+    <th th:text="#{userOrder.dateCompleted}"></th>
+    <th th:text="#{form.field.city}"></th>
+    <th th:text="#{form.field.street}"></th>
+    <th th:text="#{form.field.buildingNumber}"></th>
+    <th th:text="#{form.field.apartmentNumber}"></th>
+    <th th:text="#{userOrder.status}"></th>
   </tr>
   <tr th:each="order : ${userOrders}">
     <td th:text="${order.id}" />
@@ -34,7 +34,7 @@
   </tr>
 </table>
 
-<span th:if="${userOrders.isEmpty}">You have not made any order yet.</span>
+<span th:if="${userOrders.isEmpty}" th:text="#{userOrder.isEmpty}"></span>
 
 </body>
 </html>
