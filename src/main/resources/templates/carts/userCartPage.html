@@ -3,11 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Cart</title>
+    <title th:text="#{cart}"></title>
 </head>
 <body>
 
-<h1>Cart</h1>
+<h1 th:text="#{cart}"></h1>
 
 <table th:if="${deleteCartProductRequestErrors != null}">
     <tr th:each="error : ${deleteCartProductRequestErrors}">
@@ -23,14 +23,14 @@
     </tr>
 </table>
 
-<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
+<span th:if="${isCartProductDeleted == true}" th:text="#{userCartPage.isCartProductDeleted}"></span>
 
 <table th:if="${not userCartProducts.isEmpty}">
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Quantity</th>
+        <th th:text="#{userCartPage.name}"></th>
+        <th th:text="#{userCartPage.description}"></th>
+        <th th:text="#{userCartPage.price}"></th>
+        <th th:text="#{userCartPage.quantity}"></th>
     </tr>
     <tr th:each="cartProduct : ${userCartProducts}">
         <td th:text="${cartProduct.product.name}" />
@@ -47,19 +47,22 @@
         <td>
             <form action="/cart/deleteCartProduct" th:object="${deleteCartProductRequest}" method="post">
                 <input type="hidden" th:value="${cartProduct.id}" name="id" />
-                <button type="submit">Delete</button>
+                <button type="submit" th:text="#{userCartPage.delete}"></button>
             </form>
         </td>
     </tr>
 </table>
 
+<br>
+
 <div id="totalSum" th:if="${not userCartProducts.isEmpty}">
-    <h4>Total: €<span id="sumValue"></span></h4>
+    <b th:text="#{userCartPage.total} + ': € '"></b><b id="sumValue"></b>
     <br>
-    <a href="/order/make">Make an order</a>
+    <br>
+    <a href="/order/make" th:text="#{userCartPage.makeAnOrder}"></a>
 </div>
 
-<span th:if="${userCartProducts.isEmpty}">Your cart is empty.</span>
+<span th:if="${userCartProducts.isEmpty}" th:text="#{userCartPage.cartIsEmpty}"></span>
 
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
