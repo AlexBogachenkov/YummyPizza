@@ -27,10 +27,10 @@
 
 <table th:if="${not userCartProducts.isEmpty}">
     <tr>
-        <th th:text="#{userCartPage.name}"></th>
-        <th th:text="#{userCartPage.description}"></th>
-        <th th:text="#{userCartPage.price}"></th>
-        <th th:text="#{userCartPage.quantity}"></th>
+        <th th:text="#{product.name}"></th>
+        <th th:text="#{description}"></th>
+        <th th:text="#{price}"></th>
+        <th th:text="#{quantity}"></th>
     </tr>
     <tr th:each="cartProduct : ${userCartProducts}">
         <td th:text="${cartProduct.product.name}" />
@@ -56,13 +56,13 @@
 <br>
 
 <div id="totalSum" th:if="${not userCartProducts.isEmpty}">
-    <b th:text="#{userCartPage.total} + ': € '"></b><b id="sumValue"></b>
+    <b th:text="#{total} + ': € '"></b><b id="sumValue"></b>
     <br>
     <br>
-    <a href="/order/make" th:text="#{userCartPage.makeAnOrder}"></a>
+    <a href="/order/make" th:text="#{makeAnOrder}"></a>
 </div>
 
-<span th:if="${userCartProducts.isEmpty}" th:text="#{userCartPage.cartIsEmpty}"></span>
+<span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
 
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {

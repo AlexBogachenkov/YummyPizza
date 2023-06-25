@@ -3,13 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Make an order</title>
+    <title th:text="#{makeAnOrder}"></title>
 </head>
 <body>
 
-<h1>Make an order</h1>
+<h1 th:text="#{makeAnOrder}"></h1>
 
-<span th:if="${userCartProducts.isEmpty}">Your cart is empty.</span>
+<span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
 
 <table th:if="${createOrderRequestErrors != null}">
     <tr th:each="error : ${createOrderRequestErrors}">
@@ -20,10 +20,10 @@
 
 <table th:if="${not userCartProducts.isEmpty}">
     <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Quantity</th>
+        <th th:text="#{product.name}"></th>
+        <th th:text="#{description}"></th>
+        <th th:text="#{price}"></th>
+        <th th:text="#{quantity}"></th>
     </tr>
     <tr th:each="cartProduct : ${userCartProducts}">
         <td th:text="${cartProduct.product.name}" />
@@ -34,21 +34,21 @@
 </table>
 <br>
 <div th:if="${not userCartProducts.isEmpty}">
-    <h4>Total: €<span th:text="${createOrderRequest.amount}"></span></h4>
+    <b th:text="#{total} + ': € '"></b><b th:text="${createOrderRequest.amount}"></b>
 </div>
 <br>
 
 <form action="/order/make" th:object="${createOrderRequest}" method="post">
     <input type="hidden" th:value="${cart.id}" name="cartId" />
-    <label>City*:</label><br>
+    <label th:text="#{form.field.city} + '*:'"></label><br>
     <input type="text" th:field="${createOrderRequest.city}" /><br>
-    <label>Street*:</label><br>
+    <label th:text="#{form.field.street} + '*:'"></label><br>
     <input type="text" th:field="${createOrderRequest.street}" /><br>
-    <label>Building number*:</label><br>
+    <label th:text="#{form.field.buildingNumber} + '*:'"></label><br>
     <input type="text" th:field="${createOrderRequest.buildingNumber}" /><br>
-    <label>Apartment number:</label><br>
+    <label th:text="#{form.field.apartmentNumber} + ':'"></label><br>
     <input type="text" th:field="${createOrderRequest.apartmentNumber}" /><br><br>
-    <button type="submit">Make an order</button>
+    <button type="submit" th:text="#{makeAnOrder}">Make an order</button>
 </form>
 
 </body>
