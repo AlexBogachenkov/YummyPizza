@@ -1,90 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{cart}"></title>
 </head>
 <body>
 
-<h1 th:text="#{cart}"></h1>
-
-<table th:if="${deleteCartProductRequestErrors != null}">
-    <tr th:each="error : ${deleteCartProductRequestErrors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
-
-<table th:if="${updatedCartProductRequestErrors != null}">
-    <tr th:each="error : ${updatedCartProductRequestErrors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
-
-<span th:if="${isCartProductDeleted == true}" th:text="#{userCartPage.isCartProductDeleted}"></span>
-
-<table th:if="${not userCartProducts.isEmpty}">
-    <tr>
-        <th th:text="#{product.name}"></th>
-        <th th:text="#{description}"></th>
-        <th th:text="#{price}"></th>
-        <th th:text="#{quantity}"></th>
-    </tr>
-    <tr th:each="cartProduct : ${userCartProducts}">
-        <td th:text="${cartProduct.product.name}" />
-        <td th:text="${cartProduct.product.description}" />
-        <td th:text="${cartProduct.product.price}" />
-        <td>
-            <form action="/cart/updateCartProductQuantity" th:object="${updateCartProductRequest}" method="post">
-                <input type="hidden" th:value="${cartProduct.id}" name="id" />
-                <input type="hidden" th:value="${cartProduct.cart.id}" name="cartId" />
-                <input type="hidden" th:value="${cartProduct.product.id}" name="productId" />
-                <input type="number" min="1" th:value="${cartProduct.quantity}" name="quantity" />
-            </form>
-        </td>
-        <td>
-            <form action="/cart/deleteCartProduct" th:object="${deleteCartProductRequest}" method="post">
-                <input type="hidden" th:value="${cartProduct.id}" name="id" />
-                <button type="submit" th:text="#{userCartPage.delete}"></button>
-            </form>
-        </td>
-    </tr>
-</table>
-
-<br>
-
-<div id="totalSum" th:if="${not userCartProducts.isEmpty}">
-    <b th:text="#{total} + ': € '"></b><b id="sumValue"></b>
+<div layout:fragment="content">
+    <h1 th:text="#{cart}"></h1>
     <br>
+
+    <div th:if="${deleteCartProductRequestErrors != null}">
+        <div th:each="error : ${deleteCartProductRequestErrors}" class="text-danger">
+            <span th:text="${error.field}" />
+            <span th:text="${error.message}" />
+        </div>
+    </div>
+
+    <div th:if="${updatedCartProductRequestErrors != null}">
+        <div th:each="error : ${updatedCartProductRequestErrors}" class="text-danger">
+            <span th:text="${error.field}" />
+            <span th:text="${error.message}" />
+        </div>
+    </div>
+
+    <div th:if="${isCartProductDeleted == true}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="#{userCartPage.isCartProductDeleted}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <table th:if="${not userCartProducts.isEmpty}" class="table">
+        <tr>
+            <th th:text="#{product.name}"></th>
+            <th th:text="#{description}"></th>
+            <th th:text="#{price}"></th>
+            <th th:text="#{quantity}"></th>
+        </tr>
+        <tr th:each="cartProduct : ${userCartProducts}">
+            <td th:text="${cartProduct.product.name}" />
+            <td th:text="${cartProduct.product.description}" />
+            <td th:text="${cartProduct.product.price} + ' €'" />
+            <td>
+                <form action="/cart/updateCartProductQuantity" th:object="${updateCartProductRequest}" method="post">
+                    <input type="hidden" th:value="${cartProduct.id}" name="id" />
+                    <input type="hidden" th:value="${cartProduct.cart.id}" name="cartId" />
+                    <input type="hidden" th:value="${cartProduct.product.id}" name="productId" />
+                    <input type="number" min="1" th:value="${cartProduct.quantity}" class="form-control" name="quantity" />
+                </form>
+            </td>
+            <td>
+                <form action="/cart/deleteCartProduct" th:object="${deleteCartProductRequest}" method="post">
+                    <input type="hidden" th:value="${cartProduct.id}" name="id" />
+                    <button class="btn btn-danger" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
     <br>
-    <a href="/order/make" th:text="#{makeAnOrder}"></a>
-</div>
 
-<span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
+    <div id="totalSum" th:if="${not userCartProducts.isEmpty}">
+        <span th:text="#{total} + ': € '" class="fs-5 fw-bold"></span><span id="sumValue" class="fs-5 fw-bold"></span>
+        <br>
+        <br>
+        <a class="btn btn-warning" href="/order/make">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+            </svg>
+            <span th:text="#{makeAnOrder}"></span>
+        </a>
+    </div>
 
-<script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-        calculateTotalSum();
-    });
+    <span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
 
-    function calculateTotalSum() {
-        var cartProducts = /*[[${userCartProducts}]]*/ [];
-        var sum = 0;
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            calculateTotalSum();
+        });
 
-        for (var i = 0; i < cartProducts.length; i++) {
-            var cartProduct = cartProducts[i];
-            var price = cartProduct.product.price;
-            var quantity = cartProduct.quantity;
-            var productSum = price * quantity;
-            sum += productSum;
+        function calculateTotalSum() {
+            var cartProducts = /*[[${userCartProducts}]]*/ [];
+            var sum = 0;
+
+            for (var i = 0; i < cartProducts.length; i++) {
+                var cartProduct = cartProducts[i];
+                var price = cartProduct.product.price;
+                var quantity = cartProduct.quantity;
+                var productSum = price * quantity;
+                sum += productSum;
+            }
+
+            var sumElement = document.getElementById("sumValue");
+            sumElement.textContent = sum.toFixed(2); // Display the sum with 2 decimal places
         }
-
-        var sumElement = document.getElementById("sumValue");
-        sumElement.textContent = sum.toFixed(2); // Display the sum with 2 decimal places
-    }
-</script>
+    </script>
+</div>
 
 </body>
 </html>
