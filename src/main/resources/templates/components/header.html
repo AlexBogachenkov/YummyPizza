@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+<div class="container" th:fragment="header">
+  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <span class="fs-3" width="40" height="32">🍕</span>
+        <span class="fs-3 fw-bold">Yummy Pizza</span>
+      </a>
+    </div>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a href="/" th:text="#{home}" class="nav-link px-2"></a></li>
+      <li><a href="/menu" th:text="#{menu}" class="nav-link px-2"></a></li>
+      <li><a href="/about" th:text="#{about}" class="nav-link px-2"></a></li>
+      <li><a href="/contacts" th:text="#{contacts}" class="nav-link px-2"></a></li>
+    </ul>
+
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-right mb-md-0">
+      <li>
+        <select id="locales">
+          <option value="en">EN</option>
+          <option value="lv">LV</option>
+          <option value="ru">RU</option>
+        </select>
+      </li>
+    </ul>
+
+
+    <div class="col-md-3 text-end">
+      <div sec:authorize="not isAuthenticated()">
+        <a href="/login"><button type="button" th:text="#{login}" class="btn btn-outline-primary me-2"></button></a>
+        <a href="/signup"><button type="button" th:text="#{signup}" class="btn btn-primary"></button></a>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <div class="dropdown">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <span th:text="#{greeting} + ', ' + ${#authentication.principal.firstName} + '!'" class="fs-6"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle ms-3" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a th:text="#{myOrders}" class="dropdown-item" href="my-orders"></a></li>
+            <li><a th:text="#{profile}" class="dropdown-item" href="#"></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a th:text="#{logout}" class="dropdown-item" href="/logout"></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+      <div class="col-md-3 text-end">
+        <a href="/cart" class="link-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart2" viewBox="0 0 16 16">
+            <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </header>
+</div>
+
+</body>
+</html>

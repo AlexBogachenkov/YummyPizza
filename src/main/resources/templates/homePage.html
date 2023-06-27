@@ -1,45 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Yummy Pizza</title>
+    <title>Home</title>
 </head>
 <body>
 
-<h1 th:text="#{welcome.text}"></h1>
-
-<span th:text="#{lang.change}"></span>:
-<select id="locales">
-    <option value=""></option>
-    <option value="en" th:text="#{lang.eng}"></option>
-    <option value="lv" th:text="#{lang.lv}"></option>
-    <option value="ru" th:text="#{lang.ru}"></option>
-</select><br>
-
-<a href="/login" th:text="#{login}"></a>
-<a href="/signup" th:text="#{signup}"></a>
-<a href="/logout" th:text="#{logout}"></a>
-<br>
-<a href="/menu" th:text="#{menu}"></a>
-<br>
-<a href="/cart" th:text="#{cart}"></a>
-<br>
-<a href="/my-orders" th:text="#{myOrders}"></a>
-<br>
-<a href="/adminPage" th:text="#{adminPage}"></a>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#locales").change(function () {
-            var selectedOption = $('#locales').val();
-            if (selectedOption != ''){
-                window.location.replace('?lang=' + selectedOption);
-            }
-        });
-    });
-</script>
+<div layout:fragment="content">
+    <h1 th:text="#{welcome.heading}"></h1>
+    <br>
+    <p th:text="#{welcome.text1}"></p>
+    <p th:text="#{welcome.text2}"></p>
+    <p th:text="#{welcome.text3}"></p>
+    <p th:text="#{welcome.text4}"></p>
+</div>
 
 </body>
 </html>
