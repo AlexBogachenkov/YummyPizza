@@ -30,7 +30,7 @@ public class WebSecurityConfiguration {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/menu", true)
                 .failureUrl("/login?isAuthenticationFailed=true")
                 .permitAll();
         return http.build();

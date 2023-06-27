@@ -1,104 +1,150 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{menu}"></title>
 </head>
 <body>
 
-<table th:if="${addProductToCartRequestErrors != null}">
-    <tr th:each="error : ${addProductToCartRequestErrors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+<div layout:fragment="content">
 
-<h1 th:text="#{menu}"></h1>
+    <div th:if="${addProductToCartRequestErrors != null}">
+        <div class="text-danger" th:each="error : ${addProductToCartRequestErrors}">
+            <span th:text="${error.field}" />
+            <span th:text="${error.message}" />
+        </div>
+    </div>
 
-<h2 th:text="#{menu.pizza}"></h2>
+    <h1 th:text="#{menu}"></h1>
+    <br>
 
-<table th:if="${not products.isEmpty}">
-    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'PIZZA'}">
-        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
-        <td th:text="${product.description}" />
-        <td th:text="${product.price}" />
-        <td>
+    <h3 th:text="#{menu.pizza}"></h3>
 
-            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
-                    <div sec:authorize="isAuthenticated()">
-                        <input type="hidden" th:value="${cart.id}" name="cartId" />
-                        <input type="hidden" th:value="${product.id}" name="productId" />
-                        <input type="hidden" value="1" name="quantity" />
+    <div th:if="${not products.isEmpty}" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+        <div th:each="product : ${products}" th:if="${product.type.toString() == 'PIZZA'}" class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-body">
+                    <a th:href="@{/products/} + ${product.id}"><h5 th:text="${product.name}" class="card-title"></h5></a>
+                    <p th:text="${product.description}" />
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <h5 th:text="${product.price} + ' €'" />
+                    <div>
+
+                        <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                                <div sec:authorize="isAuthenticated()">
+                                    <input type="hidden" th:value="${cart.id}" name="cartId" />
+                                    <input type="hidden" th:value="${product.id}" name="productId" />
+                                    <input type="hidden" value="1" name="quantity" />
+                                </div>
+                                <button type="submit" th:text="#{form.button.toCart}" class="btn btn-warning"></button>
+                            </form>
+                        </div>
+
+                        <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <a href="/cart" class="btn btn-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                                    <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                                <span th:text="#{menu.inTheCart}"></span>
+                            </a>
+                        </div>
                     </div>
-                    <button type="submit" th:text="#{form.button.toCart}"></button>
-                </form>
+                </div>
+
             </div>
+        </div>
+    </div>
+    <br>
 
-            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart" th:text="#{menu.inTheCart}"></a>
-            </div>
+    <h3 th:text="#{menu.drinks}"></h3>
 
-        </td>
-    </tr>
-</table>
+    <div th:if="${not products.isEmpty}" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+        <div th:each="product : ${products}" th:if="${product.type.toString() == 'DRINK'}" class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-body">
+                    <a th:href="@{/products/} + ${product.id}"><h5 th:text="${product.name}" class="card-title"></h5></a>
+                    <p th:text="${product.description}" />
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <h5 th:text="${product.price} + ' €'" />
+                    <div>
 
-<h2 th:text="#{menu.drinks}"></h2>
+                        <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                                <div sec:authorize="isAuthenticated()">
+                                    <input type="hidden" th:value="${cart.id}" name="cartId" />
+                                    <input type="hidden" th:value="${product.id}" name="productId" />
+                                    <input type="hidden" value="1" name="quantity" />
+                                </div>
+                                <button type="submit" th:text="#{form.button.toCart}" class="btn btn-warning"></button>
+                            </form>
+                        </div>
 
-<table th:if="${not products.isEmpty}">
-    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DRINK'}">
-        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
-        <td th:text="${product.description}" />
-        <td th:text="${product.price}" />
-        <td>
-
-            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
-                    <div sec:authorize="isAuthenticated()">
-                        <input type="hidden" th:value="${cart.id}" name="cartId" />
-                        <input type="hidden" th:value="${product.id}" name="productId" />
-                        <input type="hidden" value="1" name="quantity" />
+                        <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <a href="/cart" class="btn btn-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                                    <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                                <span th:text="#{menu.inTheCart}"></span>
+                            </a>
+                        </div>
                     </div>
-                    <button type="submit" th:text="#{form.button.toCart}"></button>
-                </form>
+                </div>
+
             </div>
+        </div>
+    </div>
+    <br>
 
-            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart" th:text="#{menu.inTheCart}"></a>
-            </div>
+    <h3 th:text="#{menu.desserts}"></h3>
 
-        </td>
-    </tr>
-</table>
+    <div th:if="${not products.isEmpty}" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+        <div th:each="product : ${products}" th:if="${product.type.toString() == 'DESSERT'}" class="col">
+            <div class="card" style="height: 100%;">
+                <div class="card-body">
+                    <a th:href="@{/products/} + ${product.id}"><h5 th:text="${product.name}" class="card-title"></h5></a>
+                    <p th:text="${product.description}" />
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <h5 th:text="${product.price} + ' €'" />
+                    <div>
 
-<h2 th:text="#{menu.desserts}"></h2>
+                        <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
+                                <div sec:authorize="isAuthenticated()">
+                                    <input type="hidden" th:value="${cart.id}" name="cartId" />
+                                    <input type="hidden" th:value="${product.id}" name="productId" />
+                                    <input type="hidden" value="1" name="quantity" />
+                                </div>
+                                <button type="submit" th:text="#{form.button.toCart}" class="btn btn-warning"></button>
+                            </form>
+                        </div>
 
-<table th:if="${not products.isEmpty}">
-    <tr th:each="product : ${products}" th:if="${product.type.toString() == 'DESSERT'}">
-        <td><a th:text="${product.name}" th:href="@{/products/} + ${product.id}"></a></td>
-        <td th:text="${product.description}" />
-        <td th:text="${product.price}" />
-        <td>
-
-            <div th:unless="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <form action="/menu/addProductToCart" th:object="${addProductToCartRequest}" method="post">
-                    <div sec:authorize="isAuthenticated()">
-                        <input type="hidden" th:value="${cart.id}" name="cartId" />
-                        <input type="hidden" th:value="${product.id}" name="productId" />
-                        <input type="hidden" value="1" name="quantity" />
+                        <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
+                            <a href="/cart" class="btn btn-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                                    <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                                <span th:text="#{menu.inTheCart}"></span>
+                            </a>
+                        </div>
                     </div>
-                    <button type="submit" th:text="#{form.button.toCart}"></button>
-                </form>
-            </div>
+                </div>
 
-            <div th:if="${userCartProducts != null and #arrays.contains(userCartProducts.![product], product)}">
-                <a href="/cart" th:text="#{menu.inTheCart}"></a>
             </div>
+        </div>
+    </div>
+    <br>
 
-        </td>
-    </tr>
-</table>
+</div>
 
 </body>
 </html>
