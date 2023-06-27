@@ -1,35 +1,39 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{signup}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
 
-<h1 th:text="#{signup}"></h1>
+    <div class="container mt-5 col-4">
+        <h1 th:text="#{signup}"></h1>
+        <br>
+        <form action="/signup" th:object="${request}" method="post">
+            <label th:text="#{form.field.firstName} + ':'"></label><br>
+            <input type="text" class="form-control" th:field="*{firstName}"/><br>
+            <label th:text="#{form.field.lastName} + ':'"></label><br>
+            <input type="text" class="form-control" th:field="*{lastName}"/><br>
+            <label th:text="#{form.field.email} + ':'"></label><br>
+            <input type="text" class="form-control" th:field="*{email}"/><br>
+            <label th:text="#{form.field.password} + ':'"></label><br>
+            <input type="password" class="form-control" th:field="*{password}"/><br>
+            <label th:text="#{form.field.phone} + ':'"></label><br>
+            <input type="text" class="form-control" th:field="*{phone}"/>
+            <div th:if="${errors != null}">
+                <div class="text-danger" th:each="error : ${errors}">
+                    <span th:text="${error.field}"></span>
+                    <span th:text="${error.message}"></span>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary w-100 py-2" type="submit" th:text="#{signup}"/>
+        </form>
+    </div>
 
-<form action="/signup" th:object="${request}" method="post">
-  <label th:text="#{form.field.firstName} + ':'"></label><br>
-  <input type="text" th:field="*{firstName}"/><br>
-  <label th:text="#{form.field.lastName} + ':'"></label><br>
-  <input type="text" th:field="*{lastName}"/><br>
-  <label th:text="#{form.field.email} + ':'"></label><br>
-  <input type="text" th:field="*{email}"/><br>
-  <label th:text="#{form.field.password} + ':'"></label><br>
-  <input type="password" th:field="*{password}"/><br>
-  <label th:text="#{form.field.phone} + ':'"></label><br>
-  <input type="text" th:field="*{phone}"/><br>
-  <br>
-  <br>
-
-  <input type="submit" th:value="#{signup}"/>
-</form>
-
-<table th:if="${errors != null}">
-  <tr th:each="error : ${errors}">
-    <td th:text="${error.field}" />
-    <td th:text="${error.message}" />
-  </tr>
-</table>
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,12 +1,17 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{successfulSignUpPage.title}"></title>
 </head>
 <body>
 
-<h1 th:text="#{successfulSignUpPage.message}"></h1>
-<a href="/login" th:text="#{login}"></a>
+<div layout:fragment="content" class="mt-4">
+    <h2 th:text="#{successfulSignUpPage.message}"></h2>
+</div>
 
 </body>
 </html>

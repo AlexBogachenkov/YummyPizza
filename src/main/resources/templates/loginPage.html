@@ -9,6 +9,7 @@
 <body>
     <div class="container mt-5 col-4">
         <h1 th:text="#{login}"></h1>
+        <br>
         <form action="/login" method='POST'>
             <label th:text="#{form.field.email} + ':'"></label><br>
             <input type='text' class="form-control" name='username' /><br>
