@@ -1,55 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{makeAnOrder}"></title>
 </head>
 <body>
 
-<h1 th:text="#{makeAnOrder}"></h1>
+<div layout:fragment="content">
+    <h1 th:text="#{makeAnOrder}"></h1>
+    <br>
 
-<span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
+    <div th:if="${userCartProducts.isEmpty}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="#{yourCartIsEmpty}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 
-<table th:if="${createOrderRequestErrors != null}">
-    <tr th:each="error : ${createOrderRequestErrors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+    <table th:if="${not userCartProducts.isEmpty}" class="table">
+        <tr>
+            <th th:text="#{product.name}"></th>
+            <th th:text="#{description}"></th>
+            <th th:text="#{price}"></th>
+            <th th:text="#{quantity}"></th>
+        </tr>
+        <tr th:each="cartProduct : ${userCartProducts}">
+            <td th:text="${cartProduct.product.name}" />
+            <td th:text="${cartProduct.product.description}" />
+            <td th:text="${cartProduct.product.price} + ' €'" />
+            <td th:text="${cartProduct.quantity}" />
+        </tr>
+    </table>
+    <br>
+    <div th:if="${not userCartProducts.isEmpty}">
+        <b th:text="#{total} + ': € '"></b><b th:text="${createOrderRequest.amount}"></b>
+    </div>
+    <br>
 
-<table th:if="${not userCartProducts.isEmpty}">
-    <tr>
-        <th th:text="#{product.name}"></th>
-        <th th:text="#{description}"></th>
-        <th th:text="#{price}"></th>
-        <th th:text="#{quantity}"></th>
-    </tr>
-    <tr th:each="cartProduct : ${userCartProducts}">
-        <td th:text="${cartProduct.product.name}" />
-        <td th:text="${cartProduct.product.description}" />
-        <td th:text="${cartProduct.product.price}" />
-        <td th:text="${cartProduct.quantity}" />
-    </tr>
-</table>
-<br>
-<div th:if="${not userCartProducts.isEmpty}">
-    <b th:text="#{total} + ': € '"></b><b th:text="${createOrderRequest.amount}"></b>
+    <form action="/order/make" th:object="${createOrderRequest}" method="post" class="col-4">
+        <input type="hidden" th:value="${cart.id}" name="cartId" />
+        <label th:text="#{form.field.city} + '*:'"></label><br>
+        <input type="text" class="form-control" th:field="${createOrderRequest.city}" /><br>
+        <label th:text="#{form.field.street} + '*:'"></label><br>
+        <input type="text" class="form-control" th:field="${createOrderRequest.street}" /><br>
+        <label th:text="#{form.field.buildingNumber} + '*:'"></label><br>
+        <input type="text" class="form-control" th:field="${createOrderRequest.buildingNumber}" /><br>
+        <label th:text="#{form.field.apartmentNumber} + ':'"></label><br>
+        <input type="text" class="form-control" th:field="${createOrderRequest.apartmentNumber}" />
+
+        <div th:if="${createOrderRequestErrors != null}">
+            <div th:each="error : ${createOrderRequestErrors}" class="text-danger">
+                <span th:text="${error.field}" />
+                <span th:text="${error.message}" />
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+            </svg>
+            <span th:text="#{makeAnOrder}"></span>
+        </button>
+    </form>
 </div>
-<br>
-
-<form action="/order/make" th:object="${createOrderRequest}" method="post">
-    <input type="hidden" th:value="${cart.id}" name="cartId" />
-    <label th:text="#{form.field.city} + '*:'"></label><br>
-    <input type="text" th:field="${createOrderRequest.city}" /><br>
-    <label th:text="#{form.field.street} + '*:'"></label><br>
-    <input type="text" th:field="${createOrderRequest.street}" /><br>
-    <label th:text="#{form.field.buildingNumber} + '*:'"></label><br>
-    <input type="text" th:field="${createOrderRequest.buildingNumber}" /><br>
-    <label th:text="#{form.field.apartmentNumber} + ':'"></label><br>
-    <input type="text" th:field="${createOrderRequest.apartmentNumber}" /><br><br>
-    <button type="submit" th:text="#{makeAnOrder}">Make an order</button>
-</form>
 
 </body>
 </html>
