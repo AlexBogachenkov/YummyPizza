@@ -1,39 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{myOrders}"></title>
 </head>
 <body>
 
-<h1 th:text="#{myOrders}"></h1>
-
-<table th:if="${not userOrders.isEmpty}">
-  <tr>
-    <th th:text="#{userOrder.id}"></th>
-    <th th:text="#{userOrder.amount}"></th>
-    <th th:text="#{userOrder.dateCreated}"></th>
-    <th th:text="#{userOrder.dateCompleted}"></th>
-    <th th:text="#{form.field.city}"></th>
-    <th th:text="#{form.field.street}"></th>
-    <th th:text="#{form.field.buildingNumber}"></th>
-    <th th:text="#{form.field.apartmentNumber}"></th>
-    <th th:text="#{userOrder.status}"></th>
-  </tr>
-  <tr th:each="order : ${userOrders}">
-    <td th:text="${order.id}" />
-    <td th:text="${order.amount}" />
-    <td th:text="${order.dateCreated}" />
-    <td th:text="${order.dateCompleted}" />
-    <td th:text="${order.city}" />
-    <td th:text="${order.street}" />
-    <td th:text="${order.buildingNumber}" />
-    <td th:text="${order.apartmentNumber}" />
-    <td th:text="${order.status}" />
-  </tr>
-</table>
-
-<span th:if="${userOrders.isEmpty}" th:text="#{userOrder.isEmpty}"></span>
+<div layout:fragment="content">
+  <h1 th:text="#{myOrders}"></h1>
+  <br>
+  <table th:if="${not userOrders.isEmpty}" class="table">
+    <tr>
+      <th th:text="#{userOrder.id}"></th>
+      <th th:text="#{userOrder.amount}"></th>
+      <th th:text="#{userOrder.dateCreated}"></th>
+      <th th:text="#{userOrder.dateCompleted}"></th>
+      <th th:text="#{form.field.city}"></th>
+      <th th:text="#{form.field.street}"></th>
+      <th th:text="#{form.field.buildingNumber}"></th>
+      <th th:text="#{form.field.apartmentNumber}"></th>
+      <th th:text="#{userOrder.status}"></th>
+    </tr>
+    <tr th:each="order : ${userOrders}">
+      <td th:text="${order.id}" />
+      <td th:text="${order.amount} + ' €'" />
+      <td th:text="${order.dateCreated}" />
+      <td th:text="${order.dateCompleted}" />
+      <td th:text="${order.city}" />
+      <td th:text="${order.street}" />
+      <td th:text="${order.buildingNumber}" />
+      <td th:text="${order.apartmentNumber}" />
+      <td>
+        <div th:if="${order.status.toString} == 'RECEIVED'">
+          <span th:text="${order.status}" class="text-warning"></span>
+        </div>
+        <div th:if="${order.status.toString} == 'PREPARING'">
+          <span th:text="${order.status}" class="text-primary"></span>
+        </div>
+        <div th:if="${order.status.toString} == 'COMPLETED'">
+          <span th:text="${order.status}" class="text-success"></span>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div th:if="${userOrders.isEmpty}" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <span th:text="#{userOrder.isEmpty}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+</div>
 
 </body>
 </html>
