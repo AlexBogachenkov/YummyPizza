@@ -1,51 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find user by ID</title>
 </head>
 <body>
 
-<h1>Find user by ID</h1>
+<div layout:fragment="content">
+    <h1>Find user by ID</h1>
+    <br>
+    <form action="/users/find/" method="get">
+        <label>User ID:</label><br>
+        <input type="text" name="id"/><br>
+        <br>
+        <br>
 
-<form action="/users/find/" method="get">
-  <label>User ID:</label><br>
-  <input type="text" name="id"/><br>
-  <br>
-  <br>
+        <input type="submit" value="Find"/>
+        <input type="reset" value="Clear"/>
+    </form>
 
-  <input type="submit" value="Find"/>
-  <input type="reset" value="Clear"/>
-</form>
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
 
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
-      <td th:text="${error.field}" />
-      <td th:text="${error.message}" />
-    </tr>
-</table>
-
-<table th:if="${foundUser != null}">
-    <tr>
-      <th>ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Role</th>
-    </tr>
-    <tr>
-      <td th:text="${foundUser?.id}" />
-      <td th:text="${foundUser?.firstName}" />
-      <td th:text="${foundUser?.lastName}" />
-      <td th:text="${foundUser?.email}" />
-      <td th:text="${foundUser?.phone}" />
-      <td th:text="${foundUser?.role}" />
-    </tr>
-</table>
+    <table th:if="${foundUser != null}" class="table">
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+        </tr>
+        <tr>
+            <td th:text="${foundUser?.id}" />
+            <td th:text="${foundUser?.firstName}" />
+            <td th:text="${foundUser?.lastName}" />
+            <td th:text="${foundUser?.email}" />
+            <td th:text="${foundUser?.phone}" />
+            <td th:text="${foundUser?.role}" />
+        </tr>
+    </table>
 
 
     <span th:if="${userNotFound == true}">User not found.</span>
+</div>
 
 </body>
 </html>

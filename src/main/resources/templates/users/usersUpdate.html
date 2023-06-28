@@ -1,45 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title>Update a user</title>
 </head>
 <body>
 
-<h1>Update a user</h1>
-
-<form th:action="@{/users/} + ${user.id} + @{/update}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>First name:</label><br>
-    <input type="text" th:field="*{firstName}"/><br>
-    <label>Last name:</label><br>
-    <input type="text" th:field="*{lastName}"/><br>
-    <label>Email:</label><br>
-    <input type="text" th:field="*{email}"/><br>
-    <label>Password:</label><br>
-    <input type="text" th:field="*{password}"/><br>
-    <label>Phone:</label><br>
-    <input type="text" th:field="*{phone}"/><br>
-    <label>Role:</label><br>
-    <select th:field="*{role}">
-        <option th:value="CLIENT" th:text="Client"></option>
-        <option th:value="ADMIN" th:text="Admin"></option>
-    </select>
+<div layout:fragment="content">
+    <h1>Update a user</h1>
     <br>
-    <br>
+    <form th:action="@{/users/} + ${user.id} + @{/update}" th:object="${user}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>First name:</label><br>
+        <input type="text" th:field="*{firstName}"/><br>
+        <label>Last name:</label><br>
+        <input type="text" th:field="*{lastName}"/><br>
+        <label>Email:</label><br>
+        <input type="text" th:field="*{email}"/><br>
+        <label>Password:</label><br>
+        <input type="text" th:field="*{password}"/><br>
+        <label>Phone:</label><br>
+        <input type="text" th:field="*{phone}"/><br>
+        <label>Role:</label><br>
+        <select th:field="*{role}">
+            <option th:value="CLIENT" th:text="Client"></option>
+            <option th:value="ADMIN" th:text="Admin"></option>
+        </select>
+        <br>
+        <br>
 
-    <input type="submit" value="Update"/>
-    <input type="reset" value="Clear"/>
-</form>
+        <input type="submit" value="Update"/>
+        <input type="reset" value="Clear"/>
+    </form>
 
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
 
-<span th:if="${updatedUser != null}">The user was updated successfully!</span>
+    <span th:if="${updatedUser != null}">The user was updated successfully!</span>
+</div>
 
 </body>
 </html>

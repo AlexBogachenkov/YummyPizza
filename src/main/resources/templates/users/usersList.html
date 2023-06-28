@@ -1,53 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find all users</title>
 </head>
 <body>
 
-<h1>Find all users</h1>
+<div layout:fragment="content">
+  <h1>Find all users</h1>
+  <br>
+  <table th:if="${deleteByIdRequestErrors != null}">
+    <tr th:each="error : ${deleteByIdRequestErrors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+  </table>
 
-<table th:if="${deleteByIdRequestErrors != null}">
-  <tr th:each="error : ${deleteByIdRequestErrors}">
-    <td th:text="${error.field}" />
-    <td th:text="${error.message}" />
-  </tr>
-</table>
+  <span th:if="${userToUpdateNotFound == true}">The user to update was not found.</span>
 
-<span th:if="${userToUpdateNotFound == true}">The user to update was not found.</span>
+  <span th:if="${userDeleted == true}">The user was deleted successfully.</span>
 
-<span th:if="${userDeleted == true}">The user was deleted successfully.</span>
+  <table th:if="${not users.isEmpty}" class="table">
+    <tr>
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Role</th>
+    </tr>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.id}" />
+      <td th:text="${user.firstName}" />
+      <td th:text="${user.lastName}" />
+      <td th:text="${user.email}" />
+      <td th:text="${user.phone}" />
+      <td th:text="${user.role}" />
+      <td>
+        <a th:href="@{/users/} + ${user.id} + @{/update}">Update</a>
+      </td>
+      <td>
+        <form action="/users/delete" th:object="${deleteByIdRequest}" method="post">
+          <input type="hidden" th:value="${user.id}" name="id" />
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 
-<table th:if="${not users.isEmpty}">
-  <tr>
-    <th>ID</th>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Role</th>
-  </tr>
-  <tr th:each="user : ${users}">
-    <td th:text="${user.id}" />
-    <td th:text="${user.firstName}" />
-    <td th:text="${user.lastName}" />
-    <td th:text="${user.email}" />
-    <td th:text="${user.phone}" />
-    <td th:text="${user.role}" />
-    <td>
-      <a th:href="@{/users/} + ${user.id} + @{/update}">Update</a>
-    </td>
-    <td>
-      <form action="/users/delete" th:object="${deleteByIdRequest}" method="post">
-        <input type="hidden" th:value="${user.id}" name="id" />
-        <button type="submit">Delete</button>
-      </form>
-    </td>
-  </tr>
-</table>
+  <span th:if="${users.isEmpty}">Users not found.</span>
+</div>
 
-<span th:if="${users.isEmpty}">Users not found.</span>
+
+
 
 </body>
 </html>

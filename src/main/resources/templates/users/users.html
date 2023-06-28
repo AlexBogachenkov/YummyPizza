@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
 </head>
 <body>
 
-<h1>Users</h1>
-
-
-<a href="/users/create">Create a user</a>
-<br>
-<a href="/users/find">Find user by ID</a>
-<br>
-<a href="/users/list">Find all users</a>
-<br>
+<div layout:fragment="content">
+    <h1>Users</h1>
+    <br>
+    <a href="/users/create">Create a user</a>
+    <br>
+    <a href="/users/find">Find user by ID</a>
+    <br>
+    <a href="/users/list">Find all users</a>
+    <br>
+</div>
 
 </body>
 </html>
