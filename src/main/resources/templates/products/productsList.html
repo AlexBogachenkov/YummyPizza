@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find all products</title>
 </head>
 <body>
 
-<h1>Find all products</h1>
+<div layout:fragment="content">
+  <h1>Find all products</h1>
+  <br>
+  <table th:if="${deleteByIdRequestErrors != null}">
+    <tr th:each="error : ${deleteByIdRequestErrors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+  </table>
 
-<table th:if="${deleteByIdRequestErrors != null}">
-  <tr th:each="error : ${deleteByIdRequestErrors}">
-    <td th:text="${error.field}" />
-    <td th:text="${error.message}" />
-  </tr>
-</table>
+  <span th:if="${productToUpdateNotFound == true}">The product to update was not found.</span>
+  <span th:if="${productDeleted == true}">The product was deleted successfully.</span>
 
-<span th:if="${productToUpdateNotFound == true}">The product to update was not found.</span>
-<span th:if="${productDeleted == true}">The product was deleted successfully.</span>
+  <table th:if="${not products.isEmpty}" class="table">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Type</th>
+    </tr>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.id}" />
+      <td th:text="${product.name}" />
+      <td th:text="${product.description}" />
+      <td th:text="${product.price}" />
+      <td th:text="${product.type}" />
+      <td>
+        <a th:href="@{/products/} + ${product.id} + @{/update}">Update</a>
+      </td>
+      <td>
+        <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
+          <input type="hidden" th:value="${product.id}" name="id" />
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 
-<table th:if="${not products.isEmpty}">
-  <tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Type</th>
-  </tr>
-  <tr th:each="product : ${products}">
-    <td th:text="${product.id}" />
-    <td th:text="${product.name}" />
-    <td th:text="${product.description}" />
-    <td th:text="${product.price}" />
-    <td th:text="${product.type}" />
-    <td>
-      <a th:href="@{/products/} + ${product.id} + @{/update}">Update</a>
-    </td>
-    <td>
-      <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
-        <input type="hidden" th:value="${product.id}" name="id" />
-        <button type="submit">Delete</button>
-      </form>
-    </td>
-  </tr>
-</table>
-
-<span th:if="${products.isEmpty}">Products not found.</span>
+  <span th:if="${products.isEmpty}">Products not found.</span>
+</div>
 
 </body>
 </html>
