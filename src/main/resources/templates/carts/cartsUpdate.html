@@ -1,37 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title>Update a cart</title>
 </head>
 <body>
 
-<h1>Update a cart</h1>
-
-<form th:action="@{/carts/} + ${updateCartRequest.id} + @{/update}" th:object="${updateCartRequest}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>User ID:</label><br>
-    <input type="text" th:field="*{userId}"/><br>
-    <label>Status:</label><br>
-    <select th:field="*{status}">
-        <option th:value="ACTIVE" th:text="Active"></option>
-        <option th:value="INACTIVE" th:text="Inactive"></option>
-    </select>
+<div layout:fragment="content">
+    <h1>Update a cart</h1>
     <br>
-    <br>
+    <form th:action="@{/carts/} + ${updateCartRequest.id} + @{/update}" th:object="${updateCartRequest}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>User ID:</label><br>
+        <input type="text" th:field="*{userId}"/><br>
+        <label>Status:</label><br>
+        <select th:field="*{status}">
+            <option th:value="ACTIVE" th:text="Active"></option>
+            <option th:value="INACTIVE" th:text="Inactive"></option>
+        </select>
+        <br>
+        <br>
 
-    <input type="submit" value="Update"/>
-    <input type="reset" value="Clear"/>
-</form>
+        <input type="submit" value="Update"/>
+        <input type="reset" value="Clear"/>
+    </form>
 
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
 
-<span th:if="${updatedCart != null}">The cart was updated successfully!</span>
+    <span th:if="${updatedCart != null}">The cart was updated successfully!</span>
+</div>
 
 </body>
 </html>
