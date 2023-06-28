@@ -1,36 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title>Update a cart product</title>
 </head>
 <body>
 
-<h1>Update a cart product</h1>
-
-<form th:action="@{/cart-products/} + ${updateCartProductRequest.id} + @{/update}" th:object="${updateCartProductRequest}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>Cart ID:</label><br>
-    <input type="text" th:field="*{cartId}"/><br>
-    <label>Product ID:</label><br>
-    <input type="text" th:field="*{productId}"/><br>
-    <label>Quantity:</label><br>
-    <input type="number" min="1" th:field="*{quantity}"/><br>
+<div layout:fragment="content">
+    <h1>Update a cart product</h1>
     <br>
-    <br>
+    <form th:action="@{/cart-products/} + ${updateCartProductRequest.id} + @{/update}" th:object="${updateCartProductRequest}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>Cart ID:</label><br>
+        <input type="text" th:field="*{cartId}"/><br>
+        <label>Product ID:</label><br>
+        <input type="text" th:field="*{productId}"/><br>
+        <label>Quantity:</label><br>
+        <input type="number" min="1" th:field="*{quantity}"/><br>
+        <br>
+        <br>
 
-    <input type="submit" value="Update"/>
-    <input type="reset" value="Clear"/>
-</form>
+        <input type="submit" value="Update"/>
+        <input type="reset" value="Clear"/>
+    </form>
 
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
 
-<span th:if="${updatedCartProduct != null}">The cart product was updated successfully!</span>
+    <span th:if="${updatedCartProduct != null}">The cart product was updated successfully!</span>
+</div>
 
 </body>
 </html>

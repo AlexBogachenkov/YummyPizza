@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title>Cart products</title>
 </head>
 <body>
 
-<h1>Cart products</h1>
-
-
-<a href="/cart-products/add">Add product to the cart</a>
-<br>
-<a href="/cart-products/list">Find all cart products</a>
-<br>
-<a href="/cart-products/find">Find cart product by ID</a>
-<br>
+<div layout:fragment="content">
+    <h1>Cart products</h1>
+    <br>
+    <a href="/cart-products/add">Add product to the cart</a>
+    <br>
+    <a href="/cart-products/list">Find all cart products</a>
+    <br>
+    <a href="/cart-products/find">Find cart product by ID</a>
+    <br>
+</div>
 
 </body>
 </html>

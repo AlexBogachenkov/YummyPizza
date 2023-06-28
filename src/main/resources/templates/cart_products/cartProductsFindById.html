@@ -1,49 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find cart product by ID</title>
 </head>
 <body>
 
-<h1>Find cart product by ID</h1>
+<div layout:fragment="content">
+    <h1>Find cart product by ID</h1>
+    <br>
+    <form action="/cart-products/find/" method="get">
+        <label>Cart product ID:</label><br>
+        <input type="text" name="id"/><br>
+        <br>
+        <br>
 
-<form action="/cart-products/find/" method="get">
-  <label>Cart product ID:</label><br>
-  <input type="text" name="id"/><br>
-  <br>
-  <br>
+        <input type="submit" value="Find"/>
+        <input type="reset" value="Clear"/>
+    </form>
 
-  <input type="submit" value="Find"/>
-  <input type="reset" value="Clear"/>
-</form>
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
 
-<table th:if="${errors != null}">
-    <tr th:each="error : ${errors}">
-        <td th:text="${error.field}" />
-        <td th:text="${error.message}" />
-    </tr>
-</table>
+    <table th:if="${foundCartProduct != null}" class="table">
+        <tr>
+            <th>ID</th>
+            <th>Cart ID</th>
+            <th>Product ID</th>
+            <th>Product name</th>
+            <th>Quantity</th>
+        </tr>
+        <tr>
+            <td th:text="${foundCartProduct.id}" />
+            <td th:text="${foundCartProduct.cart.id}" />
+            <td th:text="${foundCartProduct.product.id}" />
+            <td th:text="${foundCartProduct.product.name}" />
+            <td th:text="${foundCartProduct.quantity}" />
+        </tr>
+    </table>
 
-<table th:if="${foundCartProduct != null}">
-    <tr>
-        <th>ID</th>
-        <th>Cart ID</th>
-        <th>Product ID</th>
-        <th>Product name</th>
-        <th>Quantity</th>
-    </tr>
-    <tr>
-        <td th:text="${foundCartProduct.id}" />
-        <td th:text="${foundCartProduct.cart.id}" />
-        <td th:text="${foundCartProduct.product.id}" />
-        <td th:text="${foundCartProduct.product.name}" />
-        <td th:text="${foundCartProduct.quantity}" />
-    </tr>
-</table>
-
-
-<span th:if="${cartProductNotFound == true}">Cart product not found.</span>
+    <span th:if="${cartProductNotFound == true}">Cart product not found.</span>
+</div>
 
 </body>
 </html>

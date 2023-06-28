@@ -1,51 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find all cart products</title>
 </head>
 <body>
 
-<h1>Find all cart products</h1>
+<div layout:fragment="content">
+  <h1>Find all cart products</h1>
+  <br>
+  <table th:if="${deleteByIdRequestErrors != null}">
+    <tr th:each="error : ${deleteByIdRequestErrors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+  </table>
 
-<table th:if="${deleteByIdRequestErrors != null}">
-  <tr th:each="error : ${deleteByIdRequestErrors}">
-    <td th:text="${error.field}" />
-    <td th:text="${error.message}" />
-  </tr>
-</table>
+  <span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>
 
-<span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>
+  <span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
 
-<span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
+  <table th:if="${not cartProducts.isEmpty}" class="table">
+    <tr>
+      <th>ID</th>
+      <th>Cart ID</th>
+      <th>Product ID</th>
+      <th>Product name</th>
+      <th>Quantity</th>
+    </tr>
+    <tr th:each="cartProduct : ${cartProducts}">
+      <td th:text="${cartProduct.id}" />
+      <td th:text="${cartProduct.cart.id}" />
+      <td th:text="${cartProduct.product.id}" />
+      <td th:text="${cartProduct.product.name}" />
+      <td th:text="${cartProduct.quantity}" />
+      <td>
+        <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>
+      </td>
+      <td>
+        <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">
+          <input type="hidden" th:value="${cartProduct.id}" name="id" />
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 
-<table th:if="${not cartProducts.isEmpty}">
-  <tr>
-    <th>ID</th>
-    <th>Cart ID</th>
-    <th>Product ID</th>
-    <th>Product name</th>
-    <th>Quantity</th>
-  </tr>
-  <tr th:each="cartProduct : ${cartProducts}">
-    <td th:text="${cartProduct.id}" />
-    <td th:text="${cartProduct.cart.id}" />
-    <td th:text="${cartProduct.product.id}" />
-    <td th:text="${cartProduct.product.name}" />
-    <td th:text="${cartProduct.quantity}" />
-    <td>
-      <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>
-    </td>
-    <td>
-      <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">
-        <input type="hidden" th:value="${cartProduct.id}" name="id" />
-        <button type="submit">Delete</button>
-      </form>
-    </td>
-  </tr>
-</table>
-
-<span th:if="${cartProducts.isEmpty}">Cart products not found.</span>
+  <span th:if="${cartProducts.isEmpty}">Cart products not found.</span>
+</div>
 
 </body>
 </html>

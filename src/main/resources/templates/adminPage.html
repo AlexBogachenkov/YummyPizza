@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{adminPage}"></title>
 </head>
 <body>
 
-<h1 th:text="#{adminPage}"></h1>
-
-
-<a href="/users" th:text="#{adminPage.users}"></a><br>
-<a href="/carts" th:text="#{adminPage.carts}"></a><br>
-<a href="/products" th:text="#{adminPage.products}"></a><br>
-<a href="/cart-products" th:text="#{adminPage.cartProducts}"></a><br>
-<a href="/orders" th:text="#{adminPage.orders}"></a><br>
+<div layout:fragment="content">
+    <h1 th:text="#{adminPage}"></h1>
+    <br>
+    <a href="/users" th:text="#{adminPage.users}"></a><br>
+    <a href="/carts" th:text="#{adminPage.carts}"></a><br>
+    <a href="/products" th:text="#{adminPage.products}"></a><br>
+    <a href="/cart-products" th:text="#{adminPage.cartProducts}"></a><br>
+    <a href="/orders" th:text="#{adminPage.orders}"></a><br>
+</div>
 
 </body>
 </html>
