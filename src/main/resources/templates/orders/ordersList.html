@@ -1,61 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
   <title>Find all orders</title>
 </head>
 <body>
 
-<h1>Find all orders</h1>
+<div layout:fragment="content">
+  <h1>Find all orders</h1>
+  <br>
+  <table th:if="${deleteByIdRequestErrors != null}">
+    <tr th:each="error : ${deleteByIdRequestErrors}">
+      <td th:text="${error.field}" />
+      <td th:text="${error.message}" />
+    </tr>
+  </table>
 
-<table th:if="${deleteByIdRequestErrors != null}">
-  <tr th:each="error : ${deleteByIdRequestErrors}">
-    <td th:text="${error.field}" />
-    <td th:text="${error.message}" />
-  </tr>
-</table>
+  <span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>
 
-<span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>
+  <span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>
 
-<span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>
+  <table th:if="${not orders.isEmpty}" class="table">
+    <tr>
+      <th>ID</th>
+      <th>Cart ID</th>
+      <th>Status</th>
+      <th>Amount</th>
+      <th>Date created</th>
+      <th>Date completed</th>
+      <th>City</th>
+      <th>Street</th>
+      <th>Building number</th>
+      <th>Apartment number</th>
+    </tr>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}" />
+      <td th:text="${order.cart.id}" />
+      <td th:text="${order.status}" />
+      <td th:text="${order.amount}" />
+      <td th:text="${order.dateCreated}" />
+      <td th:text="${order.dateCompleted}" />
+      <td th:text="${order.city}" />
+      <td th:text="${order.street}" />
+      <td th:text="${order.buildingNumber}" />
+      <td th:text="${order.apartmentNumber}" />
+      <td>
+        <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>
+      </td>
+      <td>
+        <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
+          <input type="hidden" th:value="${order.id}" name="id" />
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 
-<table th:if="${not orders.isEmpty}">
-  <tr>
-    <th>ID</th>
-    <th>Cart ID</th>
-    <th>Status</th>
-    <th>Amount</th>
-    <th>Date created</th>
-    <th>Date completed</th>
-    <th>City</th>
-    <th>Street</th>
-    <th>Building number</th>
-    <th>Apartment number</th>
-  </tr>
-  <tr th:each="order : ${orders}">
-    <td th:text="${order.id}" />
-    <td th:text="${order.cart.id}" />
-    <td th:text="${order.status}" />
-    <td th:text="${order.amount}" />
-    <td th:text="${order.dateCreated}" />
-    <td th:text="${order.dateCompleted}" />
-    <td th:text="${order.city}" />
-    <td th:text="${order.street}" />
-    <td th:text="${order.buildingNumber}" />
-    <td th:text="${order.apartmentNumber}" />
-    <td>
-      <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>
-    </td>
-    <td>
-      <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
-        <input type="hidden" th:value="${order.id}" name="id" />
-        <button type="submit">Delete</button>
-      </form>
-    </td>
-  </tr>
-</table>
-
-<span th:if="${orders.isEmpty}">Orders not found.</span>
+  <span th:if="${orders.isEmpty}">Orders not found.</span>
+</div>
 
 </body>
 </html>
