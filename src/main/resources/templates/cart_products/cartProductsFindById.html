@@ -5,21 +5,21 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find cart product by ID</title>
+  <title>Meklēt groza produktu pēc ID</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Find cart product by ID</h1>
+    <h1>Meklēt groza produktu pēc ID</h1>
     <br>
     <form action="/cart-products/find/" method="get">
-        <label>Cart product ID:</label><br>
+        <label>Groza produkta ID:</label><br>
         <input type="text" name="id"/><br>
         <br>
         <br>
 
-        <input type="submit" value="Find"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" value="Meklēt"/>
+        <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -32,10 +32,10 @@
     <table th:if="${foundCartProduct != null}" class="table">
         <tr>
             <th>ID</th>
-            <th>Cart ID</th>
-            <th>Product ID</th>
-            <th>Product name</th>
-            <th>Quantity</th>
+            <th>Groza ID</th>
+            <th>Produkta ID</th>
+            <th>Produkta nosaukums</th>
+            <th>Daudzums</th>
         </tr>
         <tr>
             <td th:text="${foundCartProduct.id}" />
@@ -46,7 +46,7 @@
         </tr>
     </table>
 
-    <span th:if="${cartProductNotFound == true}">Cart product not found.</span>
+    <span th:if="${cartProductNotFound == true}">Groza produkts netika atrasts.</span>
 </div>
 
 </body>

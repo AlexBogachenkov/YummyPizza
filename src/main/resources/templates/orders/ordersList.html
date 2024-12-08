@@ -5,61 +5,61 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find all orders</title>
+  <title>Visi pasūtījumi</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Find all orders</h1>
-  <br>
-  <table th:if="${deleteByIdRequestErrors != null}">
-    <tr th:each="error : ${deleteByIdRequestErrors}">
-      <td th:text="${error.field}" />
-      <td th:text="${error.message}" />
-    </tr>
-  </table>
+    <h1>Visi pasūtījumi</h1>
 
-  <span th:if="${orderToUpdateNotFound == true}">The order to update was not found.</span>
+    <table th:if="${deleteByIdRequestErrors != null}">
+      <tr th:each="error : ${deleteByIdRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+      </tr>
+    </table>
 
-  <span th:if="${isOrderDeleted == true}">The order was deleted successfully.</span>
+    <span th:if="${orderToUpdateNotFound == true}">Pasūtījums netika atrasts.</span>
 
-  <table th:if="${not orders.isEmpty}" class="table">
-    <tr>
-      <th>ID</th>
-      <th>Cart ID</th>
-      <th>Status</th>
-      <th>Amount</th>
-      <th>Date created</th>
-      <th>Date completed</th>
-      <th>City</th>
-      <th>Street</th>
-      <th>Building number</th>
-      <th>Apartment number</th>
-    </tr>
-    <tr th:each="order : ${orders}">
-      <td th:text="${order.id}" />
-      <td th:text="${order.cart.id}" />
-      <td th:text="${order.status}" />
-      <td th:text="${order.amount}" />
-      <td th:text="${order.dateCreated}" />
-      <td th:text="${order.dateCompleted}" />
-      <td th:text="${order.city}" />
-      <td th:text="${order.street}" />
-      <td th:text="${order.buildingNumber}" />
-      <td th:text="${order.apartmentNumber}" />
-      <td>
-        <a th:href="@{/orders/} + ${order.id} + @{/update}">Update</a>
-      </td>
-      <td>
-        <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
-          <input type="hidden" th:value="${order.id}" name="id" />
-          <button type="submit">Delete</button>
-        </form>
-      </td>
-    </tr>
-  </table>
+    <span th:if="${isOrderDeleted == true}">Pasūtījums tika veiksmīgi dzēsts.</span>
 
-  <span th:if="${orders.isEmpty}">Orders not found.</span>
+    <table th:if="${not orders.isEmpty}">
+      <tr>
+        <th>ID</th>
+        <th>Groza ID</th>
+        <th>Statuss</th>
+        <th>Summa</th>
+        <th>Izveidošanas datums</th>
+        <th>Izpildes datums</th>
+        <th>Pilsēta</th>
+        <th>Iela</th>
+        <th>Mājas numurs</th>
+        <th>Dzīvokļa numurs</th>
+      </tr>
+      <tr th:each="order : ${orders}">
+        <td th:text="${order.id}" />
+        <td th:text="${order.cart.id}" />
+        <td th:text="${order.status}" />
+        <td th:text="${order.amount}" />
+        <td th:text="${order.dateCreated}" />
+        <td th:text="${order.dateCompleted}" />
+        <td th:text="${order.city}" />
+        <td th:text="${order.street}" />
+        <td th:text="${order.buildingNumber}" />
+        <td th:text="${order.apartmentNumber}" />
+        <td>
+          <a th:href="@{/orders/} + ${order.id} + @{/update}">Labot</a>
+        </td>
+        <td>
+          <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
+            <input type="hidden" th:value="${order.id}" name="id" />
+            <button type="submit">Dzēst</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+
+    <span th:if="${orders.isEmpty}">Pasūtījumi netika atrasti.</span>
 </div>
 
 </body>

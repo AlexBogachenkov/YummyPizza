@@ -5,48 +5,48 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find product by ID</title>
+  <title>Meklēt produktu pēc ID</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Find product by ID</h1>
+    <h1>Meklēt produktu pēc ID</h1>
     <br>
     <form action="/products/find/" method="get">
-        <label>Product ID:</label><br>
-        <input type="text" name="id"/><br>
-        <br>
-        <br>
+      <label>Produkta ID:</label><br>
+      <input type="text" name="id"/><br>
+      <br>
+      <br>
 
-        <input type="submit" value="Find"/>
-        <input type="reset" value="Clear"/>
+      <input type="submit" value="Meklēt"/>
+      <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
         <tr th:each="error : ${errors}">
-            <td th:text="${error.field}" />
-            <td th:text="${error.message}" />
+          <td th:text="${error.field}" />
+          <td th:text="${error.message}" />
         </tr>
     </table>
 
-    <table th:if="${foundProduct != null}" class="table">
+    <table th:if="${foundProduct != null}">
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Type</th>
+            <th>Nosaukums</th>
+            <th>Apraksts</th>
+            <th>Cena</th>
+            <th>Tips</th>
         </tr>
         <tr>
-            <td th:text="${foundProduct?.id}" />
-            <td th:text="${foundProduct?.name}" />
-            <td th:text="${foundProduct?.description}" />
-            <td th:text="${foundProduct?.price}" />
-            <td th:text="${foundProduct?.type}" />
+          <td th:text="${foundProduct?.id}" />
+          <td th:text="${foundProduct?.name}" />
+          <td th:text="${foundProduct?.description}" />
+          <td th:text="${foundProduct?.price}" />
+          <td th:text="${foundProduct?.type}" />
         </tr>
     </table>
 
-    <span th:if="${productNotFound == true}">Product not found.</span>
+    <span th:if="${productNotFound == true}">Produkts netika atrasts.</span>
 </div>
 
 </body>

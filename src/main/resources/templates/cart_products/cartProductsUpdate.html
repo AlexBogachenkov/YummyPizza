@@ -5,26 +5,26 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Update a cart product</title>
+    <title>Labot groza produkta informāciju</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Update a cart product</h1>
+    <h1>Labot groza produkta informāciju</h1>
     <br>
     <form th:action="@{/cart-products/} + ${updateCartProductRequest.id} + @{/update}" th:object="${updateCartProductRequest}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <label>Cart ID:</label><br>
+        <label>Groza ID:</label><br>
         <input type="text" th:field="*{cartId}"/><br>
-        <label>Product ID:</label><br>
+        <label>Produkta ID:</label><br>
         <input type="text" th:field="*{productId}"/><br>
-        <label>Quantity:</label><br>
+        <label>Daudzums:</label><br>
         <input type="number" min="1" th:field="*{quantity}"/><br>
         <br>
         <br>
 
-        <input type="submit" value="Update"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" value="Labot"/>
+        <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -34,7 +34,7 @@
         </tr>
     </table>
 
-    <span th:if="${updatedCartProduct != null}">The cart product was updated successfully!</span>
+    <span th:if="${updatedCartProduct != null}">Groza produkta informācija tika veiksmīgi labota!</span>
 </div>
 
 </body>

@@ -5,20 +5,19 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Orders</title>
+    <title>Pasūtījumi</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Orders</h1>
+    <h1>Pasūtījumi</h1>
+
+    <a href="/orders/create">Noformēt pasūtījumu</a>
     <br>
-    <a href="/orders/create">Create an order</a>
+    <a href="/orders/find">Meklēt pasūtījumu pēc ID</a>
     <br>
-    <a href="/orders/find">Find order by ID</a>
-    <br>
-    <a href="/orders/list">Find all orders</a>
+    <a href="/orders/list">Visi pasūtījumi</a>
     <br>
 </div>
-
 </body>
 </html>

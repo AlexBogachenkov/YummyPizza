@@ -5,51 +5,50 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find user by ID</title>
+  <title>Meklēt lietotāju pēc ID</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Find user by ID</h1>
-    <br>
-    <form action="/users/find/" method="get">
-        <label>User ID:</label><br>
-        <input type="text" name="id"/><br>
-        <br>
-        <br>
+    <h1>Meklēt lietotāju pēc ID</h1>
 
-        <input type="submit" value="Find"/>
-        <input type="reset" value="Clear"/>
+    <form action="/users/find/" method="get">
+      <label>Lietotāja ID:</label><br>
+      <input type="text" name="id"/><br>
+      <br>
+      <br>
+
+      <input type="submit" value="Meklēt"/>
+      <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
         <tr th:each="error : ${errors}">
-            <td th:text="${error.field}" />
-            <td th:text="${error.message}" />
+          <td th:text="${error.field}" />
+          <td th:text="${error.message}" />
         </tr>
     </table>
 
-    <table th:if="${foundUser != null}" class="table">
+    <table th:if="${foundUser != null}">
         <tr>
-            <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
+          <th>ID</th>
+          <th>Vārds</th>
+          <th>Uzvārds</th>
+          <th>E-pasts</th>
+          <th>Telefona numurs</th>
+          <th>Loma</th>
         </tr>
         <tr>
-            <td th:text="${foundUser?.id}" />
-            <td th:text="${foundUser?.firstName}" />
-            <td th:text="${foundUser?.lastName}" />
-            <td th:text="${foundUser?.email}" />
-            <td th:text="${foundUser?.phone}" />
-            <td th:text="${foundUser?.role}" />
+          <td th:text="${foundUser?.id}" />
+          <td th:text="${foundUser?.firstName}" />
+          <td th:text="${foundUser?.lastName}" />
+          <td th:text="${foundUser?.email}" />
+          <td th:text="${foundUser?.phone}" />
+          <td th:text="${foundUser?.role}" />
         </tr>
     </table>
 
-
-    <span th:if="${userNotFound == true}">User not found.</span>
+    <span th:if="${userNotFound == true}">Lietotājs netika atrasts.</span>
 </div>
 
 </body>

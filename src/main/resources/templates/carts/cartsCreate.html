@@ -5,26 +5,26 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Create a cart</title>
+    <title>Izveidot grozu</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Create a cart</h1>
+  <h1>Izveidot grozu</h1>
   <br>
   <form action="/carts/create" th:object="${request}" method="post">
-    <label>User ID:</label><br>
+    <label>Lietotāja ID:</label><br>
     <input type="text" th:field="*{userId}"/><br>
-    <label>Status:</label><br>
+    <label>Statuss:</label><br>
     <select th:field="*{status}">
-      <option th:value="ACTIVE" th:text="Active"></option>
-      <option th:value="INACTIVE" th:text="Inactive"></option>
+      <option th:value="ACTIVE" th:text="Aktīvs"></option>
+      <option th:value="INACTIVE" th:text="Neaktīvs"></option>
     </select>
     <br>
     <br>
 
-    <input type="submit" value="Create"/>
-    <input type="reset" value="Clear"/>
+    <input type="submit" value="Izveidot"/>
+    <input type="reset" value="Attīrīt formu"/>
   </form>
 
   <table th:if="${errors != null}">
@@ -34,7 +34,7 @@
     </tr>
   </table>
 
-  <span th:if="${createdCart != null}">The cart was created successfully!</span>
+  <span th:if="${createdCart != null}">Grozs tika veiksmīgi izveidots!</span>
 </div>
 
 </body>

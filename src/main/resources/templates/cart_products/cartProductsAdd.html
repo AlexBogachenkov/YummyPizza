@@ -5,25 +5,25 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Add product to the cart</title>
+    <title>Pievienot produktu grozam</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Add product to the cart</h1>
+  <h1>Pievienot produktu grozam</h1>
   <br>
   <form action="/cart-products/add" th:object="${request}" method="post">
-    <label>Cart ID:</label><br>
+    <label>Groza ID:</label><br>
     <input type="text" th:field="*{cartId}"/><br>
-    <label>Product ID:</label><br>
+    <label>Produkta ID:</label><br>
     <input type="text" th:field="*{productId}"/><br>
-    <label>Quantity:</label><br>
+    <label>Daudzums:</label><br>
     <input type="number" min="1" th:field="*{quantity}"/><br>
     <br>
     <br>
 
-    <input type="submit" value="Create"/>
-    <input type="reset" value="Clear"/>
+    <input type="submit" value="Pievienot"/>
+    <input type="reset" value="Attīrīt formu"/>
   </form>
 
   <table th:if="${errors != null}">
@@ -33,7 +33,7 @@
     </tr>
   </table>
 
-  <span th:if="${addedCartProduct != null}">The product was added to the cart successfully!</span>
+  <span th:if="${addedCartProduct != null}">Produkts tika veiksmīgi pievienots grozam!</span>
 </div>
 
 </body>

@@ -5,34 +5,34 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Create a user</title>
+    <title>Pievienot lietotāju</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Create a user</h1>
-    <br>
+    <h1>Pievienot lietotāju</h1>
+
     <form action="/users/create" th:object="${request}" method="post">
-        <label>First name:</label><br>
+        <label>Vārds:</label><br>
         <input type="text" th:field="*{firstName}"/><br>
-        <label>Last name:</label><br>
+        <label>Uzvārds:</label><br>
         <input type="text" th:field="*{lastName}"/><br>
-        <label>Email:</label><br>
+        <label>E-pasts:</label><br>
         <input type="text" th:field="*{email}"/><br>
-        <label>Password:</label><br>
+        <label>Parole:</label><br>
         <input type="password" th:field="*{password}"/><br>
-        <label>Phone:</label><br>
+        <label>Telefona numurs:</label><br>
         <input type="text" th:field="*{phone}"/><br>
-        <label>Role:</label><br>
+        <label>Loma:</label><br>
         <select th:field="*{role}">
-            <option th:value="CLIENT" th:text="Client"></option>
-            <option th:value="ADMIN" th:text="Admin"></option>
+            <option th:value="CLIENT" th:text="Klients"></option>
+            <option th:value="ADMIN" th:text="Administrators"></option>
         </select>
         <br>
         <br>
 
-        <input type="submit" value="Create"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" value="Pievienot"/>
+        <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -42,7 +42,7 @@
         </tr>
     </table>
 
-    <span th:if="${createdUser != null}">The user was created successfully!</span>
+    <span th:if="${createdUser != null}">Lietotājs tika veiksmīgi pievienots!</span>
 </div>
 
 </body>

@@ -5,50 +5,50 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find all products</title>
+  <title>Visi produkti</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Find all products</h1>
-  <br>
-  <table th:if="${deleteByIdRequestErrors != null}">
-    <tr th:each="error : ${deleteByIdRequestErrors}">
-      <td th:text="${error.field}" />
-      <td th:text="${error.message}" />
-    </tr>
-  </table>
+    <h1>Visi produkti</h1>
 
-  <span th:if="${productToUpdateNotFound == true}">The product to update was not found.</span>
-  <span th:if="${productDeleted == true}">The product was deleted successfully.</span>
+    <table th:if="${deleteByIdRequestErrors != null}">
+      <tr th:each="error : ${deleteByIdRequestErrors}">
+        <td th:text="${error.field}" />
+        <td th:text="${error.message}" />
+      </tr>
+    </table>
 
-  <table th:if="${not products.isEmpty}" class="table">
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Type</th>
-    </tr>
-    <tr th:each="product : ${products}">
-      <td th:text="${product.id}" />
-      <td th:text="${product.name}" />
-      <td th:text="${product.description}" />
-      <td th:text="${product.price}" />
-      <td th:text="${product.type}" />
-      <td>
-        <a th:href="@{/products/} + ${product.id} + @{/update}">Update</a>
-      </td>
-      <td>
-        <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
-          <input type="hidden" th:value="${product.id}" name="id" />
-          <button type="submit">Delete</button>
-        </form>
-      </td>
-    </tr>
-  </table>
+    <span th:if="${productToUpdateNotFound == true}">Produkts netika atrasts.</span>
+    <span th:if="${productDeleted == true}">Produkts tika veiksmīgi dzēsts.</span>
 
-  <span th:if="${products.isEmpty}">Products not found.</span>
+    <table th:if="${not products.isEmpty}">
+      <tr>
+        <th>ID</th>
+        <th>Nosaukums</th>
+        <th>Apraksts</th>
+        <th>Cena</th>
+        <th>Tips</th>
+      </tr>
+      <tr th:each="product : ${products}">
+        <td th:text="${product.id}" />
+        <td th:text="${product.name}" />
+        <td th:text="${product.description}" />
+        <td th:text="${product.price}" />
+        <td th:text="${product.type}" />
+        <td>
+          <a th:href="@{/products/} + ${product.id} + @{/update}">Labot</a>
+        </td>
+        <td>
+          <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
+            <input type="hidden" th:value="${product.id}" name="id" />
+            <button type="submit">Dzēst</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+
+    <span th:if="${products.isEmpty}">Produkti netika atrasti.</span>
 </div>
 
 </body>

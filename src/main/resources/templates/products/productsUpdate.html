@@ -5,32 +5,32 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Update a product</title>
+    <title>Labot produkta informāciju</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Update a product</h1>
-    <br>
+    <h1>Labot produkta informāciju</h1>
+
     <form th:action="@{/products/} + ${product.id} + @{/update}" th:object="${product}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <label>Name:</label><br>
+        <label>Nosaukums:</label><br>
         <input type="text" th:field="*{name}"/><br>
-        <label>Description:</label><br>
+        <label>Apraksts:</label><br>
         <input type="text" th:field="*{description}"/><br>
-        <label>Price:</label><br>
+        <label>Cena:</label><br>
         <input type="number" step="0.01" th:field="*{price}"/><br>
-        <label>Type:</label><br>
+        <label>Tips:</label><br>
         <select th:field="*{type}">
-            <option th:value="PIZZA" th:text="Pizza"></option>
-            <option th:value="DRINK" th:text="Drink"></option>
-            <option th:value="DESSERT" th:text="Dessert"></option>
+            <option th:value="PIZZA" th:text="Pica"></option>
+            <option th:value="DRINK" th:text="Dzēriens"></option>
+            <option th:value="DESSERT" th:text="Deserts"></option>
         </select>
         <br>
         <br>
 
-        <input type="submit" value="Update"/>
-        <input type="reset" value="Clear"/>
+        <input type="submit" value="Labot"/>
+        <input type="reset" value="Attīrīt formu"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -40,7 +40,7 @@
         </tr>
     </table>
 
-    <span th:if="${updatedProduct != null}">The product was updated successfully!</span>
+    <span th:if="${updatedProduct != null}">Produkta informācija tika veiksmīgi labota!</span>
 </div>
 
 </body>
