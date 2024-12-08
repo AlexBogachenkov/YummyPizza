@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Find all products</title>
+  <title>Visi produkti</title>
 </head>
 <body>
 
-<h1>Find all products</h1>
+<h1>Visi produkti</h1>
 
 <table th:if="${deleteByIdRequestErrors != null}">
   <tr th:each="error : ${deleteByIdRequestErrors}">
@@ -15,16 +15,16 @@
   </tr>
 </table>
 
-<span th:if="${productToUpdateNotFound == true}">The product to update was not found.</span>
-<span th:if="${productDeleted == true}">The product was deleted successfully.</span>
+<span th:if="${productToUpdateNotFound == true}">Produkts netika atrasts.</span>
+<span th:if="${productDeleted == true}">Produkts tika veiksmīgi dzēsts.</span>
 
 <table th:if="${not products.isEmpty}">
   <tr>
     <th>ID</th>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price</th>
-    <th>Type</th>
+    <th>Nosaukums</th>
+    <th>Apraksts</th>
+    <th>Cena</th>
+    <th>Tips</th>
   </tr>
   <tr th:each="product : ${products}">
     <td th:text="${product.id}" />
@@ -33,18 +33,18 @@
     <td th:text="${product.price}" />
     <td th:text="${product.type}" />
     <td>
-      <a th:href="@{/products/} + ${product.id} + @{/update}">Update</a>
+      <a th:href="@{/products/} + ${product.id} + @{/update}">Labot</a>
     </td>
     <td>
       <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${product.id}" name="id" />
-        <button type="submit">Delete</button>
+        <button type="submit">Dzēst</button>
       </form>
     </td>
   </tr>
 </table>
 
-<span th:if="${products.isEmpty}">Products not found.</span>
+<span th:if="${products.isEmpty}">Produkti netika atrasti.</span>
 
 </body>
 </html>

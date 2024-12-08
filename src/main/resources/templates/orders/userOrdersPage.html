@@ -5,24 +5,24 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{myOrders}"></title>
+    <title>Mani pasūtījumi</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1 th:text="#{myOrders}"></h1>
+  <h1>Mani pasūtījumi</h1>
   <br>
   <table th:if="${not userOrders.isEmpty}" class="table">
     <tr>
-      <th th:text="#{userOrder.id}"></th>
-      <th th:text="#{userOrder.amount}"></th>
-      <th th:text="#{userOrder.dateCreated}"></th>
-      <th th:text="#{userOrder.dateCompleted}"></th>
-      <th th:text="#{form.field.city}"></th>
-      <th th:text="#{form.field.street}"></th>
-      <th th:text="#{form.field.buildingNumber}"></th>
-      <th th:text="#{form.field.apartmentNumber}"></th>
-      <th th:text="#{userOrder.status}"></th>
+      <th>ID</th>
+      <th>Summa</th>
+      <th>Izveidošanas datums</th>
+      <th>Izpildes datums</th>
+      <th>Pilsēta</th>
+      <th>Iela</th>
+      <th>Mājas numurs</th>
+      <th>Dzīvokļa numurs</th>
+      <th>Statuss</th>
     </tr>
     <tr th:each="order : ${userOrders}">
       <td th:text="${order.id}" />
@@ -35,19 +35,19 @@
       <td th:text="${order.apartmentNumber}" />
       <td>
         <div th:if="${order.status.toString} == 'RECEIVED'">
-          <span th:text="${order.status}" class="text-warning"></span>
+          <span class="text-warning">Saņemts</span>
         </div>
         <div th:if="${order.status.toString} == 'PREPARING'">
-          <span th:text="${order.status}" class="text-primary"></span>
+          <span class="text-primary">Sagatavošanā</span>
         </div>
         <div th:if="${order.status.toString} == 'COMPLETED'">
-          <span th:text="${order.status}" class="text-success"></span>
+          <span class="text-success">Izpildīts</span>
         </div>
       </td>
     </tr>
   </table>
   <div th:if="${userOrders.isEmpty}" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <span th:text="#{userOrder.isEmpty}"></span>
+    <span>Jūs pagaidām neesat veicis nevienu pasūtījumu.</span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 </div>

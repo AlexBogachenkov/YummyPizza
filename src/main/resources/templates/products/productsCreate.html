@@ -2,30 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create a product</title>
+    <title>Pievienot produktu</title>
 </head>
 <body>
 
-<h1>Create a product</h1>
+<h1>Pievienot produktu</h1>
 
 <form action="/products/create" th:object="${request}" method="post">
-    <label>Name:</label><br>
+    <label>Nosaukums:</label><br>
     <input type="text" th:field="*{name}"/><br>
-    <label>Description:</label><br>
+    <label>Apraksts:</label><br>
     <input type="text" th:field="*{description}"/><br>
-    <label>Price:</label><br>
+    <label>Cena:</label><br>
     <input type="number" step="0.01" th:field="*{price}"/><br>
-    <label>Type:</label><br>
+    <label>Tips:</label><br>
     <select th:field="*{type}">
-        <option th:value="PIZZA" th:text="Pizza"></option>
-        <option th:value="DRINK" th:text="Drink"></option>
-        <option th:value="DESSERT" th:text="Dessert"></option>
+        <option th:value="PIZZA" th:text="Pica"></option>
+        <option th:value="DRINK" th:text="Dzēriens"></option>
+        <option th:value="DESSERT" th:text="Deserts"></option>
     </select>
     <br>
     <br>
 
-    <input type="submit" value="Create"/>
-    <input type="reset" value="Clear"/>
+    <input type="submit" value="Pievienot"/>
+    <input type="reset" value="Attīrīt formu"/>
 </form>
 
 <table th:if="${errors != null}">
@@ -35,7 +35,7 @@
     </tr>
 </table>
 
-<span th:if="${createdProduct != null}">The product was created successfully!</span>
+<span th:if="${createdProduct != null}">Produkts tika veiksmīgi pievienots!</span>
 
 </body>
 </html>

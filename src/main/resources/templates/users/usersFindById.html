@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Find user by ID</title>
+  <title>Meklēt lietotāju pēc ID</title>
 </head>
 <body>
 
-<h1>Find user by ID</h1>
+<h1>Meklēt lietotāju pēc ID</h1>
 
 <form action="/users/find/" method="get">
-  <label>User ID:</label><br>
+  <label>Lietotāja ID:</label><br>
   <input type="text" name="id"/><br>
   <br>
   <br>
 
-  <input type="submit" value="Find"/>
-  <input type="reset" value="Clear"/>
+  <input type="submit" value="Meklēt"/>
+  <input type="reset" value="Attīrīt formu"/>
 </form>
 
 <table th:if="${errors != null}">
@@ -28,11 +28,11 @@
 <table th:if="${foundUser != null}">
     <tr>
       <th>ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Role</th>
+      <th>Vārds</th>
+      <th>Uzvārds</th>
+      <th>E-pasts</th>
+      <th>Telefona numurs</th>
+      <th>Loma</th>
     </tr>
     <tr>
       <td th:text="${foundUser?.id}" />
@@ -45,7 +45,7 @@
 </table>
 
 
-    <span th:if="${userNotFound == true}">User not found.</span>
+    <span th:if="${userNotFound == true}">Lietotājs netika atrasts.</span>
 
 </body>
 </html>

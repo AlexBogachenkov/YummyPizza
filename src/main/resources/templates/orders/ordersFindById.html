@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Find order by ID</title>
+  <title>Meklēt pasūtījumu pēc ID</title>
 </head>
 <body>
 
-<h1>Find order by ID</h1>
+<h1>Meklēt pasūtījumu pēc ID</h1>
 
 <form action="/orders/find/" method="get">
-  <label>Order ID:</label><br>
+  <label>Pasūtījuma ID:</label><br>
   <input type="text" name="id"/><br>
   <br>
   <br>
 
-  <input type="submit" value="Find"/>
-  <input type="reset" value="Clear"/>
+  <input type="submit" value="Meklēt"/>
+  <input type="reset" value="Attīrīt formu"/>
 </form>
 
 <table th:if="${errors != null}">
@@ -28,15 +28,15 @@
 <table th:if="${foundOrder != null}">
     <tr>
         <th>ID</th>
-        <th>Cart ID</th>
-        <th>Status</th>
-        <th>Amount</th>
-        <th>Date created</th>
-        <th>Date completed</th>
-        <th>City</th>
-        <th>Street</th>
-        <th>Building number</th>
-        <th>Apartment number</th>
+        <th>Groza ID</th>
+        <th>Statuss</th>
+        <th>Summa</th>
+        <th>Izveidošanas datums</th>
+        <th>Izpildes datums</th>
+        <th>Pilsēta</th>
+        <th>Iela</th>
+        <th>Mājas numurs</th>
+        <th>Dzīvokļa numurs</th>
     </tr>
     <tr>
         <td th:text="${foundOrder?.id}" />
@@ -53,7 +53,7 @@
 </table>
 
 
-<span th:if="${orderNotFound == true}">Order not found.</span>
+<span th:if="${orderNotFound == true}">Pasūtījums netika atrasts.</span>
 
 </body>
 </html>

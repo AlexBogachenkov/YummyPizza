@@ -5,12 +5,12 @@
       layout:decorate="mainTemplatePage.html">
 <head>
   <meta charset="UTF-8">
-  <title>Find all cart products</title>
+  <title>Visi grozu produkti</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Find all cart products</h1>
+  <h1>Visi grozu produkti</h1>
   <br>
   <table th:if="${deleteByIdRequestErrors != null}">
     <tr th:each="error : ${deleteByIdRequestErrors}">
@@ -19,17 +19,17 @@
     </tr>
   </table>
 
-  <span th:if="${cartProductToUpdateNotFound == true}">The cart product to update was not found.</span>
+  <span th:if="${cartProductToUpdateNotFound == true}">Groza produkts netika atrasts.</span>
 
-  <span th:if="${isCartProductDeleted == true}">The cart product was deleted successfully.</span>
+  <span th:if="${isCartProductDeleted == true}">Produkts tika veiksmīgi izņemts no groza.</span>
 
   <table th:if="${not cartProducts.isEmpty}" class="table">
     <tr>
       <th>ID</th>
-      <th>Cart ID</th>
-      <th>Product ID</th>
-      <th>Product name</th>
-      <th>Quantity</th>
+      <th>Groza ID</th>
+      <th>Produkta ID</th>
+      <th>Produkta nosaukums</th>
+      <th>Daudzums</th>
     </tr>
     <tr th:each="cartProduct : ${cartProducts}">
       <td th:text="${cartProduct.id}" />
@@ -38,18 +38,18 @@
       <td th:text="${cartProduct.product.name}" />
       <td th:text="${cartProduct.quantity}" />
       <td>
-        <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Update</a>
+        <a th:href="@{/cart-products/} + ${cartProduct.id} + @{/update}">Labot</a>
       </td>
       <td>
         <form action="/cart-products/delete" th:object="${deleteByIdRequest}" method="post">
           <input type="hidden" th:value="${cartProduct.id}" name="id" />
-          <button type="submit">Delete</button>
+          <button type="submit">Izņemt no groza</button>
         </form>
       </td>
     </tr>
   </table>
 
-  <span th:if="${cartProducts.isEmpty}">Cart products not found.</span>
+  <span th:if="${cartProducts.isEmpty}">Grozu produkti netika atrasti.</span>
 </div>
 
 </body>

@@ -2,34 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update a user</title>
+    <title>Labot lietotāja informāciju</title>
 </head>
 <body>
 
-<h1>Update a user</h1>
+<h1>Labot lietotāja informāciju</h1>
 
 <form th:action="@{/users/} + ${user.id} + @{/update}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    <label>First name:</label><br>
+    <label>Vārds:</label><br>
     <input type="text" th:field="*{firstName}"/><br>
-    <label>Last name:</label><br>
+    <label>Uzvārds:</label><br>
     <input type="text" th:field="*{lastName}"/><br>
-    <label>Email:</label><br>
+    <label>E-pasts:</label><br>
     <input type="text" th:field="*{email}"/><br>
-    <label>Password:</label><br>
+    <label>Parole:</label><br>
     <input type="text" th:field="*{password}"/><br>
-    <label>Phone:</label><br>
+    <label>Telefona numurs:</label><br>
     <input type="text" th:field="*{phone}"/><br>
-    <label>Role:</label><br>
+    <label>Loma:</label><br>
     <select th:field="*{role}">
-        <option th:value="CLIENT" th:text="Client"></option>
-        <option th:value="ADMIN" th:text="Admin"></option>
+        <option th:value="CLIENT" th:text="Klients"></option>
+        <option th:value="ADMIN" th:text="Administrators"></option>
     </select>
     <br>
     <br>
 
-    <input type="submit" value="Update"/>
-    <input type="reset" value="Clear"/>
+    <input type="submit" value="Labot"/>
+    <input type="reset" value="Attīrīt formu"/>
 </form>
 
 <table th:if="${errors != null}">
@@ -39,7 +39,7 @@
     </tr>
 </table>
 
-<span th:if="${updatedUser != null}">The user was updated successfully!</span>
+<span th:if="${updatedUser != null}">Lietotāja informācija tika veiksmīgi labota!</span>
 
 </body>
 </html>

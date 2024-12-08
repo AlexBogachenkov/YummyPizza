@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Find all users</title>
+  <title>Visi lietotāji</title>
 </head>
 <body>
 
-<h1>Find all users</h1>
+<h1>Visi lietotāji</h1>
 
 <table th:if="${deleteByIdRequestErrors != null}">
   <tr th:each="error : ${deleteByIdRequestErrors}">
@@ -15,18 +15,18 @@
   </tr>
 </table>
 
-<span th:if="${userToUpdateNotFound == true}">The user to update was not found.</span>
+<span th:if="${userToUpdateNotFound == true}">Lietotājs netika atrasts.</span>
 
-<span th:if="${userDeleted == true}">The user was deleted successfully.</span>
+<span th:if="${userDeleted == true}">Lietotājs tika veiksmīgi dzēsts.</span>
 
 <table th:if="${not users.isEmpty}">
   <tr>
     <th>ID</th>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Role</th>
+    <th>Vārds</th>
+    <th>Uzvārds</th>
+    <th>E-pasts</th>
+    <th>Telefona numurs</th>
+    <th>Loma</th>
   </tr>
   <tr th:each="user : ${users}">
     <td th:text="${user.id}" />
@@ -36,18 +36,18 @@
     <td th:text="${user.phone}" />
     <td th:text="${user.role}" />
     <td>
-      <a th:href="@{/users/} + ${user.id} + @{/update}">Update</a>
+      <a th:href="@{/users/} + ${user.id} + @{/update}">Labot</a>
     </td>
     <td>
       <form action="/users/delete" th:object="${deleteByIdRequest}" method="post">
         <input type="hidden" th:value="${user.id}" name="id" />
-        <button type="submit">Delete</button>
+        <button type="submit">Dzēst</button>
       </form>
     </td>
   </tr>
 </table>
 
-<span th:if="${users.isEmpty}">Users not found.</span>
+<span th:if="${users.isEmpty}">Lietotāji netika atrasti.</span>
 
 </body>
 </html>

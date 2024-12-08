@@ -5,12 +5,12 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title th:text="#{cart}"></title>
+    <title>Mans grozs</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1 th:text="#{cart}"></h1>
+    <h1>Mans grozs</h1>
     <br>
 
     <div th:if="${deleteCartProductRequestErrors != null}">
@@ -28,16 +28,16 @@
     </div>
 
     <div th:if="${isCartProductDeleted == true}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <span th:text="#{userCartPage.isCartProductDeleted}"></span>
+        <span>Prece tika veiksmīgi dzēsta no groza.</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
     <table th:if="${not userCartProducts.isEmpty}" class="table">
         <tr>
-            <th th:text="#{product.name}"></th>
-            <th th:text="#{description}"></th>
-            <th th:text="#{price}"></th>
-            <th th:text="#{quantity}"></th>
+            <th>Nosaukums</th>
+            <th>Apraksts</th>
+            <th>Cena</th>
+            <th>Daudzums</th>
         </tr>
         <tr th:each="cartProduct : ${userCartProducts}">
             <td th:text="${cartProduct.product.name}" />
@@ -67,7 +67,7 @@
     <br>
 
     <div id="totalSum" th:if="${not userCartProducts.isEmpty}">
-        <span th:text="#{total} + ': € '" class="fs-5 fw-bold"></span><span id="sumValue" class="fs-5 fw-bold"></span>
+        <span th:text="'Kopā: € '" class="fs-5 fw-bold"></span><span id="sumValue" class="fs-5 fw-bold"></span>
         <br>
         <br>
         <a class="btn btn-warning" href="/order/make">
@@ -76,11 +76,11 @@
                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
             </svg>
-            <span th:text="#{makeAnOrder}"></span>
+            <span>Noformēt pasūtījumu</span>
         </a>
     </div>
 
-    <span th:if="${userCartProducts.isEmpty}" th:text="#{yourCartIsEmpty}"></span>
+    <span th:if="${userCartProducts.isEmpty}">Jūsu grozs ir tukšs.</span>
 
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function() {

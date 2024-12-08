@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Find product by ID</title>
+  <title>Meklēt produktu pēc ID</title>
 </head>
 <body>
 
-<h1>Find product by ID</h1>
+<h1>Meklēt produktu pēc ID</h1>
 
 <form action="/products/find/" method="get">
-  <label>Product ID:</label><br>
+  <label>Produkta ID:</label><br>
   <input type="text" name="id"/><br>
   <br>
   <br>
 
-  <input type="submit" value="Find"/>
-  <input type="reset" value="Clear"/>
+  <input type="submit" value="Meklēt"/>
+  <input type="reset" value="Attīrīt formu"/>
 </form>
 
 <table th:if="${errors != null}">
@@ -28,10 +28,10 @@
 <table th:if="${foundProduct != null}">
     <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Type</th>
+        <th>Nosaukums</th>
+        <th>Apraksts</th>
+        <th>Cena</th>
+        <th>Tips</th>
     </tr>
     <tr>
       <td th:text="${foundProduct?.id}" />
@@ -42,8 +42,7 @@
     </tr>
 </table>
 
-
-    <span th:if="${productNotFound == true}">Product not found.</span>
+    <span th:if="${productNotFound == true}">Produkts netika atrasts.</span>
 
 </body>
 </html>
