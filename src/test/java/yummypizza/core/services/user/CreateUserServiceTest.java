@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.User;
 import yummypizza.core.domain.UserRole;
@@ -28,6 +30,10 @@ class CreateUserServiceTest {
     private CreateUserRequestValidator validator;
     @Mock
     private UserRepository repository;
+    @Mock
+    private CartRepository cartRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @InjectMocks
     private CreateUserService service;
 
@@ -65,6 +71,7 @@ class CreateUserServiceTest {
     @Test
     public void shouldCreateUserInRepositoryWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
+        Mockito.when(passwordEncoder.encode("password")).thenReturn("password");
         service.execute(validRequest);
         Mockito.verify(repository).save(user);
     }
@@ -79,6 +86,7 @@ class CreateUserServiceTest {
     @Test
     public void shouldReturnResponseWithCreatedUserWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
+        Mockito.when(passwordEncoder.encode("password")).thenReturn("password");
         Mockito.when(repository.save(user)).thenReturn(user);
         CreateUserResponse response = service.execute(validRequest);
         assertNotNull(response.getCreatedUser());

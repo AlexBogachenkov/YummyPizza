@@ -32,11 +32,15 @@ public class Product {
     @Column(name = "type", nullable = false)
     private ProductType type;
 
-    public Product(String name, String description, BigDecimal price, ProductType type) {
+    @Column(name = "image_file_name")
+    private String imageFileName;
+
+    public Product(String name, String description, BigDecimal price, ProductType type, String imageFileName) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.type = type;
+        this.imageFileName = imageFileName;
     }
 
 }

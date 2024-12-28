@@ -12,7 +12,7 @@
 <div layout:fragment="content">
     <h1>Labot produkta informāciju</h1>
 
-    <form th:action="@{/products/} + ${product.id} + @{/update}" th:object="${product}" method="post">
+    <form th:action="@{/products/} + ${request.id} + @{/update}" th:object="${request}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
         <label>Nosaukums:</label><br>
         <input type="text" th:field="*{name}"/><br>
@@ -25,7 +25,9 @@
             <option th:value="PIZZA" th:text="Pica"></option>
             <option th:value="DRINK" th:text="Dzēriens"></option>
             <option th:value="DESSERT" th:text="Deserts"></option>
-        </select>
+        </select><br>
+        <label>Attēls:</label><br>
+        <input type="file" th:field="*{image}" accept="image/*">
         <br>
         <br>
 

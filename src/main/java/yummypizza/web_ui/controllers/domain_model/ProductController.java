@@ -102,15 +102,13 @@ public class ProductController {
             modelMap.addAttribute("productToUpdateNotFound", true);
             return showProductsListPage(modelMap);
         } else {
-            modelMap.addAttribute("product", foundProduct.get());
+            modelMap.addAttribute("request", createUpdateProductRequest(foundProduct.get()));
             return "products/productsUpdate.html";
         }
     }
 
     @PostMapping(value = "/{id}/update")
-    public String processUpdateProductRequest(@ModelAttribute(value = "product") Product product, ModelMap modelMap) {
-        UpdateProductRequest request = new UpdateProductRequest(product.getId(), product.getName(),
-                product.getDescription(), product.getPrice(), product.getType());
+    public String processUpdateProductRequest(@ModelAttribute(value = "request") UpdateProductRequest request, ModelMap modelMap) {
         UpdateProductResponse response = updateProductService.execute(request);
         if (response.hasErrors()) {
             modelMap.addAttribute("errors", response.getErrors());
@@ -118,6 +116,17 @@ public class ProductController {
             modelMap.addAttribute("updatedProduct", response.getUpdatedProduct());
         }
         return "products/productsUpdate.html";
+    }
+
+    private UpdateProductRequest createUpdateProductRequest(Product product) {
+        UpdateProductRequest request = new UpdateProductRequest();
+        request.setId(product.getId());
+        request.setName(product.getName());
+        request.setDescription(product.getDescription());
+        request.setPrice(product.getPrice());
+        request.setType(product.getType());
+        request.setImage(null);
+        return request;
     }
 
 }

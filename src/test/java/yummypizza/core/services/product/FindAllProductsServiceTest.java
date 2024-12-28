@@ -32,8 +32,8 @@ class FindAllProductsServiceTest {
 
     @BeforeAll
     public void setup() {
-        product1 = new Product("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA);
-        product2 = new Product("Coca-Cola 2L", "Taste the feeling", new BigDecimal("3.00"), ProductType.DRINK);
+        product1 = new Product("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, "pepperoni.jpg");
+        product2 = new Product("Coca-Cola 2L", "Taste the feeling", new BigDecimal("3.00"), ProductType.DRINK, "cocacola.jpg");
     }
 
     @Test

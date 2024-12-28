@@ -7,6 +7,7 @@ import yummypizza.core.domain.Product;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.product.CreateProductResponse;
+import yummypizza.core.services.ImageService;
 import yummypizza.core.validators.product.CreateProductRequestValidator;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 @Service
 public class CreateProductService {
 
+    @Autowired
+    private ImageService imageService;
     @Autowired
     private CreateProductRequestValidator validator;
     @Autowired
@@ -24,7 +27,9 @@ public class CreateProductService {
         if (!errors.isEmpty()) {
             return new CreateProductResponse(errors);
         }
-        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getType());
+
+        String imageFileName = imageService.uploadImage(request.getImage());
+        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getType(), imageFileName);
         return new CreateProductResponse(repository.save(product));
     }
 

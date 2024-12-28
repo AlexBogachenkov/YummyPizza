@@ -14,6 +14,7 @@ import yummypizza.core.domain.ProductType;
 import yummypizza.core.requests.product.UpdateProductRequest;
 import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.product.UpdateProductResponse;
+import yummypizza.core.services.ImageService;
 import yummypizza.core.validators.product.UpdateProductRequestValidator;
 
 import java.math.BigDecimal;
@@ -29,6 +30,8 @@ class UpdateProductServiceTest {
     private UpdateProductRequestValidator validator;
     @Mock
     private ProductRepository repository;
+    @Mock
+    private ImageService imageService;
     @InjectMocks
     private UpdateProductService service;
 
@@ -39,11 +42,11 @@ class UpdateProductServiceTest {
     @BeforeAll
     public void setup() {
         invalidRequest = new UpdateProductRequest(null, "Pepperoni", "Real jam",
-                new BigDecimal("9.80"), ProductType.PIZZA);
+                new BigDecimal("9.80"), ProductType.PIZZA, null);
         validRequest = new UpdateProductRequest(5L, "Pepperoni", "Real jam",
-                new BigDecimal("9.80"), ProductType.PIZZA);
+                new BigDecimal("9.80"), ProductType.PIZZA, null);
         product = new Product(validRequest.getId(), validRequest.getName(), validRequest.getDescription(),
-                validRequest.getPrice(), validRequest.getType());
+                validRequest.getPrice(), validRequest.getType(), null);
     }
 
     @Test

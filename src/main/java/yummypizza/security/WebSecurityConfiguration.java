@@ -26,6 +26,7 @@ public class WebSecurityConfiguration {
                 .requestMatchers("/about").permitAll()
                 .requestMatchers("/contacts").permitAll()
                 .requestMatchers("/products/**").permitAll()
+                .requestMatchers("/uploads/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

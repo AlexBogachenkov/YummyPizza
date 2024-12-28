@@ -14,6 +14,7 @@ import yummypizza.core.domain.ProductType;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.product.CreateProductResponse;
+import yummypizza.core.services.ImageService;
 import yummypizza.core.validators.product.CreateProductRequestValidator;
 
 import java.math.BigDecimal;
@@ -29,6 +30,8 @@ class CreateProductServiceTest {
     private CreateProductRequestValidator validator;
     @Mock
     private ProductRepository repository;
+    @Mock
+    private ImageService imageService;
     @InjectMocks
     private CreateProductService service;
 
@@ -38,9 +41,9 @@ class CreateProductServiceTest {
 
     @BeforeAll
     public void setup() {
-        invalidRequest = new CreateProductRequest(null, "Real jam", new BigDecimal("9.80"), ProductType.PIZZA);
-        validRequest = new CreateProductRequest("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA);
-        product = new Product(validRequest.getName(), validRequest.getDescription(), validRequest.getPrice(), validRequest.getType());
+        invalidRequest = new CreateProductRequest(null, "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, null);
+        validRequest = new CreateProductRequest("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, null);
+        product = new Product(validRequest.getName(), validRequest.getDescription(), validRequest.getPrice(), validRequest.getType(), null);
     }
 
     @Test

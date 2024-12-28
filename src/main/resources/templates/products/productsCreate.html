@@ -12,7 +12,7 @@
 <div layout:fragment="content">
     <h1>Pievienot produktu</h1>
 
-    <form action="/products/create" th:object="${request}" method="post">
+    <form action="/products/create" th:object="${request}" method="post" enctype="multipart/form-data">
         <label>Nosaukums:</label><br>
         <input type="text" th:field="*{name}"/><br>
         <label>Apraksts:</label><br>
@@ -24,7 +24,9 @@
             <option th:value="PIZZA" th:text="Pica"></option>
             <option th:value="DRINK" th:text="Dzēriens"></option>
             <option th:value="DESSERT" th:text="Deserts"></option>
-        </select>
+        </select><br>
+        <label>Attēls:</label><br>
+        <input type="file" th:field="*{image}" accept="image/*">
         <br>
         <br>
 

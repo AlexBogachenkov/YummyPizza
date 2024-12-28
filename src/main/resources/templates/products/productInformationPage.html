@@ -9,7 +9,8 @@
 </head>
 <body>
 
-<div layout:fragment="content">
+<div layout:fragment="content" style="display: block">
+    <img th:src="@{/uploads/} + ${foundProduct?.imageFileName}" alt="" style="width: 30%; float: left; margin-right: 20px;">
     <h3 th:text="${foundProduct?.name}"></h3>
     <br>
 

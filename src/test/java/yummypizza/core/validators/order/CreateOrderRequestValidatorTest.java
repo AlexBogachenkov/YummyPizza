@@ -7,8 +7,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import yummypizza.core.database.CartProductRepository;
 import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
+import yummypizza.core.domain.CartProduct;
 import yummypizza.core.domain.OrderStatus;
 import yummypizza.core.requests.order.CreateOrderRequest;
 import yummypizza.core.responses.CoreError;
@@ -27,6 +29,8 @@ class CreateOrderRequestValidatorTest {
     private OrderRepository orderRepository;
     @Mock
     private CartRepository cartRepository;
+    @Mock
+    private CartProductRepository cartProductRepository;
     @InjectMocks
     private CreateOrderRequestValidator validator;
 
@@ -72,6 +76,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenCartNotExist() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         Mockito.when(cartRepository.existsById(request.getCartId())).thenReturn(false);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -81,6 +86,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenOrderWithSuchCartIdAlreadyExists() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         Mockito.when(orderRepository.existsByCartId(request.getCartId())).thenReturn(true);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -90,6 +96,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenStatusIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setStatus(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -99,6 +106,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenAmountIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setAmount(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -108,6 +116,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenAmountIsNegative() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setAmount(new BigDecimal("-4.00"));
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -117,6 +126,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenAmountIsZero() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setAmount(new BigDecimal(0));
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -126,6 +136,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenDateCreatedIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setDateCreated(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -135,6 +146,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorsWhenDateCreatedIsInFuture() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setDateCreated(LocalDateTime.now().plusHours(1));
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -144,6 +156,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenDateCompletedIsInFuture() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setDateCompleted(LocalDateTime.now().plusHours(1));
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -153,6 +166,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenDateCompletedIsBeforeDateCreated() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setDateCompleted(LocalDateTime.of(2023, 05, 25, 11, 19, 59));
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -162,6 +176,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenCityIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setCity(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -171,6 +186,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenCityIsEmpty() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setCity("");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -180,6 +196,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenCityIsBlank() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setCity("   ");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -189,6 +206,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenStreetIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setStreet(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -198,6 +216,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenStreetIsEmpty() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setStreet("");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -207,6 +226,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenStreetIsBlank() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setStreet("   ");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -216,6 +236,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenBuildingNumberIsNull() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setBuildingNumber(null);
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -225,6 +246,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenBuildingNumberIsEmpty() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setBuildingNumber("");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());
@@ -234,6 +256,7 @@ class CreateOrderRequestValidatorTest {
 
     @Test
     public void shouldReturnErrorWhenBuildingNumberIsBlank() {
+        Mockito.when(cartProductRepository.findByCartId(4L)).thenReturn(List.of(new CartProduct()));
         request.setBuildingNumber("   ");
         List<CoreError> errors = validator.validate(request);
         assertEquals(1, errors.size());

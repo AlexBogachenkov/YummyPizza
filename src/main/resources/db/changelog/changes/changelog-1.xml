@@ -123,4 +123,12 @@
                                  referencedColumnNames="id"  constraintName="FK_orders_cart_id"/>
     </changeSet>
 
+    <changeSet id="6" author="Alexander">
+        <addColumn tableName="products">
+            <column name="image_file_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

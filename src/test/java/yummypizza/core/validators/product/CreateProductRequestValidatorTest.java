@@ -18,7 +18,7 @@ class CreateProductRequestValidatorTest {
 
     @BeforeEach
     public void setup() {
-        request = new CreateProductRequest("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA);
+        request = new CreateProductRequest("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, null);
     }
 
     @Test

@@ -77,7 +77,7 @@ class FindProductByIdServiceTest {
     public void shouldReturnResponseWithFoundProductWhenValidationPasses() {
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         Mockito.when(repository.findById(validRequest.getId())).thenReturn(Optional.of(
-                new Product("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA)));
+                new Product("Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, "pepperoni.jpg")));
         FindProductByIdResponse response = service.execute(validRequest);
         assertNotNull(response.getFoundProduct());
         assertEquals("Pepperoni", response.getFoundProduct().get().getName());

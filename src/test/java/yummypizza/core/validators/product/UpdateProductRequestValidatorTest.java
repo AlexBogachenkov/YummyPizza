@@ -30,7 +30,7 @@ class UpdateProductRequestValidatorTest {
 
     @BeforeEach
     public void setup() {
-        request = new UpdateProductRequest(5L, "Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA);
+        request = new UpdateProductRequest(5L, "Pepperoni", "Real jam", new BigDecimal("9.80"), ProductType.PIZZA, null);
         Mockito.when(repository.existsById(request.getId())).thenReturn(true);
     }
 
