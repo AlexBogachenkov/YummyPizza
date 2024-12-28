@@ -81,29 +81,32 @@
     </div>
 
     <span th:if="${userCartProducts.isEmpty}">Jūsu grozs ir tukšs.</span>
-</div>
 
-<script th:inline="javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-        calculateTotalSum();
-    });
+    <script th:inline="javascript">
+        console.log("hereeeeeee");
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("here");
+            calculateTotalSum();
+        });
 
-    function calculateTotalSum() {
-        var cartProducts = /*[[${userCartProducts}]]*/ [];
-        var sum = 0;
+        function calculateTotalSum() {
+            console.log("dere");
+            var cartProducts = /*[[${userCartProducts}]]*/ [];
+            var sum = 0;
 
-        for (var i = 0; i < cartProducts.length; i++) {
-            var cartProduct = cartProducts[i];
-            var price = cartProduct.product.price;
-            var quantity = cartProduct.quantity;
-            var productSum = price * quantity;
-            sum += productSum;
+            for (var i = 0; i < cartProducts.length; i++) {
+                var cartProduct = cartProducts[i];
+                var price = cartProduct.product.price;
+                var quantity = cartProduct.quantity;
+                var productSum = price * quantity;
+                sum += productSum;
+            }
+
+            var sumElement = document.getElementById("sumValue");
+            sumElement.textContent = sum.toFixed(2); // Display the sum with 2 decimal places
         }
-
-        var sumElement = document.getElementById("sumValue");
-        sumElement.textContent = sum.toFixed(2); // Display the sum with 2 decimal places
-    }
-</script>
+    </script>
+</div>
 
 </body>
 </html>
