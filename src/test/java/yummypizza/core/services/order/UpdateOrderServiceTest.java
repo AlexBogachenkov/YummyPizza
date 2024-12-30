@@ -43,14 +43,14 @@ class UpdateOrderServiceTest {
     public void setup() {
         invalidRequest = new UpdateOrderRequest(null, 4L, OrderStatus.PREPARING, new BigDecimal("15.50"),
                 LocalDateTime.of(2023, 5, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         validRequest = new UpdateOrderRequest(2L, 4L, OrderStatus.COMPLETED, new BigDecimal("25.34"),
                 LocalDateTime.of(2023, 5, 25, 13, 52, 16),
-                null, "Riga", "Skolas iela", "65", "33");
+                null, false, "Riga", "Skolas iela", "65", "33");
         cart = new Cart();
         cart.setId(validRequest.getCartId());
         order = new Order(validRequest.getId(), cart, validRequest.getStatus(), validRequest.getAmount(),
-                validRequest.getDateCreated(), validRequest.getDateCompleted(), validRequest.getCity(),
+                validRequest.getDateCreated(), validRequest.getDateCompleted(), validRequest.getIsForTakeaway(), validRequest.getCity(),
                 validRequest.getStreet(), validRequest.getBuildingNumber(), validRequest.getApartmentNumber());
     }
 

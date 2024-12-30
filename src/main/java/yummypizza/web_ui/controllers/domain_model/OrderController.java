@@ -105,7 +105,7 @@ public class OrderController {
             Order order = optionalOfOrder.get();
             modelMap.addAttribute("updateOrderRequest",
                     new UpdateOrderRequest(order.getId(), order.getCart().getId(), order.getStatus(), order.getAmount(),
-                            order.getDateCreated(), order.getDateCompleted(), order.getCity(), order.getStreet(),
+                            order.getDateCreated(), order.getDateCompleted(), order.isForTakeaway(), order.getCity(), order.getStreet(),
                             order.getBuildingNumber(), order.getApartmentNumber()));
             return "orders/ordersUpdate.html";
         }

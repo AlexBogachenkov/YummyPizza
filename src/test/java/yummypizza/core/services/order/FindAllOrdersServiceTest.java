@@ -35,10 +35,10 @@ class FindAllOrdersServiceTest {
     public void setup() {
         order1 = new Order(new Cart(new User(), CartStatus.INACTIVE), OrderStatus.RECEIVED, new BigDecimal("12.40"),
                 LocalDateTime.of(2023, 05, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         order2 = new Order(new Cart(new User(), CartStatus.INACTIVE), OrderStatus.COMPLETED, new BigDecimal("110.00"),
                 LocalDateTime.of(2023, 05, 25, 14, 45, 20),
-                LocalDateTime.of(2023, 05, 25, 16, 12, 06),
+                LocalDateTime.of(2023, 05, 25, 16, 12, 06), false,
                 "Salaspils", "Skolas iela", "7", "23");
     }
 

@@ -36,7 +36,13 @@ public class CreateOrderService {
         cartRepository.save(new Cart(cart.getUser(), CartStatus.ACTIVE));
 
         Order order = new Order(cart, request.getStatus(), request.getAmount(), request.getDateCreated(),
-                request.getDateCompleted(), request.getCity(), request.getStreet(), request.getBuildingNumber(), request.getApartmentNumber());
+                request.getDateCompleted(), request.isForTakeaway(), request.getCity(), request.getStreet(), request.getBuildingNumber(), request.getApartmentNumber());
+        if (request.isForTakeaway()) {
+            order.setCity(null);
+            order.setStreet(null);
+            order.setBuildingNumber(null);
+            order.setApartmentNumber(null);
+        }
         return new CreateOrderResponse(orderRepository.save(order));
     }
 

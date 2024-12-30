@@ -40,14 +40,21 @@
 
     <form action="/order/make" th:object="${createOrderRequest}" method="post" class="col-4">
         <input type="hidden" th:value="${cart.id}" name="cartId" />
-        <label>Pilsēta*:</label><br>
-        <input type="text" class="form-control" th:field="${createOrderRequest.city}" /><br>
-        <label>Iela*:</label><br>
-        <input type="text" class="form-control" th:field="${createOrderRequest.street}" /><br>
-        <label>Mājas numurs*:</label><br>
-        <input type="text" class="form-control" th:field="${createOrderRequest.buildingNumber}" /><br>
-        <label>Dzīvokļa numurs:</label><br>
-        <input type="text" class="form-control" th:field="${createOrderRequest.apartmentNumber}" />
+        <label>Piegādes veids:</label><br>
+        <select th:field="${createOrderRequest.isForTakeaway}" id="is-for-takeaway-select">
+            <option th:value="true" th:text="'Paņemšu pats'" selected></option>
+            <option th:value="false" th:text="'Ar kurjeru'"></option>
+        </select><br><br>
+        <div id="address-details-block">
+            <label>Pilsēta*:</label><br>
+            <input type="text" class="form-control" th:field="${createOrderRequest.city}" /><br>
+            <label>Iela*:</label><br>
+            <input type="text" class="form-control" th:field="${createOrderRequest.street}" /><br>
+            <label>Mājas numurs*:</label><br>
+            <input type="text" class="form-control" th:field="${createOrderRequest.buildingNumber}" /><br>
+            <label>Dzīvokļa numurs:</label><br>
+            <input type="text" class="form-control" th:field="${createOrderRequest.apartmentNumber}" />
+        </div>
 
         <div th:if="${createOrderRequestErrors != null}">
             <div th:each="error : ${createOrderRequestErrors}" class="text-danger">
@@ -65,6 +72,26 @@
             <span>Pasūtīt</span>
         </button>
     </form>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deliveryTypeSelect = document.getElementById('is-for-takeaway-select');
+        const addressDetailsBlock = document.getElementById("address-details-block");
+
+        function toggleAddressDetails() {
+            if (deliveryTypeSelect.value === "false") {
+                addressDetailsBlock.style.display = "block";
+            } else {
+                addressDetailsBlock.style.display = "none";
+            }
+        }
+
+        deliveryTypeSelect.addEventListener("change", toggleAddressDetails);
+
+        toggleAddressDetails();
+    });
+</script>
 </div>
 
 </body>

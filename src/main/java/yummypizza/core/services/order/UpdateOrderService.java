@@ -33,8 +33,14 @@ public class UpdateOrderService {
         Cart cart = new Cart();
         cart.setId(request.getCartId());
         Order order = new Order(request.getId(), cart, request.getStatus(), request.getAmount(),
-                request.getDateCreated(), request.getDateCompleted(), request.getCity(), request.getStreet(),
+                request.getDateCreated(), request.getDateCompleted(), request.isForTakeaway(), request.getCity(), request.getStreet(),
                 request.getBuildingNumber(), request.getApartmentNumber());
+        if (request.isForTakeaway()) {
+            order.setCity(null);
+            order.setStreet(null);
+            order.setBuildingNumber(null);
+            order.setApartmentNumber(null);
+        }
         return new UpdateOrderResponse(orderRepository.save(order));
     }
 

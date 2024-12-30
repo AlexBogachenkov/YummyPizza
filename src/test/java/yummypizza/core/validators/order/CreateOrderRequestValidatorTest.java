@@ -40,7 +40,7 @@ class CreateOrderRequestValidatorTest {
     public void setup() {
         request = new CreateOrderRequest(4L, OrderStatus.PREPARING, new BigDecimal("15.50"),
                 LocalDateTime.of(2023, 05, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         Mockito.when(cartRepository.existsById(request.getCartId())).thenReturn(true);
     }
 

@@ -77,7 +77,7 @@ class FindOrderByIdServiceTest {
     public void shouldReturnResponseWithFoundOrderWhenValidationPasses() {
         Order order = new Order(4L, new Cart(new User(), CartStatus.INACTIVE), OrderStatus.RECEIVED, new BigDecimal("12.40"),
                 LocalDateTime.of(2023, 05, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         Mockito.when(validator.validate(validRequest)).thenReturn(List.of());
         Mockito.when(repository.findById(4L)).thenReturn(Optional.of(order));
         FindOrderByIdResponse response = service.execute(validRequest);

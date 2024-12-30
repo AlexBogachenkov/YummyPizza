@@ -34,9 +34,9 @@ public class UpdateOrderRequestValidator {
         validateAmount(request.getAmount());
         validateDateCreated(request.getDateCreated());
         validateDateCompleted(request.getDateCompleted(), request.getDateCreated());
-        validateCity(request.getCity());
-        validateStreet(request.getStreet());
-        validateBuildingNumber(request.getBuildingNumber());
+        validateCity(request.getCity(), request.isForTakeaway());
+        validateStreet(request.getStreet(), request.isForTakeaway());
+        validateBuildingNumber(request.getBuildingNumber(), request.isForTakeaway());
         return errors;
     }
 
@@ -113,19 +113,28 @@ public class UpdateOrderRequestValidator {
         }
     }
 
-    private void validateCity(String city) {
+    private void validateCity(String city, boolean isForTakeaway) {
+        if (isForTakeaway) {
+            return;
+        }
         if (city == null || city.isBlank()) {
             errors.add(new CoreError("City", "is mandatory."));
         }
     }
 
-    private void validateStreet(String street) {
+    private void validateStreet(String street, boolean isForTakeaway) {
+        if (isForTakeaway) {
+            return;
+        }
         if (street == null || street.isBlank()) {
             errors.add(new CoreError("Street", "is mandatory."));
         }
     }
 
-    private void validateBuildingNumber(String buildingNumber) {
+    private void validateBuildingNumber(String buildingNumber, boolean isForTakeaway) {
+        if (isForTakeaway) {
+            return;
+        }
         if (buildingNumber == null || buildingNumber.isBlank()) {
             errors.add(new CoreError("Building number", "is mandatory."));
         }

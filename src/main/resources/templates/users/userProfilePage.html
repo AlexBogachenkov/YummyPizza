@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="mainTemplatePage.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Mans profils</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h1>Mans profils</h1>
+    <br>
+    <form th:action="@{/users/} + ${request.id}" th:object="${request}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>Vārds:</label><br>
+        <input type="text" th:field="*{firstName}"/><br>
+        <label>Uzvārds:</label><br>
+        <input type="text" th:field="*{lastName}"/><br>
+        <label>E-pasts:</label><br>
+        <input type="text" th:field="*{email}"/><br>
+        <label>Parole:</label><br>
+        <input type="password" th:field="*{password}"/><br>
+        <label>Parole vēlreiz:</label><br>
+        <input type="password" th:field="*{passwordOneMoreTime}"/><br>
+        <label>Telefona numurs:</label><br>
+        <input type="text" th:field="*{phone}"/><br>
+        <input type="hidden" th:field="*{role}"/>
+        <br>
+        <br>
+
+        <input type="submit" value="Labot"/>
+        <input type="reset" value="Attīrīt formu"/>
+    </form>
+
+    <table th:if="${errors != null}">
+        <tr th:each="error : ${errors}">
+            <td th:text="${error.field}" />
+            <td th:text="${error.message}" />
+        </tr>
+    </table>
+
+    <span th:if="${updatedUser != null}">Jūsu profila informācija tika veiksmīgi labota!</span>
+    <span th:if="${userToUpdateNotFound == true}">Lietotājs netika atrasts.</span>
+</div>
+
+</body>
+</html>

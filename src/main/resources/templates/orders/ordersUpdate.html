@@ -28,14 +28,21 @@
         <input type="text" th:field="*{dateCreated}"><br>
         <label>Izpildes datums:</label><br>
         <input type="text" th:field="*{dateCompleted}"><br>
-        <label>Pilsēta:</label><br>
-        <input type="text" th:field="*{city}"/><br>
-        <label>Iela:</label><br>
-        <input type="text" th:field="*{street}"/><br>
-        <label>Mājas numurs:</label><br>
-        <input type="text" th:field="*{buildingNumber}"/><br>
-        <label>Dzīvokļa numurs:</label><br>
-        <input type="text" th:field="*{apartmentNumber}"/><br>
+        <label>Saņemšanas veids:</label><br>
+        <select th:field="*{isForTakeaway}" id="is-for-takeaway-select">
+            <option th:value="true" th:text="'Paņemšu pats'"></option>
+            <option th:value="false" th:text="'Ar kurjeru'"></option>
+        </select><br>
+        <div id="address-details-block">
+            <label>Pilsēta:</label><br>
+            <input type="text" th:field="*{city}"/><br>
+            <label>Iela:</label><br>
+            <input type="text" th:field="*{street}"/><br>
+            <label>Mājas numurs:</label><br>
+            <input type="text" th:field="*{buildingNumber}"/><br>
+            <label>Dzīvokļa numurs:</label><br>
+            <input type="text" th:field="*{apartmentNumber}"/><br>
+        </div>
         <br>
         <br>
 
@@ -51,6 +58,25 @@
     </table>
 
     <span th:if="${updatedOrder != null}">Pasūtījuma informācija tika veiksmīgi labota!</span>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deliveryTypeSelect = document.getElementById('is-for-takeaway-select');
+        const addressDetailsBlock = document.getElementById("address-details-block");
+
+        function toggleAddressDetails() {
+            if (deliveryTypeSelect.value === "false") {
+                addressDetailsBlock.style.display = "block";
+            } else {
+                addressDetailsBlock.style.display = "none";
+            }
+        }
+
+        deliveryTypeSelect.addEventListener("change", toggleAddressDetails);
+
+        toggleAddressDetails();
+    });
+</script>
 </div>
 
 </body>

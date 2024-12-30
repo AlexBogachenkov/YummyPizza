@@ -37,29 +37,34 @@ public class Order {
     @Column(name = "date_completed")
     private LocalDateTime dateCompleted;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "is_for_takeaway", nullable = false)
+    private boolean isForTakeaway;
+
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "street", nullable = false)
+    @Column(name = "street")
     private String street;
 
-    @Column(name = "building_number", nullable = false)
+    @Column(name = "building_number")
     private String buildingNumber;
 
     @Column(name = "apartment_number")
     private String apartmentNumber;
 
     public Order(Cart cart, OrderStatus status, BigDecimal amount, LocalDateTime dateCreated,
-                 LocalDateTime dateCompleted, String city, String street, String buildingNumber,
+                 LocalDateTime dateCompleted, boolean isForTakeaway, String city, String street, String buildingNumber,
                  String apartmentNumber) {
         this.cart = cart;
         this.status = status;
         this.amount = amount;
         this.dateCreated = dateCreated;
         this.dateCompleted = dateCompleted;
+        this.isForTakeaway = isForTakeaway;
         this.city = city;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.apartmentNumber = apartmentNumber;
     }
+
 }

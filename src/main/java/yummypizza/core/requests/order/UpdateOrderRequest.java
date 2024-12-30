@@ -17,13 +17,14 @@ public class UpdateOrderRequest {
     private BigDecimal amount;
     private LocalDateTime dateCreated;
     private LocalDateTime dateCompleted;
+    private boolean isForTakeaway;
     private String city;
     private String street;
     private String buildingNumber;
     private String apartmentNumber;
 
     public UpdateOrderRequest(Long id, Long cartId, OrderStatus status, BigDecimal amount,
-                              LocalDateTime dateCreated, LocalDateTime dateCompleted, String city,
+                              LocalDateTime dateCreated, LocalDateTime dateCompleted, boolean isForTakeaway, String city,
                               String street, String buildingNumber, String apartmentNumber) {
         this.id = id;
         this.cartId = cartId;
@@ -31,10 +32,23 @@ public class UpdateOrderRequest {
         this.amount = amount;
         this.dateCreated = dateCreated;
         this.dateCompleted = dateCompleted;
+        this.isForTakeaway = isForTakeaway;
         this.city = city;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.apartmentNumber = apartmentNumber;
+    }
+
+    public boolean isForTakeaway() {
+        return this.isForTakeaway;
+    }
+
+    public boolean getIsForTakeaway() {
+        return this.isForTakeaway;
+    }
+
+    public void setIsForTakeaway(boolean isForTakeaway) {
+        this.isForTakeaway = isForTakeaway;
     }
 
 }

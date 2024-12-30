@@ -131,4 +131,18 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="7" author="Alexander">
+        <addColumn tableName="orders">
+            <column name="is_for_takeaway" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8" author="Alexander">
+        <dropNotNullConstraint tableName="orders" columnName="city" columnDataType="varchar(30)"/>
+        <dropNotNullConstraint tableName="orders" columnName="street" columnDataType="varchar(30)"/>
+        <dropNotNullConstraint tableName="orders" columnName="building_number" columnDataType="varchar(10)"/>
+    </changeSet>
+
 </databaseChangeLog>

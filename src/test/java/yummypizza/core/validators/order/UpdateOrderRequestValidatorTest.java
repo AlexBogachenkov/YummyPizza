@@ -37,7 +37,7 @@ class UpdateOrderRequestValidatorTest {
     public void setup() {
         request = new UpdateOrderRequest(2L, 4L, OrderStatus.PREPARING, new BigDecimal("15.50"),
                 LocalDateTime.of(2023, 5, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         Mockito.when(cartRepository.existsById(request.getCartId())).thenReturn(true);
         Mockito.when(orderRepository.existsById(request.getId())).thenReturn(true);
     }
@@ -116,7 +116,7 @@ class UpdateOrderRequestValidatorTest {
         Cart cart = new Cart(4L, new User(), CartStatus.INACTIVE);
         Order order = new Order(cart, OrderStatus.PREPARING, new BigDecimal("15.50"),
                 LocalDateTime.of(2023, 05, 25, 12, 19, 59),
-                null, "Riga", "Brīvības iela", "134", "21A");
+                null, false, "Riga", "Brīvības iela", "134", "21A");
         Mockito.when(orderRepository.existsByCartId(request.getCartId())).thenReturn(true);
         Mockito.when(orderRepository.findByCartId(request.getCartId())).thenReturn(Optional.of(order));
         List<CoreError> errors = validator.validate(request);
