@@ -109,6 +109,7 @@ public class UserController {
             modelMap.addAttribute("userToUpdateNotFound", true);
             return showUsersListPage(modelMap);
         } else {
+            foundUser.get().setPassword(null);
             modelMap.addAttribute("user", foundUser.get());
             return "users/usersUpdate.html";
         }
