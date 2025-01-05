@@ -5,25 +5,25 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Pievienot lietotāju</title>
+    <title>Izveidot lietotāju</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Pievienot lietotāju</h1>
+    <h1>Izveidot lietotāju</h1>
 
     <form action="/users/create" th:object="${request}" method="post">
-        <label>Vārds:</label><br>
+        <label>Vārds<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{firstName}"/><br>
-        <label>Uzvārds:</label><br>
+        <label>Uzvārds<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{lastName}"/><br>
-        <label>E-pasts:</label><br>
+        <label>E-pasts<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{email}"/><br>
-        <label>Parole:</label><br>
+        <label>Parole<span style="color: red">*</span>:</label><br>
         <input type="password" th:field="*{password}"/><br>
-        <label>Telefona numurs:</label><br>
+        <label>Telefona numurs<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{phone}"/><br>
-        <label>Loma:</label><br>
+        <label>Loma<span style="color: red">*</span>:</label><br>
         <select th:field="*{role}">
             <option th:value="CLIENT" th:text="Klients"></option>
             <option th:value="EMPLOYEE" th:text="Darbinieks"></option>
@@ -32,7 +32,7 @@
         <br>
         <br>
 
-        <input type="submit" value="Pievienot"/>
+        <input type="submit" value="Izveidot"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -42,7 +42,7 @@
         </tr>
     </table>
 
-    <span th:if="${createdUser != null}">Lietotājs tika veiksmīgi pievienots</span>
+    <span th:if="${createdUser != null}">Lietotājs tika veiksmīgi izveidots</span>
 </div>
 
 </body>

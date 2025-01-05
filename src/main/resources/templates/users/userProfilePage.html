@@ -14,23 +14,23 @@
     <br>
     <form th:action="@{/users/} + ${request.id}" th:object="${request}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <label>Vārds:</label><br>
+        <label>Vārds<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{firstName}"/><br>
-        <label>Uzvārds:</label><br>
+        <label>Uzvārds<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{lastName}"/><br>
-        <label>E-pasts:</label><br>
+        <label>E-pasts<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{email}"/><br>
         <label>Parole:</label><br>
         <input type="password" th:field="*{password}"/><br>
         <label>Parole vēlreiz:</label><br>
         <input type="password" th:field="*{passwordOneMoreTime}"/><br>
-        <label>Telefona numurs:</label><br>
+        <label>Telefona numurs<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{phone}"/><br>
         <input type="hidden" th:field="*{role}"/>
         <br>
         <br>
 
-        <input type="submit" value="Labot"/>
+        <input type="submit" value="Saglabāt"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -40,7 +40,7 @@
         </tr>
     </table>
 
-    <span th:if="${updatedUser != null}">Jūsu profila informācija tika veiksmīgi labota!</span>
+    <span th:if="${updatedUser != null}">Profila informācija tika veiksmīgi saglabāta</span>
     <span th:if="${userToUpdateNotFound == true}">Lietotājs netika atrasts.</span>
 </div>
 
