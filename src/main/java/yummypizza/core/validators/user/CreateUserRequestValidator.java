@@ -30,7 +30,7 @@ public class CreateUserRequestValidator {
 
     private void validateFirstName(String firstName) {
         if (firstName == null || firstName.isBlank()) {
-            errors.add(new CoreError("First name", "is mandatory."));
+            errors.add(new CoreError("Vārds", "ir obligāts."));
         }
     }
 

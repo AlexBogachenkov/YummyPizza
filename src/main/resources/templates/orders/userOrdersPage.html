@@ -46,6 +46,15 @@
         <div th:if="${order.status.toString} == 'RECEIVED'">
           <span class="text-warning">Saņemts</span>
         </div>
+        <div th:if="${order.status.toString} == 'READY_FOR_TAKEAWAY'">
+          <span class="text-primary">Gatavs izsniegšanai</span>
+        </div>
+        <div th:if="${order.status.toString} == 'ON_THE_WAY'">
+          <span class="text-primary">Kurjers ceļā</span>
+        </div>
+        <div th:if="${order.status.toString} == 'CANCELLED'">
+          <span class="text-primary">Atcelts</span>
+        </div>
         <div th:if="${order.status.toString} == 'PREPARING'">
           <span class="text-primary">Sagatavošanā</span>
         </div>

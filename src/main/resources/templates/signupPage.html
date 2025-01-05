@@ -12,15 +12,15 @@
         <h1>Reģistrēties</h1>
         <br>
         <form action="/signup" th:object="${request}" method="post">
-            <label>Vārds:</label><br>
+            <label>Vārds<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="*{firstName}"/><br>
-            <label>Uzvārds:</label><br>
+            <label>Uzvārds<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="*{lastName}"/><br>
-            <label>E-pasts:</label><br>
+            <label>E-pasts<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="*{email}"/><br>
-            <label>Parole:</label><br>
+            <label>Parole<span style="color: red">*</span>:</label><br>
             <input type="password" class="form-control" th:field="*{password}"/><br>
-            <label>Telefona numurs:</label><br>
+            <label>Telefona numurs<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="*{phone}"/>
             <div th:if="${errors != null}">
                 <div class="text-danger" th:each="error : ${errors}">

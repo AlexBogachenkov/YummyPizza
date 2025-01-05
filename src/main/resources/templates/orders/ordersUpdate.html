@@ -20,7 +20,10 @@
         <select th:field="*{status}">
             <option th:value="RECEIVED" th:text="Saņemts"></option>
             <option th:value="PREPARING" th:text="Sagatavošanā"></option>
+            <option th:value="READY_FOR_TAKEAWAY" th:text="Gatavs izsniegšanai"></option>
+            <option th:value="ON_THE_WAY" th:text="Kurjers ceļā"></option>
             <option th:value="COMPLETED" th:text="Izpildīts"></option>
+            <option th:value="CANCELLED" th:text="Atcelts"></option>
         </select><br>
         <label>Summa:</label><br>
         <input type="number" step="0.01" th:field="*{amount}"/><br>
