@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT') or hasRole('EMPLOYEE')")
 @RequestMapping(value = "/order/make")
 public class MakeOrderPageController {
 
@@ -44,20 +44,26 @@ public class MakeOrderPageController {
 
     @GetMapping("")
     public String showMakeOrderPage(ModelMap modelMap) {
+        // Get user details from authentication context
         CustomUserDetails userDetails = getAuthenticatedUserDetails().get();
+
+        // Get user cart
         FindCartsByUserIdAndStatusRequest findCartsRequest = new FindCartsByUserIdAndStatusRequest(userDetails.getId(), CartStatus.ACTIVE);
         FindCartsByUserIdAndStatusResponse findCartsResponse = findCartsByUserIdAndStatusService.execute(findCartsRequest);
         modelMap.addAttribute("cart", findCartsResponse.getCarts().get(0));
 
+        // Get user cart products
         FindCartProductsByCartIdRequest findCartProductsRequest =
                 new FindCartProductsByCartIdRequest(findCartsResponse.getCarts().get(0).getId());
         FindCartProductsByCartIdResponse findCartProductsResponse = findCartProductsByCartIdService.execute(findCartProductsRequest);
         List<CartProduct> userCartProducts = findCartProductsResponse.getCartProducts();
         modelMap.addAttribute("userCartProducts", userCartProducts);
 
+        // Calculate user cart amount
         BigDecimal cartAmount = userCartProducts.stream()
                 .map(cartProduct -> cartProduct.getProduct().getPrice().multiply(BigDecimal.valueOf(cartProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         CreateOrderRequest createOrderRequest = new CreateOrderRequest();
         createOrderRequest.setAmount(cartAmount);
         modelMap.addAttribute("createOrderRequest", createOrderRequest);
@@ -67,19 +73,25 @@ public class MakeOrderPageController {
     @PostMapping(value = "")
     public String processCreateOrderRequest(@ModelAttribute(value = "createOrderRequest") CreateOrderRequest request,
                                             ModelMap modelMap) {
+        // Get user details from authentication context
         CustomUserDetails userDetails = getAuthenticatedUserDetails().get();
+
+        // Get user cart
         FindCartsByUserIdAndStatusRequest findCartsRequest = new FindCartsByUserIdAndStatusRequest(userDetails.getId(), CartStatus.ACTIVE);
         FindCartsByUserIdAndStatusResponse findCartsResponse = findCartsByUserIdAndStatusService.execute(findCartsRequest);
 
+        // Get user cart products
         FindCartProductsByCartIdRequest findCartProductsRequest =
                 new FindCartProductsByCartIdRequest(findCartsResponse.getCarts().get(0).getId());
         FindCartProductsByCartIdResponse findCartProductsResponse = findCartProductsByCartIdService.execute(findCartProductsRequest);
         List<CartProduct> userCartProducts = findCartProductsResponse.getCartProducts();
 
+        // Calculate user cart amount
         BigDecimal cartAmount = userCartProducts.stream()
                 .map(cartProduct -> cartProduct.getProduct().getPrice().multiply(BigDecimal.valueOf(cartProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        // Set initial order data
         request.setStatus(OrderStatus.RECEIVED);
         request.setAmount(cartAmount);
         request.setDateCreated(LocalDateTime.now());
