@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pieslēgties</title>
+    <title>Pieteikties</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -15,8 +15,8 @@
             <input type='text' class="form-control" name='username' /><br>
             <label>Parole:</label><br>
             <input type='password' class="form-control" name='password' /><br>
-            <span class="text-danger" th:if="${isAuthenticationFailed == true}">E-pasts vai parole ir ievadīti nepareizi. Mēģiniet vēlreiz!<br></span><br>
-            <button class="btn btn-primary w-100 py-2" type="submit">Pieslēgties</button>
+            <span class="text-danger" th:if="${isAuthenticationFailed == true}">E-pasts vai parole ir ievadīti nepareizi<br></span><br>
+            <button class="btn btn-primary w-100 py-2" type="submit">Pieteikties</button>
         </form>
     </div>
 

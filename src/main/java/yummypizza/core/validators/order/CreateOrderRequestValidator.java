@@ -107,7 +107,7 @@ public class CreateOrderRequestValidator {
             return;
         }
         if (city == null || city.isBlank()) {
-            errors.add(new CoreError("City", "is mandatory."));
+            errors.add(new CoreError("Pilsēta", "ir obligāta."));
         }
     }
 
@@ -116,7 +116,7 @@ public class CreateOrderRequestValidator {
             return;
         }
         if (street == null || street.isBlank()) {
-            errors.add(new CoreError("Street", "is mandatory."));
+            errors.add(new CoreError("Iela", "ir obligāta."));
         }
     }
 

@@ -22,7 +22,7 @@
     <span th:if="${productToUpdateNotFound == true}">Produkts netika atrasts.</span>
     <span th:if="${productDeleted == true}">Produkts tika veiksmīgi dzēsts.</span>
 
-    <table th:if="${not products.isEmpty}">
+    <table th:if="${not products.isEmpty}" class="table">
       <tr>
         <th>ID</th>
         <th>Nosaukums</th>
