@@ -28,7 +28,6 @@ public class UpdateUserProfileInformationRequestValidator {
         validateEmail(request.getEmail(), request.getId());
         validatePasswords(request.getPassword(), request.getPasswordOneMoreTime());
         validatePhone(request.getPhone());
-        validateRole(request.getRole());
         return errors;
     }
 
@@ -122,16 +121,6 @@ public class UpdateUserProfileInformationRequestValidator {
         }
         if (!phone.matches("[0-9]+")) {
             errors.add(new CoreError("Telefona numura", "ievadei ir atļauti tikai ciparu simboli"));
-        }
-    }
-
-    private void validateRole(UserRole role) {
-        if (role == null || role.name().isBlank()) {
-            errors.add(new CoreError("Role", "is mandatory."));
-            return;
-        }
-        if (role != UserRole.CLIENT && role != UserRole.ADMIN) {
-            errors.add(new CoreError("Role", "must be either 'CLIENT' or 'ADMIN'."));
         }
     }
 

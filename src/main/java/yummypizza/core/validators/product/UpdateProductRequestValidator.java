@@ -31,47 +31,45 @@ public class UpdateProductRequestValidator {
 
     private void validateId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("ID", "is mandatory."));
+            errors.add(new CoreError("Produkta ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("ID", "must be a positive number."));
+            errors.add(new CoreError("Produkta ID", "ir jābūt pozitīvam skaitlim"));
             return;
         }
         if (!repository.existsById(id)) {
-            errors.add(new CoreError("ID", "doesn't exist."));
+            errors.add(new CoreError("Produkta ID", "neeksistē"));
         }
     }
 
     private void validateName(String name) {
         if (name == null || name.isBlank()) {
-            errors.add(new CoreError("Name", "is mandatory."));
+            errors.add(new CoreError("Nosaukums", "ir obligāts"));
+            return;
+        }
+        if (name.length() > 50) {
+            errors.add(new CoreError("Nosaukuma", "garumam ir jābūt robežās līdz 50 simboliem"));
         }
     }
 
     private void validateDescription(String description) {
         if (description == null || description.isBlank()) {
-            errors.add(new CoreError("Description", "is mandatory."));
+            errors.add(new CoreError("Apraksts", "ir obligāts"));
+            return;
+        }
+        if (description.length() > 320) {
+            errors.add(new CoreError("Apraksta", "garumam ir jābūt robežās līdz 320 simboliem"));
         }
     }
 
     private void validatePrice(BigDecimal price) {
         if (price == null) {
-            errors.add(new CoreError("Price", "is mandatory."));
+            errors.add(new CoreError("Cena", "ir obligāta"));
             return;
         }
-        if (price.compareTo(new BigDecimal(0)) < 0) {
-            errors.add(new CoreError("Price", "must be positive."));
-        }
-    }
-
-    private void validateType(ProductType type) {
-        if (type == null || type.name().isBlank()) {
-            errors.add(new CoreError("Type", "is mandatory."));
-            return;
-        }
-        if (type != ProductType.PIZZA && type != ProductType.DRINK && type != ProductType.DESSERT) {
-            errors.add(new CoreError("Type", "must be either 'PIZZA', 'DRINK' or 'DESSERT'."));
+        if (price.compareTo(new BigDecimal(0)) <= 0) {
+            errors.add(new CoreError("Cenai", "ir jābūt lielākai par 0"));
         }
     }
 

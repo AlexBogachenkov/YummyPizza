@@ -14,13 +14,13 @@
 
     <form th:action="@{/products/} + ${request.id} + @{/update}" th:object="${request}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
-        <label>Nosaukums:</label><br>
+        <label>Nosaukums<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{name}"/><br>
-        <label>Apraksts:</label><br>
+        <label>Apraksts<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{description}"/><br>
-        <label>Cena:</label><br>
+        <label>Cena<span style="color: red">*</span>:</label><br>
         <input type="number" step="0.01" th:field="*{price}"/><br>
-        <label>Tips:</label><br>
+        <label>Tips<span style="color: red">*</span>:</label><br>
         <select th:field="*{type}">
             <option th:value="PIZZA" th:text="Pica"></option>
             <option th:value="DRINK" th:text="Dzēriens"></option>
@@ -31,7 +31,7 @@
         <br>
         <br>
 
-        <input type="submit" value="Labot"/>
+        <input type="submit" value="Saglabāt"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -41,7 +41,7 @@
         </tr>
     </table>
 
-    <span th:if="${updatedProduct != null}">Produkta informācija tika veiksmīgi labota!</span>
+    <span th:if="${updatedProduct != null}">Produkta informācija tika veiksmīgi saglabāta</span>
 </div>
 
 </body>
