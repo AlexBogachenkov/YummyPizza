@@ -40,10 +40,12 @@
           <a th:href="@{/products/} + ${product.id} + @{/update}">Labot</a>
         </td>
         <td>
-          <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
-            <input type="hidden" th:value="${product.id}" name="id" />
-            <button type="submit">Dzēst</button>
-          </form>
+            <div th:if="${#authentication.principal.role.name == 'ADMIN'}">
+              <form action="/products/delete" th:object="${deleteByIdRequest}" method="post">
+                <input type="hidden" th:value="${product.id}" name="id" />
+                <button type="submit">Dzēst</button>
+              </form>
+            </div>
         </td>
       </tr>
     </table>

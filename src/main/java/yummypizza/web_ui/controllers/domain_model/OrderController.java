@@ -10,6 +10,7 @@ import yummypizza.core.requests.order.CreateOrderRequest;
 import yummypizza.core.requests.order.DeleteOrderByIdRequest;
 import yummypizza.core.requests.order.FindOrderByIdRequest;
 import yummypizza.core.requests.order.UpdateOrderRequest;
+import yummypizza.core.requests.user.DeleteUserByIdRequest;
 import yummypizza.core.responses.order.*;
 import yummypizza.core.services.order.*;
 
@@ -49,9 +50,10 @@ public class OrderController {
     }
 
     @GetMapping(value = "/list")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String showOrdersListPage(ModelMap modelMap) {
         FindAllOrdersResponse response = findAllOrdersService.execute();
-        //modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());
+        modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());
         modelMap.addAttribute("orders", response.getAllOrders());
         return "orders/ordersList.html";
     }
@@ -89,6 +91,7 @@ public class OrderController {
         return showOrdersListPage(modelMap);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping(value = "/{id}/update")
     public String showOrdersUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindOrderByIdResponse response = findOrderByIdService.execute(new FindOrderByIdRequest(id));
@@ -106,6 +109,7 @@ public class OrderController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping(value = "/{id}/update")
     public String processUpdateOrderRequest(@ModelAttribute(value = "updateOrderRequest") UpdateOrderRequest request, ModelMap modelMap) {
         UpdateOrderResponse response = updateOrderService.execute(request);

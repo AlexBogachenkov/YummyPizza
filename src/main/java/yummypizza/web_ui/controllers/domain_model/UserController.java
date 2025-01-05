@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/list")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String showUsersListPage(ModelMap modelMap) {
         FindAllUsersResponse response = findAllUsersService.execute();
         modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());

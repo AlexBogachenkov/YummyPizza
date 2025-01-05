@@ -32,11 +32,13 @@ public class ProductController {
     private UpdateProductService updateProductService;
 
     @GetMapping(value = "/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String showProductsCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateProductRequest());
         return "products/productsCreate.html";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping(value = "/create")
     public String processCreateProductRequest(@ModelAttribute(value = "request") CreateProductRequest request, ModelMap modelMap) {
         CreateProductResponse response = createProductService.execute(request);
@@ -49,6 +51,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/list")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String showProductsListPage(ModelMap modelMap) {
         FindAllProductsResponse response = findAllProductsService.execute();
         modelMap.addAttribute("products", response.getAllProducts());
@@ -89,6 +92,7 @@ public class ProductController {
         return "products/productsFindById.html";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping(value = "/{id}/update")
     public String showProductsUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindProductByIdResponse response = findProductByIdService.execute(new FindProductByIdRequest(id));
@@ -102,6 +106,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping(value = "/{id}/update")
     public String processUpdateProductRequest(@ModelAttribute(value = "request") UpdateProductRequest request, ModelMap modelMap) {
         UpdateProductResponse response = updateProductService.execute(request);

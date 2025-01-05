@@ -40,13 +40,17 @@
         <td th:text="${user.phone}" />
         <td th:text="${user.role}" />
         <td>
-          <a th:href="@{/users/} + ${user.id} + @{/update}">Labot</a>
+            <div th:if="${#authentication.principal.role.name == 'ADMIN'}">
+                <a th:href="@{/users/} + ${user.id} + @{/update}">Labot</a>
+            </div>
         </td>
         <td>
-          <form action="/users/delete" th:object="${deleteByIdRequest}" method="post">
-            <input type="hidden" th:value="${user.id}" name="id" />
-            <button type="submit">Dzēst</button>
-          </form>
+            <div th:if="${#authentication.principal.role.name == 'ADMIN'}">
+              <form action="/users/delete" th:object="${deleteByIdRequest}" method="post">
+                <input type="hidden" th:value="${user.id}" name="id" />
+                <button type="submit">Dzēst</button>
+              </form>
+            </div>
         </td>
       </tr>
     </table>

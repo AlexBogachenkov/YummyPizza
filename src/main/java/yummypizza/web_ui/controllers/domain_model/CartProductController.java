@@ -51,7 +51,7 @@ public class CartProductController {
     @GetMapping(value = "/list")
     public String showCartProductsListPage(ModelMap modelMap) {
         FindAllCartProductsResponse response = findAllCartProductsService.execute();
-//        modelMap.addAttribute("deleteByIdRequest", new DeleteCartProductByIdRequest());
+        modelMap.addAttribute("deleteByIdRequest", new DeleteCartProductByIdRequest());
         modelMap.addAttribute("cartProducts", response.getAllCartProducts());
         return "cart_products/cartProductsList.html";
     }
