@@ -40,17 +40,17 @@
 
     <form action="/order/make" th:object="${createOrderRequest}" method="post" class="col-4">
         <input type="hidden" th:value="${cart.id}" name="cartId" />
-        <label>Piegādes veids:</label><br>
+        <label>Piegādes veids<span style="color: red">*</span>:</label><br>
         <select th:field="${createOrderRequest.isForTakeaway}" id="is-for-takeaway-select">
             <option th:value="true" th:text="'Paņemšu pats'" selected></option>
             <option th:value="false" th:text="'Ar kurjeru'"></option>
         </select><br><br>
         <div id="address-details-block">
-            <label>Pilsēta*:</label><br>
+            <label>Pilsēta<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="${createOrderRequest.city}" /><br>
-            <label>Iela*:</label><br>
+            <label>Iela<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="${createOrderRequest.street}" /><br>
-            <label>Mājas numurs*:</label><br>
+            <label>Mājas numurs<span style="color: red">*</span>:</label><br>
             <input type="text" class="form-control" th:field="${createOrderRequest.buildingNumber}" /><br>
             <label>Dzīvokļa numurs:</label><br>
             <input type="text" class="form-control" th:field="${createOrderRequest.apartmentNumber}" />

@@ -30,75 +30,44 @@ public class CreateOrderRequestValidator {
     public List<CoreError> validate(CreateOrderRequest request) {
         errors = new ArrayList<>();
         validateCartId(request.getCartId());
-        validateStatus(request.getStatus());
         validateAmount(request.getAmount());
         validateDateCreated(request.getDateCreated());
-        validateDateCompleted(request.getDateCompleted(), request.getDateCreated());
         validateCity(request.getCity(), request.isForTakeaway());
         validateStreet(request.getStreet(), request.isForTakeaway());
         validateBuildingNumber(request.getBuildingNumber(), request.isForTakeaway());
+        validateApartmentNumber(request.getApartmentNumber(), request.isForTakeaway());
         return errors;
     }
 
     private void validateCartId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("Cart ID", "is mandatory."));
+            errors.add(new CoreError("Groza ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("Cart ID", "must be a positive number."));
+            errors.add(new CoreError("Groza ID", "ir jābūt pozitīvam skaitlim"));
             return;
         }
         if (!cartRepository.existsById(id)) {
-            errors.add(new CoreError("Cart ID", "doesn't exist."));
+            errors.add(new CoreError("Grozs", "ar šādu ID netika atrasts"));
         }
         if (orderRepository.existsByCartId(id)) {
-            errors.add(new CoreError("Cart ID", "is already in use in another order."));
+            errors.add(new CoreError("Grozs", "ar šādu ID jau tika izmantots citā pasūtījumā"));
         }
         if (cartProductRepository.findByCartId(id).isEmpty()) {
-            errors.add(new CoreError("Cart", "should have at least one product to make an order."));
-        }
-    }
-
-    private void validateStatus(OrderStatus status) {
-        if (status == null || status.name().isBlank()) {
-            errors.add(new CoreError("Status", "is mandatory."));
-            return;
-        }
-        if (status != OrderStatus.RECEIVED && status != OrderStatus.PREPARING && status != OrderStatus.COMPLETED) {
-            errors.add(new CoreError("Status", "must be either 'RECEIVED', 'INACTIVE' or 'COMPLETED'."));
+            errors.add(new CoreError("Grozā", "jābūt vismaz vienam produktam, lai veiktu pasūtīumu"));
         }
     }
 
     private void validateAmount(BigDecimal amount) {
         if (amount == null) {
-            errors.add(new CoreError("Amount", "is mandatory."));
-            return;
-        }
-        if (amount.compareTo(new BigDecimal(0)) <= 0) {
-            errors.add(new CoreError("Amount", "must be positive."));
+            errors.add(new CoreError("Summa", "ir obligāta"));
         }
     }
 
     private void validateDateCreated(LocalDateTime dateCreated) {
         if (dateCreated == null) {
-            errors.add(new CoreError("Date created", "is mandatory."));
-            return;
-        }
-        if (dateCreated.isAfter(LocalDateTime.now(ZoneId.of("Europe/Riga")))) {
-            errors.add(new CoreError("Date created", "can not be in the future."));
-        }
-    }
-
-    private void validateDateCompleted(LocalDateTime dateCompleted, LocalDateTime dateCreated) {
-        if (dateCompleted == null) {
-            return;
-        }
-        if (dateCompleted.isAfter(LocalDateTime.now(ZoneId.of("Europe/Riga")))) {
-            errors.add(new CoreError("Date completed", "can not be in the future."));
-        }
-        if (dateCompleted.isBefore(dateCreated)) {
-            errors.add(new CoreError("Date completed", "can not be before the date created."));
+            errors.add(new CoreError("Izveidošanas datums", "ir obligāts"));
         }
     }
 
@@ -107,7 +76,11 @@ public class CreateOrderRequestValidator {
             return;
         }
         if (city == null || city.isBlank()) {
-            errors.add(new CoreError("Pilsēta", "ir obligāta."));
+            errors.add(new CoreError("Pilsēta", "ir obligāta"));
+            return;
+        }
+        if (city.length() > 30) {
+            errors.add(new CoreError("Pilsētas nosaukuma", "garumam ir jābūt robežās līdz 30 simboliem"));
         }
     }
 
@@ -116,7 +89,11 @@ public class CreateOrderRequestValidator {
             return;
         }
         if (street == null || street.isBlank()) {
-            errors.add(new CoreError("Iela", "ir obligāta."));
+            errors.add(new CoreError("Iela", "ir obligāta"));
+            return;
+        }
+        if (street.length() > 30) {
+            errors.add(new CoreError("Ielas nosaukuma", "garumam ir jābūt robežās līdz 30 simboliem"));
         }
     }
 
@@ -125,7 +102,17 @@ public class CreateOrderRequestValidator {
             return;
         }
         if (buildingNumber == null || buildingNumber.isBlank()) {
-            errors.add(new CoreError("Building number", "is mandatory."));
+            errors.add(new CoreError("Mājas numurs", "ir obligāts"));
+            return;
+        }
+        if (buildingNumber.length() > 10) {
+            errors.add(new CoreError("Mājas numura", "garumam ir jābūt robežās līdz 10 simboliem"));
+        }
+    }
+
+    private void validateApartmentNumber(String apartmentNumber, boolean isForTakeaway) {
+        if (!isForTakeaway && apartmentNumber.length() > 10) {
+            errors.add(new CoreError("Dzīvokļa numura", "garumam ir jābūt robežās līdz 10 simboliem"));
         }
     }
 

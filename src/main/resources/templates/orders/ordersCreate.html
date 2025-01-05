@@ -5,17 +5,17 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Noformēt pasūtījumu</title>
+    <title>Izveidot pasūtījumu</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h1>Noformēt pasūtījumu</h1>
+    <h1>Izveidot pasūtījumu</h1>
     <br>
     <form action="/orders/create" th:object="${request}" method="post">
-        <label>Groza ID:</label><br>
+        <label>Groza ID<span style="color: red">*</span>:</label><br>
         <input type="number" th:field="*{cartId}"/><br>
-        <label>Statuss:</label><br>
+        <label>Statuss<span style="color: red">*</span>:</label><br>
         <select th:field="*{status}">
             <option th:value="RECEIVED" th:text="'Saņemts'"></option>
             <option th:value="PREPARING" th:text="'Sagatavošanā'"></option>
@@ -24,23 +24,23 @@
             <option th:value="COMPLETED" th:text="'Izpildīts'"></option>
             <option th:value="CANCELLED" th:text="'Atcelts'"></option>
         </select><br>
-        <label>Summa:</label><br>
+        <label>Summa<span style="color: red">*</span>:</label><br>
         <input type="number" step="0.01" th:field="*{amount}"/><br>
-        <label>Izveidošanas datums:</label><br>
+        <label>Izveidošanas datums<span style="color: red">*</span>:</label><br>
         <input type="datetime-local" step="1" th:field="*{dateCreated}"><br>
         <label>Izpildes datums:</label><br>
         <input type="datetime-local" step="1" th:field="*{dateCompleted}"><br>
-        <label>Piegādes veids:</label><br>
+        <label>Piegādes veids<span style="color: red">*</span>:</label><br>
         <select th:field="*{isForTakeaway}" id="is-for-takeaway-select">
             <option th:value="true" th:text="'Paņemšu pats'" selected></option>
             <option th:value="false" th:text="'Ar kurjeru'"></option>
         </select><br><br>
         <div id="address-details-block">
-            <label>Pilsēta:</label><br>
+            <label>Pilsēta<span style="color: red">*</span>:</label><br>
             <input type="text" th:field="*{city}"/><br>
-            <label>Iela:</label><br>
+            <label>Iela<span style="color: red">*</span>:</label><br>
             <input type="text" th:field="*{street}"/><br>
-            <label>Mājas numurs:</label><br>
+            <label>Mājas numurs<span style="color: red">*</span>:</label><br>
             <input type="text" th:field="*{buildingNumber}"/><br>
             <label>Dzīvokļa numurs:</label><br>
             <input type="text" th:field="*{apartmentNumber}"/><br>
@@ -49,7 +49,7 @@
         <br>
         <br>
 
-        <input type="submit" value="Noformēt"/>
+        <input type="submit" value="Saglabāt"/>
     </form>
 
     <table th:if="${errors != null}">
@@ -59,7 +59,7 @@
         </tr>
     </table>
 
-<span th:if="${createdOrder != null}">Pasūtījums tika veiksmīgi noformēts!</span>
+<span th:if="${createdOrder != null}">Pasūtījums tika veiksmīgi noformēts</span>
 
 
 <script>
