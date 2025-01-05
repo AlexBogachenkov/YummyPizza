@@ -28,8 +28,8 @@
     <tr th:each="order : ${userOrders}">
       <td th:text="${order.id}" />
       <td th:text="${order.amount} + ' €'" />
-      <td th:text="${order.dateCreated}" />
-      <td th:text="${order.dateCompleted}" />
+      <td th:text="${#temporals.format(order.dateCreated, 'dd.MM.yyyy HH:mm')}" />
+      <td th:text="${#temporals.format(order.dateCompleted, 'dd.MM.yyyy HH:mm')}" />
       <td>
         <div th:if="${order.isForTakeaway}">
           <span>Saņemšana picērijā</span>
