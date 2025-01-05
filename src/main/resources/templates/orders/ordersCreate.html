@@ -17,12 +17,12 @@
         <input type="number" th:field="*{cartId}"/><br>
         <label>Statuss:</label><br>
         <select th:field="*{status}">
-            <option th:value="RECEIVED" th:text="Saņemts"></option>
-            <option th:value="PREPARING" th:text="Sagatavošanā"></option>
-            <option th:value="READY_FOR_TAKEAWAY" th:text="Gatavs izsniegšanai"></option>
-            <option th:value="ON_THE_WAY" th:text="Kurjers ceļā"></option>
-            <option th:value="COMPLETED" th:text="Izpildīts"></option>
-            <option th:value="CANCELLED" th:text="Atcelts"></option>
+            <option th:value="RECEIVED" th:text="'Saņemts'"></option>
+            <option th:value="PREPARING" th:text="'Sagatavošanā'"></option>
+            <option th:value="READY_FOR_TAKEAWAY" th:text="'Gatavs izsniegšanai'"></option>
+            <option th:value="ON_THE_WAY" th:text="'Kurjers ceļā'"></option>
+            <option th:value="COMPLETED" th:text="'Izpildīts'"></option>
+            <option th:value="CANCELLED" th:text="'Atcelts'"></option>
         </select><br>
         <label>Summa:</label><br>
         <input type="number" step="0.01" th:field="*{amount}"/><br>
@@ -30,14 +30,21 @@
         <input type="datetime-local" step="1" th:field="*{dateCreated}"><br>
         <label>Izpildes datums:</label><br>
         <input type="datetime-local" step="1" th:field="*{dateCompleted}"><br>
-        <label>Pilsēta:</label><br>
-        <input type="text" th:field="*{city}"/><br>
-        <label>Iela:</label><br>
-        <input type="text" th:field="*{street}"/><br>
-        <label>Mājas numurs:</label><br>
-        <input type="text" th:field="*{buildingNumber}"/><br>
-        <label>Dzīvokļa numurs:</label><br>
-        <input type="text" th:field="*{apartmentNumber}"/><br>
+        <label>Piegādes veids:</label><br>
+        <select th:field="*{isForTakeaway}" id="is-for-takeaway-select">
+            <option th:value="true" th:text="'Paņemšu pats'" selected></option>
+            <option th:value="false" th:text="'Ar kurjeru'"></option>
+        </select><br><br>
+        <div id="address-details-block">
+            <label>Pilsēta:</label><br>
+            <input type="text" th:field="*{city}"/><br>
+            <label>Iela:</label><br>
+            <input type="text" th:field="*{street}"/><br>
+            <label>Mājas numurs:</label><br>
+            <input type="text" th:field="*{buildingNumber}"/><br>
+            <label>Dzīvokļa numurs:</label><br>
+            <input type="text" th:field="*{apartmentNumber}"/><br>
+        </div>
 
         <br>
         <br>
@@ -53,6 +60,26 @@
     </table>
 
 <span th:if="${createdOrder != null}">Pasūtījums tika veiksmīgi noformēts!</span>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deliveryTypeSelect = document.getElementById('is-for-takeaway-select');
+        const addressDetailsBlock = document.getElementById("address-details-block");
+
+        function toggleAddressDetails() {
+            if (deliveryTypeSelect.value === "false") {
+                addressDetailsBlock.style.display = "block";
+            } else {
+                addressDetailsBlock.style.display = "none";
+            }
+        }
+
+        deliveryTypeSelect.addEventListener("change", toggleAddressDetails);
+
+        toggleAddressDetails();
+    });
+</script>
 </div>
 
 </body>
