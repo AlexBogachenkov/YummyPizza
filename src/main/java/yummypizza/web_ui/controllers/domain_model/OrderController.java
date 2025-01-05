@@ -31,11 +31,6 @@ public class OrderController {
     @Autowired
     private UpdateOrderService updateOrderService;
 
-    @GetMapping(value = "")
-    public String showOrdersPage() {
-        return "orders/orders.html";
-    }
-
     @GetMapping(value = "/create")
     public String showOrdersCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateOrderRequest());

@@ -31,11 +31,6 @@ public class CartProductController {
     @Autowired
     private DeleteCartProductByIdService deleteCartProductByIdService;
 
-    @GetMapping(value = "")
-    public String showCartProductsPage() {
-        return "cart_products/cartProducts.html";
-    }
-
     @GetMapping(value = "/add")
     public String showAddCartProductPage(ModelMap modelMap) {
         modelMap.addAttribute("request", new AddCartProductRequest());

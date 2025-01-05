@@ -31,11 +31,6 @@ public class CartController {
     @Autowired
     private FindCartByIdService findCartByIdService;
 
-    @GetMapping(value = "")
-    public String showCartsPage() {
-        return "carts/carts.html";
-    }
-
     @GetMapping(value = "/create")
     public String showCartsCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateCartRequest());

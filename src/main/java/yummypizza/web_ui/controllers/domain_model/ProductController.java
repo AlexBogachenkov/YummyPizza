@@ -31,11 +31,6 @@ public class ProductController {
     @Autowired
     private UpdateProductService updateProductService;
 
-    @GetMapping(value = "")
-    public String showProductsPage() {
-        return "products/products.html";
-    }
-
     @GetMapping(value = "/create")
     public String showProductsCreatePage(ModelMap modelMap) {
         modelMap.addAttribute("request", new CreateProductRequest());

@@ -30,12 +30,6 @@ public class UserController {
     @Autowired
     private UpdateUserProfileInformationService updateUserProfileInformationService;
 
-    @GetMapping(value = "")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String showUsersPage() {
-        return "users/users.html";
-    }
-
     @GetMapping(value = "/create")
     @PreAuthorize("hasRole('ADMIN')")
     public String showUsersCreatePage(ModelMap modelMap) {
