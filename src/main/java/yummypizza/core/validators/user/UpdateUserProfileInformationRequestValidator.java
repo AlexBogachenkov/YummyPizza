@@ -41,7 +41,7 @@ public class UpdateUserProfileInformationRequestValidator {
             return;
         }
         if (!repository.existsById(id)) {
-            errors.add(new CoreError("Lietotāja ID", "neeksistē"));
+            errors.add(new CoreError("Lietotājs", "ar šādu ID netika atrasts"));
         }
     }
 

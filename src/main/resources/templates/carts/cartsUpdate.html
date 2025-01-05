@@ -14,9 +14,9 @@
     <br>
     <form th:action="@{/carts/} + ${updateCartRequest.id} + @{/update}" th:object="${updateCartRequest}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <label>Lietotāja ID:</label><br>
+        <label>Lietotāja ID<span style="color: red">*</span>:</label><br>
         <input type="text" th:field="*{userId}"/><br>
-        <label>Statuss:</label><br>
+        <label>Statuss<span style="color: red">*</span>:</label><br>
         <select th:field="*{status}">
             <option th:value="ACTIVE" th:text="Aktīvs"></option>
             <option th:value="INACTIVE" th:text="Neaktīvs"></option>
@@ -34,7 +34,7 @@
         </tr>
     </table>
 
-    <span th:if="${updatedCart != null}">Grozs tika veiksmīgi labots</span>
+    <span th:if="${updatedCart != null}">Groza informācija tika veiksmīgi saglabāta</span>
 </div>
 
 </body>

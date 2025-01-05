@@ -24,41 +24,34 @@ public class AddCartProductRequestValidator {
         errors = new ArrayList<>();
         validateCartId(request.getCartId());
         validateProductId(request.getProductId());
-        validateQuantity(request.getQuantity());
         return errors;
     }
 
     private void validateCartId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("Cart ID", "is mandatory."));
+            errors.add(new CoreError("Groza ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("Cart ID", "must be a positive number."));
+            errors.add(new CoreError("Groza ID", "ir jābūt pozitīvam skaitlim"));
             return;
         }
         if (!cartRepository.existsById(id)) {
-            errors.add(new CoreError("Cart ID", "doesn't exist."));
+            errors.add(new CoreError("Grozs", "ar šādu ID netika atrasts"));
         }
     }
 
     private void validateProductId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("Product ID", "is mandatory."));
+            errors.add(new CoreError("Produkta ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("Product ID", "must be a positive number."));
+            errors.add(new CoreError("Produkta ID", "ir jābūt pozitīvam skaitlim"));
             return;
         }
         if (!productRepository.existsById(id)) {
-            errors.add(new CoreError("Product ID", "doesn't exist."));
-        }
-    }
-
-    private void validateQuantity(int quantity) {
-        if (quantity <= 0) {
-            errors.add(new CoreError("Quantity", "must be a positive number."));
+            errors.add(new CoreError("Produkts", "ar šādu ID netika atrasts"));
         }
     }
 

@@ -25,7 +25,6 @@ public class UpdateProductRequestValidator {
         validateName(request.getName());
         validateDescription(request.getDescription());
         validatePrice(request.getPrice());
-        validateType(request.getType());
         return errors;
     }
 
@@ -39,7 +38,7 @@ public class UpdateProductRequestValidator {
             return;
         }
         if (!repository.existsById(id)) {
-            errors.add(new CoreError("Produkta ID", "neeksistē"));
+            errors.add(new CoreError("Produkts", "ar šādu ID netika atrasts"));
         }
     }
 

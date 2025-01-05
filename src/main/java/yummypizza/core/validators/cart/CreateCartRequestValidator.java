@@ -15,42 +15,26 @@ import java.util.List;
 public class CreateCartRequestValidator {
 
     @Autowired
-    private CartRepository cartRepository;
-    @Autowired
     private UserRepository userRepository;
     private List<CoreError> errors;
 
     public List<CoreError> validate(CreateCartRequest request) {
         errors = new ArrayList<>();
         validateUserId(request.getUserId());
-        validateStatus(request.getStatus(), request.getUserId());
         return errors;
     }
 
     private void validateUserId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("User ID", "is mandatory."));
+            errors.add(new CoreError("Lietotāja ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("User ID", "must be a positive number."));
+            errors.add(new CoreError("Lietotāja ID", "ir jābūt veselam pozitīvam skaitlim"));
             return;
         }
         if (!userRepository.existsById(id)) {
-            errors.add(new CoreError("User ID", "doesn't exist."));
-        }
-    }
-
-    private void validateStatus(CartStatus status, Long userId) {
-        if (status == null || status.name().isBlank()) {
-            errors.add(new CoreError("Status", "is mandatory."));
-            return;
-        }
-        if (status != CartStatus.ACTIVE && status != CartStatus.INACTIVE) {
-            errors.add(new CoreError("Status", "must be either 'ACTIVE' or 'INACTIVE'."));
-        }
-        if (status == CartStatus.ACTIVE && cartRepository.findAllByUserIdAndStatus(userId, status).size() > 0) {
-            errors.add(new CoreError("Status", "'ACTIVE' is already set for one of the user's carts."));
+            errors.add(new CoreError("Lietotājs", "ar šādu ID netika atrasts"));
         }
     }
 

@@ -5,24 +5,24 @@
       layout:decorate="mainTemplatePage.html">
 <head>
     <meta charset="UTF-8">
-    <title>Pievienot produktu grozam</title>
+    <title>Ielikt produktu grozā</title>
 </head>
 <body>
 
 <div layout:fragment="content">
-  <h1>Pievienot produktu grozam</h1>
+  <h1>Ielikt produktu grozā</h1>
   <br>
   <form action="/cart-products/add" th:object="${request}" method="post">
-    <label>Groza ID:</label><br>
+    <label>Groza ID<span style="color: red">*</span>:</label><br>
     <input type="text" th:field="*{cartId}"/><br>
-    <label>Produkta ID:</label><br>
+    <label>Produkta ID<span style="color: red">*</span>:</label><br>
     <input type="text" th:field="*{productId}"/><br>
-    <label>Daudzums:</label><br>
+    <label>Daudzums<span style="color: red">*</span>:</label><br>
     <input type="number" min="1" th:field="*{quantity}"/><br>
     <br>
     <br>
 
-    <input type="submit" value="Pievienot"/>
+    <input type="submit" value="Ielikt"/>
   </form>
 
   <table th:if="${errors != null}">
@@ -32,7 +32,7 @@
     </tr>
   </table>
 
-  <span th:if="${addedCartProduct != null}">Produkts tika veiksmīgi pievienots grozam!</span>
+  <span th:if="${addedCartProduct != null}">Produkts tika veiksmīgi ielikts grozā</span>
 </div>
 
 </body>

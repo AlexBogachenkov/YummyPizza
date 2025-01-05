@@ -13,9 +13,9 @@
   <h1>Izveidot grozu</h1>
   <br>
   <form action="/carts/create" th:object="${request}" method="post">
-    <label>Lietotāja ID:</label><br>
+    <label>Lietotāja ID<span style="color: red">*</span>:</label><br>
     <input type="text" th:field="*{userId}"/><br>
-    <label>Statuss:</label><br>
+    <label>Statuss<span style="color: red">*</span>:</label><br>
     <select th:field="*{status}">
       <option th:value="ACTIVE" th:text="Aktīvs"></option>
       <option th:value="INACTIVE" th:text="Neaktīvs"></option>

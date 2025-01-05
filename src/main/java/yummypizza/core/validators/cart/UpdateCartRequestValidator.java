@@ -45,15 +45,15 @@ public class UpdateCartRequestValidator {
 
     private void validateUserId(Long id) {
         if (id == null) {
-            errors.add(new CoreError("User ID", "is mandatory."));
+            errors.add(new CoreError("Lietotāja ID", "ir obligāts"));
             return;
         }
         if (id <= 0) {
-            errors.add(new CoreError("User ID", "must be a positive number."));
+            errors.add(new CoreError("Lietotāja ID", "ir jābūt veselam pozitīvam skaitlim"));
             return;
         }
         if (!userRepository.existsById(id)) {
-            errors.add(new CoreError("User ID", "doesn't exist."));
+            errors.add(new CoreError("Lietotājs", "ar šādu ID netika atrasts"));
         }
     }
 
