@@ -3,11 +3,8 @@ package yummypizza.core.validators.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.domain.UserRole;
 import yummypizza.core.requests.user.UpdateUserProfileInformationRequest;
-import yummypizza.core.requests.user.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.user.UpdateUserProfileInformationResponse;
 
 import java.util.ArrayList;
 import java.util.List;

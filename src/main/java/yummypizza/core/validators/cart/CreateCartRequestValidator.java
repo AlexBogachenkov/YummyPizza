@@ -2,9 +2,7 @@ package yummypizza.core.validators.cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.domain.CartStatus;
 import yummypizza.core.requests.cart.CreateCartRequest;
 import yummypizza.core.responses.CoreError;
 

@@ -7,7 +7,6 @@ import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.CoreResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter

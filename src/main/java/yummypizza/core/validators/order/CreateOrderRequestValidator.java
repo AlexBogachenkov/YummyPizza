@@ -5,13 +5,11 @@ import org.springframework.stereotype.Component;
 import yummypizza.core.database.CartProductRepository;
 import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
-import yummypizza.core.domain.OrderStatus;
 import yummypizza.core.requests.order.CreateOrderRequest;
 import yummypizza.core.responses.CoreError;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 

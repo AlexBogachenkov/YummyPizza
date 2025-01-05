@@ -3,7 +3,6 @@ package yummypizza.core.validators.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import yummypizza.core.database.UserRepository;
-import yummypizza.core.domain.UserRole;
 import yummypizza.core.requests.user.UpdateUserRequest;
 import yummypizza.core.responses.CoreError;
 
@@ -63,7 +62,7 @@ public class UpdateUserRequestValidator {
         }
     }
 
-    private void validateEmail(String email, Long id) {
+    private void validateEmail(String email) {
         if (email == null || email.isBlank()) {
             errors.add(new CoreError("E-pasts", "ir obligāts"));
             return;

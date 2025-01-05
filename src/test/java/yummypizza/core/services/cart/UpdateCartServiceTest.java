@@ -9,18 +9,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import yummypizza.core.database.CartRepository;
-import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.Cart;
 import yummypizza.core.domain.CartStatus;
 import yummypizza.core.domain.User;
-import yummypizza.core.domain.UserRole;
 import yummypizza.core.requests.cart.UpdateCartRequest;
 import yummypizza.core.responses.CoreError;
 import yummypizza.core.responses.cart.UpdateCartResponse;
 import yummypizza.core.validators.cart.UpdateCartRequestValidator;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

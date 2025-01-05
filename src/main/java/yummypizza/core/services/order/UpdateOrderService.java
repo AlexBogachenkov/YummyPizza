@@ -2,17 +2,12 @@ package yummypizza.core.services.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
 import yummypizza.core.domain.Cart;
 import yummypizza.core.domain.Order;
-import yummypizza.core.domain.User;
-import yummypizza.core.requests.cart.UpdateCartRequest;
 import yummypizza.core.requests.order.UpdateOrderRequest;
 import yummypizza.core.responses.CoreError;
-import yummypizza.core.responses.cart.UpdateCartResponse;
 import yummypizza.core.responses.order.UpdateOrderResponse;
-import yummypizza.core.validators.cart.UpdateCartRequestValidator;
 import yummypizza.core.validators.order.UpdateOrderRequestValidator;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package yummypizza.core.services.cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yummypizza.core.database.CartRepository;
-import yummypizza.core.database.UserRepository;
 import yummypizza.core.domain.Cart;
 import yummypizza.core.domain.User;
 import yummypizza.core.requests.cart.CreateCartRequest;

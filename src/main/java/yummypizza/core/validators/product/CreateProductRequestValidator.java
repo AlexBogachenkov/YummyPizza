@@ -1,7 +1,6 @@
 package yummypizza.core.validators.product;
 
 import org.springframework.stereotype.Component;
-import yummypizza.core.domain.ProductType;
 import yummypizza.core.requests.product.CreateProductRequest;
 import yummypizza.core.responses.CoreError;
 

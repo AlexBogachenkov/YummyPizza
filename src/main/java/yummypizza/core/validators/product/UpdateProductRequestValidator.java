@@ -3,7 +3,6 @@ package yummypizza.core.validators.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import yummypizza.core.database.ProductRepository;
-import yummypizza.core.domain.ProductType;
 import yummypizza.core.requests.product.UpdateProductRequest;
 import yummypizza.core.responses.CoreError;
 
