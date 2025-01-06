@@ -30,13 +30,19 @@ public class CreateOrderService {
             return new CreateOrderResponse(errors);
         }
 
+        // Setting user's active cart status to 'INACTIVE' since it is used for order
         Cart cart = cartRepository.findById(request.getCartId()).get();
         cart.setStatus(CartStatus.INACTIVE);
         cartRepository.save(cart);
+
+        // Creating new active cart for user
         cartRepository.save(new Cart(cart.getUser(), CartStatus.ACTIVE));
 
         Order order = new Order(cart, request.getStatus(), request.getAmount(), request.getDateCreated(),
-                request.getDateCompleted(), request.isForTakeaway(), request.getCity(), request.getStreet(), request.getBuildingNumber(), request.getApartmentNumber());
+                request.getDateCompleted(), request.isForTakeaway(), request.getCity(), request.getStreet(),
+                request.getBuildingNumber(), request.getApartmentNumber());
+
+        // If request is for takeaway address data is not saved even if passed
         if (request.isForTakeaway()) {
             order.setCity(null);
             order.setStreet(null);
