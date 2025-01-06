@@ -22,7 +22,6 @@ public class UpdateUserRequestValidator {
         validateId(request.getId());
         validateFirstName(request.getFirstName());
         validateLastName(request.getLastName());
-        validateEmail(request.getEmail(), request.getId());
         validatePassword(request.getPassword());
         validatePhone(request.getPhone());
         return errors;

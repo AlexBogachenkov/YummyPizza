@@ -54,7 +54,7 @@ public class OrderController {
     public String showOrdersListPage(ModelMap modelMap) {
         FindAllOrdersResponse response = findAllOrdersService.execute();
         modelMap.addAttribute("deleteByIdRequest", new DeleteUserByIdRequest());
-        modelMap.addAttribute("orders", response.getAllOrders());
+        modelMap.addAttribute("orderDtos", response.getAllOrders());
         return "orders/ordersList.html";
     }
 

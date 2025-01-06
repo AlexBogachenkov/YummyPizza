@@ -2,6 +2,7 @@ package yummypizza.core.responses.order;
 
 import lombok.Getter;
 import yummypizza.core.domain.Order;
+import yummypizza.core.models.OrderDto;
 import yummypizza.core.responses.CoreResponse;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.List;
 @Getter
 public class FindAllOrdersResponse extends CoreResponse {
 
-    private List<Order> allOrders;
+    private List<OrderDto> allOrders;
 
-    public FindAllOrdersResponse(List<Order> allOrders) {
+    public FindAllOrdersResponse(List<OrderDto> allOrders) {
         this.allOrders = allOrders;
     }
 

@@ -23,7 +23,7 @@
 
     <span th:if="${isOrderDeleted == true}">Pasūtījums tika veiksmīgi dzēsts</span>
 
-    <table th:if="${not orders.isEmpty}">
+    <table th:if="${not orderDtos.isEmpty}" class="table">
       <tr>
         <th>ID</th>
         <th>Groza ID</th>
@@ -36,33 +36,40 @@
         <th>Iela</th>
         <th>Mājas numurs</th>
         <th>Dzīvokļa numurs</th>
+        <th>Pasūtījuma produkti</th>
       </tr>
-      <tr th:each="order : ${orders}">
-        <td th:text="${order.id}" />
-        <td th:text="${order.cart.id}" />
-        <td th:text="${order.status}" />
-        <td th:text="${order.amount}" />
-        <td th:text="${order.dateCreated}" />
-        <td th:text="${order.dateCompleted}" />
+      <tr th:each="orderDto : ${orderDtos}">
+        <td th:text="${orderDto.order.id}" />
+        <td th:text="${orderDto.order.cart.id}" />
+        <td th:text="${orderDto.order.status}" />
+        <td th:text="${orderDto.order.amount} + ' €'" />
+        <td th:text="${#temporals.format(orderDto.order.dateCreated, 'dd.MM.yyyy HH:mm')}" />
+        <td th:text="${#temporals.format(orderDto.order.dateCompleted, 'dd.MM.yyyy HH:mm')}" />
         <td>
-          <div th:if="${order.isForTakeaway}">
+          <div th:if="${orderDto.order.isForTakeaway}">
             <span>Saņemšana picērijā</span>
           </div>
-          <div th:if="${!order.isForTakeaway}">
+          <div th:if="${!orderDto.order.isForTakeaway}">
             <span>Piegāde ar kurjeru</span>
           </div>
         </td>
-        <td th:text="${order.city}" />
-        <td th:text="${order.street}" />
-        <td th:text="${order.buildingNumber}" />
-        <td th:text="${order.apartmentNumber}" />
+        <td th:text="${orderDto.order.city}" />
+        <td th:text="${orderDto.order.street}" />
+        <td th:text="${orderDto.order.buildingNumber}" />
+        <td th:text="${orderDto.order.apartmentNumber}" />
         <td>
-          <a th:href="@{/orders/} + ${order.id} + @{/update}">Labot</a>
+          <div th:each="cartProduct : ${orderDto.orderProducts}">
+            <span th:text="${cartProduct.product.name}" />
+            <span th:text="'(' + ${cartProduct.quantity} + ' gab.)'" />
+          </div>
+        </td>
+        <td>
+          <a th:href="@{/orders/} + ${orderDto.order.id} + @{/update}">Labot</a>
         </td>
         <td>
           <div th:if="${#authentication.principal.role.name == 'ADMIN'}">
             <form action="/orders/delete" th:object="${deleteByIdRequest}" method="post">
-              <input type="hidden" th:value="${order.id}" name="id" />
+              <input type="hidden" th:value="${orderDto.order.id}" name="id" />
               <button type="submit">Dzēst</button>
             </form>
           </div>
@@ -70,7 +77,7 @@
       </tr>
     </table>
 
-    <span th:if="${orders.isEmpty}">Pasūtījumi netika atrasti.</span>
+    <span th:if="${orderDtos.isEmpty}">Pasūtījumi netika atrasti.</span>
 </div>
 
 </body>
