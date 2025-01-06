@@ -16,7 +16,6 @@ import yummypizza.core.services.product.*;
 import java.util.Optional;
 
 @Controller
-@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(value = "/products")
 public class ProductController {
 
@@ -38,8 +37,8 @@ public class ProductController {
         return "products/productsCreate.html";
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping(value = "/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String processCreateProductRequest(@ModelAttribute(value = "request") CreateProductRequest request, ModelMap modelMap) {
         CreateProductResponse response = createProductService.execute(request);
         if (response.hasErrors()) {
@@ -60,6 +59,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String processDeleteProductByIdRequest(@ModelAttribute(value = "deleteByIdRequest")
                                                       DeleteProductByIdRequest request, ModelMap modelMap) {
         DeleteProductByIdResponse response = deleteProductByIdService.execute(request);
@@ -72,11 +72,13 @@ public class ProductController {
     }
 
     @GetMapping(value = "/find")
+    @PreAuthorize("hasRole('ADMIN')")
     public String showProductsFindByIdPage() {
         return "products/productsFindById.html";
     }
 
     @GetMapping(value = "/find/")
+    @PreAuthorize("hasRole('ADMIN')")
     public String processFindProductByIdRequest(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
         FindProductByIdRequest request = new FindProductByIdRequest(id);
         FindProductByIdResponse response = findProductByIdService.execute(request);
@@ -92,8 +94,8 @@ public class ProductController {
         return "products/productsFindById.html";
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping(value = "/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String showProductsUpdatePage(@PathVariable("id") Long id, ModelMap modelMap) {
         FindProductByIdResponse response = findProductByIdService.execute(new FindProductByIdRequest(id));
         Optional<Product> foundProduct = response.getFoundProduct();
@@ -106,8 +108,8 @@ public class ProductController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @PostMapping(value = "/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     public String processUpdateProductRequest(@ModelAttribute(value = "request") UpdateProductRequest request, ModelMap modelMap) {
         UpdateProductResponse response = updateProductService.execute(request);
         if (response.hasErrors()) {
