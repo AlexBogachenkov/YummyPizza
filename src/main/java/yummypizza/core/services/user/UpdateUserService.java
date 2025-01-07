@@ -11,6 +11,7 @@ import yummypizza.core.responses.user.UpdateUserResponse;
 import yummypizza.core.validators.user.UpdateUserRequestValidator;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UpdateUserService {
@@ -27,10 +28,20 @@ public class UpdateUserService {
         if (!errors.isEmpty()) {
             return new UpdateUserResponse(errors);
         }
-        User user = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
-                passwordEncoder.encode(request.getPassword()), request.getPhone(), request.getRole());
-        user.setId(request.getId());
-        return new UpdateUserResponse(repository.save(user));
+
+        User updatedUser = null;
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
+            updatedUser = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
+                    passwordEncoder.encode(request.getPassword()), request.getPhone(), request.getRole());
+        } else {
+            Optional<User> foundUser = repository.findById(request.getId());
+            if (foundUser.isPresent()) {
+                updatedUser = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
+                        foundUser.get().getPassword(), request.getPhone(), request.getRole());
+            }
+        }
+        updatedUser.setId(request.getId());
+        return new UpdateUserResponse(repository.save(updatedUser));
     }
 
 }

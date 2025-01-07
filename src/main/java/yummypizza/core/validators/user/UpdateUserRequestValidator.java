@@ -22,6 +22,7 @@ public class UpdateUserRequestValidator {
         validateId(request.getId());
         validateFirstName(request.getFirstName());
         validateLastName(request.getLastName());
+        validateEmail(request.getEmail(), request.getId());
         validatePassword(request.getPassword());
         validatePhone(request.getPhone());
         return errors;
@@ -61,7 +62,7 @@ public class UpdateUserRequestValidator {
         }
     }
 
-    private void validateEmail(String email) {
+    private void validateEmail(String email, Long id) {
         if (email == null || email.isBlank()) {
             errors.add(new CoreError("E-pasts", "ir obligāts"));
             return;
@@ -78,14 +79,13 @@ public class UpdateUserRequestValidator {
         if (email.length() > 320) {
             errors.add(new CoreError("E-pasta", "garumam ir jābūt robežās līdz 320 simboliem"));
         }
-        if (repository.findByEmail(email).isPresent()) {
+        if (repository.findAllByEmailAndIdIsNot(email, id).size() > 0) {
             errors.add(new CoreError("Ievadīto e-pastu", "jau izmanto kāds cits lietotājs"));
         }
     }
 
     private void validatePassword(String password) {
         if (password == null || password.isBlank()) {
-            errors.add(new CoreError("Parole", "ir obligāta"));
             return;
         }
         if (password.length() < 8) {
