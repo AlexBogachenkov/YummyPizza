@@ -37,6 +37,12 @@
             </svg>
           </a>
           <ul class="dropdown-menu text-small">
+            <div th:if="${#authentication.principal.role.name == 'ADMIN'}">
+              <li><a class="dropdown-item" href="/adminPage">Administratora skats</a></li>
+            </div>
+            <div th:if="${#authentication.principal.role.name == 'ADMIN' or #authentication.principal.role.name == 'EMPLOYEE'}">
+              <li><a class="dropdown-item" href="/employeePage">Darbinieka skats</a></li>
+            </div>
             <li><a class="dropdown-item" href="/my-orders">Mani pasūtījumi</a></li>
             <li><a class="dropdown-item" th:href="'/users/' + ${#authentication.principal.id}">Mans profils</a></li>
             <li><hr class="dropdown-divider"></li>

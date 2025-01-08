@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT') or hasRole('EMPLOYEE')")
 @RequestMapping(value = "/cart")
 public class UserCartPageController {
 

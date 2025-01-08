@@ -13,7 +13,7 @@
     <h1>Visi lietotāji</h1>
 
     <table th:if="${deleteByIdRequestErrors != null}">
-      <tr th:each="error : ${deleteByIdRequestErrors}">
+      <tr th:each="error : ${deleteByIdRequestErrors}" class="text-danger">
         <td th:text="${error.field}" />
         <td th:text="${error.message}" />
       </tr>
@@ -23,7 +23,7 @@
 
     <span th:if="${userDeleted == true}">Lietotājs tika veiksmīgi dzēsts</span>
 
-    <table th:if="${not users.isEmpty}">
+    <table th:if="${not users.isEmpty}" class="table">
       <tr>
         <th>ID</th>
         <th>Vārds</th>

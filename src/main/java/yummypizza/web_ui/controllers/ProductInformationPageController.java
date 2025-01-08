@@ -72,7 +72,7 @@ public class ProductInformationPageController {
         return "products/productInformationPage.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT') or hasRole('EMPLOYEE')")
     @PostMapping(value = "/{id}/addProductToCart")
     public String processAddProductToCartRequest(@ModelAttribute(value = "addProductToCartRequest")
                                                  AddCartProductRequest request, ModelMap modelMap) {

@@ -63,7 +63,7 @@ public class MenuPageController {
         return "menuPage.html";
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT') or hasRole('EMPLOYEE')")
     @PostMapping(value = "/addProductToCart")
     public String processAddProductToCartRequest(@ModelAttribute(value = "addProductToCartRequest")
                                                      AddCartProductRequest request, ModelMap modelMap) {

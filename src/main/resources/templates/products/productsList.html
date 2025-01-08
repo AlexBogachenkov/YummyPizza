@@ -13,7 +13,7 @@
     <h1>Visi produkti</h1>
 
     <table th:if="${deleteByIdRequestErrors != null}">
-      <tr th:each="error : ${deleteByIdRequestErrors}">
+      <tr th:each="error : ${deleteByIdRequestErrors}" class="text-danger">
         <td th:text="${error.field}" />
         <td th:text="${error.message}" />
       </tr>

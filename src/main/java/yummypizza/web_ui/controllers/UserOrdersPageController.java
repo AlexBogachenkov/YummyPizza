@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/my-orders")
-@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT')")
+@PreAuthorize("hasRole('ADMIN') or hasRole('CLIENT') or hasRole('EMPLOYEE')")
 public class UserOrdersPageController {
 
     @Autowired
