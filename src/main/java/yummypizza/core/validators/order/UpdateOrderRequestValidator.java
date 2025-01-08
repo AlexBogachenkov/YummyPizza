@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import yummypizza.core.database.CartProductRepository;
 import yummypizza.core.database.CartRepository;
 import yummypizza.core.database.OrderRepository;
-import yummypizza.core.domain.OrderStatus;
 import yummypizza.core.requests.order.UpdateOrderRequest;
 import yummypizza.core.responses.CoreError;
 

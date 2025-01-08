@@ -1,7 +1,6 @@
 package yummypizza.core.responses.order;
 
 import lombok.Getter;
-import yummypizza.core.domain.Order;
 import yummypizza.core.models.OrderDto;
 import yummypizza.core.responses.CoreResponse;
 
