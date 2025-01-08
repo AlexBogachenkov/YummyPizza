@@ -24,6 +24,7 @@ public class FindAllOrdersService {
         List<OrderDto> orderDtos = new ArrayList<>();
 
         List<Order> orders = repository.findAll();
+        // Add products for each orders
         for (Order order : orders) {
             List<CartProduct> orderProducts = cartProductRepository.findByCartId(order.getCart().getId());
             orderDtos.add(new OrderDto(order, orderProducts));

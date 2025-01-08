@@ -30,6 +30,7 @@ public class UpdateOrderService {
         Order order = new Order(request.getId(), cart, request.getStatus(), request.getAmount(),
                 request.getDateCreated(), request.getDateCompleted(), request.isForTakeaway(), request.getCity(), request.getStreet(),
                 request.getBuildingNumber(), request.getApartmentNumber());
+        // If request is for takeaway address data is not saved even if passed
         if (request.isForTakeaway()) {
             order.setCity(null);
             order.setStreet(null);

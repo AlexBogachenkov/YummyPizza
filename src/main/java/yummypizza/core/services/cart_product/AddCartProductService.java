@@ -31,9 +31,11 @@ public class AddCartProductService {
         CartProduct cartProduct;
         Optional<CartProduct> optionalOfCartProduct = repository.findByCartIdAndProductId(request.getCartId(), request.getProductId());
         if (optionalOfCartProduct.isPresent()) {
+            // Update cart product if exists
             cartProduct = optionalOfCartProduct.get();
             cartProduct.setQuantity(cartProduct.getQuantity() + request.getQuantity());
         } else {
+            // Create new if not exists
             Cart cart = new Cart();
             cart.setId(request.getCartId());
 

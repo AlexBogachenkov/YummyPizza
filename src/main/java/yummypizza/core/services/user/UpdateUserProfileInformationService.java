@@ -30,6 +30,7 @@ public class UpdateUserProfileInformationService {
         }
 
         User updatedUser = null;
+        // Update password if it was entered, otherwise save entity with old password
         if (request.getPassword() != null && !request.getPassword().isBlank()) {
             updatedUser = new User(request.getFirstName(), request.getLastName(), request.getEmail(),
                     passwordEncoder.encode(request.getPassword()), request.getPhone(), request.getRole());
