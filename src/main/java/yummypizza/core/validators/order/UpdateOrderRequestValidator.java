@@ -31,7 +31,6 @@ public class UpdateOrderRequestValidator {
         errors = new ArrayList<>();
         validateId(request.getId());
         validateCartId(request.getCartId(), request.getId());
-        validateStatus(request.getStatus());
         validateAmount(request.getAmount());
         validateDateCreated(request.getDateCreated());
         validateCity(request.getCity(), request.isForTakeaway());
@@ -72,16 +71,6 @@ public class UpdateOrderRequestValidator {
         }
         if (cartProductRepository.findByCartId(cartId).isEmpty()) {
             errors.add(new CoreError("Grozā", "jābūt vismaz vienam produktam, lai veiktu pasūtīumu"));
-        }
-    }
-
-    private void validateStatus(OrderStatus status) {
-        if (status == null || status.name().isBlank()) {
-            errors.add(new CoreError("Status", "is mandatory."));
-            return;
-        }
-        if (status != OrderStatus.RECEIVED && status != OrderStatus.PREPARING && status != OrderStatus.COMPLETED) {
-            errors.add(new CoreError("Status", "must be either 'RECEIVED', 'INACTIVE' or 'COMPLETED'."));
         }
     }
 

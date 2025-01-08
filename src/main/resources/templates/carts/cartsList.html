@@ -40,12 +40,12 @@
       <td th:text="${cart.user.email}" />
       <td th:text="${cart.status}" />
       <td>
-        <a th:href="@{/carts/} + ${cart.id} + @{/update}">Update</a>
+        <a th:href="@{/carts/} + ${cart.id} + @{/update}">Labot</a>
       </td>
       <td>
         <form action="/carts/delete" th:object="${deleteByIdRequest}" method="post">
           <input type="hidden" th:value="${cart.id}" name="id" />
-          <button type="submit">Delete</button>
+          <button type="submit">Dzēst</button>
         </form>
       </td>
     </tr>

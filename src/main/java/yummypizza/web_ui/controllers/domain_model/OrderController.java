@@ -86,7 +86,7 @@ public class OrderController {
         if (response.hasErrors()) {
             modelMap.addAttribute("deleteByIdRequestErrors", response.getErrors());
         } else {
-            modelMap.addAttribute("orderDeleted", true);
+            modelMap.addAttribute("isOrderDeleted", true);
         }
         return showOrdersListPage(modelMap);
     }
